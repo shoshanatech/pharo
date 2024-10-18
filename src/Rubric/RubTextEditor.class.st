@@ -680,9 +680,12 @@ RubTextEditor >> cursorLeft: aKeyboardEvent [
 	textArea editing ifTrue: [ ^ false ].
 	self closeTypeIn.
 	self
-		moveCursor:[:position | position - 1 max: 1]
+		moveCursor: [ :position | position - 1 max: 1 ]
 		forward: false
-		specialBlock:[:position | self previousWord: position]
+		specialBlock: [ :position |
+			self
+				previousWord: position
+				stopOnUpperCase: aKeyboardEvent optionKeyPressed ]
 		event: aKeyboardEvent.
 	^ true
 ]
@@ -729,9 +732,12 @@ RubTextEditor >> cursorRight: aKeyboardEvent [
 	textArea editing ifTrue: [ ^ false ].
 	self closeTypeIn.
 	self
-		moveCursor: [:position | position + 1]
+		moveCursor: [ :position | position + 1 ]
 		forward: true
-		specialBlock:[:position | self nextWord: position]
+		specialBlock: [ :position |
+			self
+				nextWord: position
+				stopOnUpperCase: aKeyboardEvent optionKeyPressed ]
 		event: aKeyboardEvent.
 	^ true
 ]
@@ -1428,9 +1434,18 @@ RubTextEditor >> isTextEditor [
 
 { #category : 'private' }
 RubTextEditor >> isWordCharacterAt: index in: aString [
+
+	^ self isWordCharacterAt: index in: aString except: [ :char | false ]
+]
+
+{ #category : 'private' }
+RubTextEditor >> isWordCharacterAt: index in: aString except: aBlock [
 	"By default, group alphanumeric and non-alphanumeric separately"
 
-	^ (aString at: index) isAlphaNumeric
+	| character |
+	character := aString at: index.
+	(aBlock value: character) ifTrue: [ ^ false ].
+	^ character isAlphaNumeric
 ]
 
 { #category : 'typing support' }
@@ -1656,11 +1671,16 @@ RubTextEditor >> nextCharacterIfAbsent: aBlock [
 { #category : 'private' }
 RubTextEditor >> nextWord: position [
 
-	| string index initialIsAlphaNumeric size initialPosition |
+	^ self nextWord: position stopOnUpperCase: false
+]
+
+{ #category : 'private' }
+RubTextEditor >> nextWord: position stopOnUpperCase: stopOnUpperCase [
 	"Positions go from 1 to size + 1
 	Position N + 1 is after the Nth character"
-	initialPosition := 1 max: position.
-	index := initialPosition.
+
+	| string index initialIsAlphaNumeric size |
+	index := 1 max: position.
 
 	string := self string.
 	size := string size + 1.
@@ -1685,7 +1705,10 @@ RubTextEditor >> nextWord: position [
 	nextCharacterInDirection = Character cr
 		ifTrue: [ ^ index ].
 	
-	(self isWordCharacterAt: index in: string) = initialIsAlphaNumeric ]
+		(self
+			 isWordCharacterAt: index
+			 in: string
+			 except: [ :char | stopOnUpperCase and: [ char isUppercase ] ]) = initialIsAlphaNumeric ]
 		whileTrue: [ index := index + 1 ].
 
 	^ index
@@ -1834,6 +1857,12 @@ RubTextEditor >> previousCharacterIfAbsent: aBlock [
 { #category : 'private' }
 RubTextEditor >> previousWord: position [
 
+	^ self previousWord: position stopOnUpperCase: false
+]
+
+{ #category : 'private' }
+RubTextEditor >> previousWord: position stopOnUpperCase: stopOnUpperCase [ 
+
 	| string index initialIsAlphaNumeric size initialPosition |
 	"Positions go from 1 to size + 1
 	Position N + 1 is after the Nth character"
@@ -1844,26 +1873,26 @@ RubTextEditor >> previousWord: position [
 	index := initialPosition.
 
 	position <= 2 ifTrue: [ ^ 1 ].
-	
+
 	[ index > 0 and: [ 
 			{ Character space . Character tab }
 				includes: (string at: index - 1)]
 	] whileTrue: [ index := index - 1 ].
 
 	initialIsAlphaNumeric := self isWordCharacterAt: index - 1 in: string.
-	
+
 	index = initialPosition
 		ifTrue: [ index := index - 1 ].
-	
+
 	[ | nextCharacterInDirection |
 	"If we reach the end"
 	index <= 1 ifTrue: [ ^ index ].
-	
+
 	nextCharacterInDirection := string at: index - 1.
 	nextCharacterInDirection = Character cr
 		ifTrue: [ ^ index ].
-	
-	(self isWordCharacterAt: index - 1 in: string) = initialIsAlphaNumeric ]
+
+	(self isWordCharacterAt: index in: string except: [ :char | stopOnUpperCase and: [ char isUppercase ] ]) = initialIsAlphaNumeric ]
 		whileTrue: [ index := index - 1 ].
 
 	^ index
