@@ -35,6 +35,32 @@ RubTextEditorTest >> assertNextJumpPointOf: actual equals: expected [
 		equals: expectedIndex
 ]
 
+{ #category : 'asserting' }
+RubTextEditorTest >> assertPreviousJumpPointFrom: actualFrom to: actualTo equals: expected [
+
+	| actualIndexFrom actualIndexTo expectedIndex |
+	actualIndexFrom := actualFrom indexOf: $¶.
+	actualIndexTo := actualTo indexOf: $¶.
+	expectedIndex := expected indexOf: $¶.
+
+	actualIndexFrom to: actualIndexTo do: [ :i |
+		self
+			assert: (editor previousWord2: i stopOnUpperCase: true)
+			equals: expectedIndex ]
+]
+
+{ #category : 'asserting' }
+RubTextEditorTest >> assertPreviousJumpPointOf: actual equals: expected [
+
+	| actualIndex expectedIndex |
+	actualIndex := actual indexOf: $¶.
+	expectedIndex := expected indexOf: $¶.
+
+	self
+		assert: (editor previousWord2: actualIndex stopOnUpperCase: true)
+		equals: expectedIndex
+]
+
 { #category : 'running' }
 RubTextEditorTest >> setUp [
 
@@ -175,8 +201,8 @@ RubTextEditorTest >> testNextWordStopOnUpperCase [
 	string := 'loRem ipSum'.
 	editor addString: string.
 
-	self assert: (editor nextWord: -999 stopOnUpperCase: true) equals: 3. "Out of range means start of text"
-	self assert: (editor nextWord: 0 stopOnUpperCase: true) equals: 3. "Out of range means start of text"
+	self assert: (editor nextWord2: -999 stopOnUpperCase: true) equals: 3. "Out of range means end of text"
+	self assert: (editor nextWord2: 0 stopOnUpperCase: true) equals: 3. "Out of range means end of text"
 	self assert: (editor nextWord2: 999 stopOnUpperCase: true) equals: string size + 1. "Out of range"
 
 	self assertNextJumpPointFrom: '¶loRem ipSum' to: 'l¶oRem ipSum' equals: 'lo¶Rem ipSum'.
@@ -453,38 +479,200 @@ a'.
 
 RubTextEditorTest >> testPreviousWordStopOnUpperCase [
 
-	| textSize |
-	string := 'LoRem ipSum '.
+	string := 'loRem ipSum'.
 	editor addString: string.
-	textSize := string size.
-	self assert: (editor previousWord: -999 stopOnUpperCase: true) equals: 1. "Out of range"
-	self assert: (editor previousWord: 0 stopOnUpperCase: true) equals: 1. "Out of range"
 
-	1 to: 3 do: [ :i |
-		"From:   |LoRem ipSum 
-		 To:     Lo|Rem ipSum 
-		 Should be: |LoRem ipSum "
-		self assert: (editor previousWord: i stopOnUpperCase: true) equals: 1 ].
+	self assert: (editor previousWord2: -999 stopOnUpperCase: true) equals: 1. "Out of range means start of text"
+	self assert: (editor previousWord2: 0 stopOnUpperCase: true) equals: 1. "Out of range means start of text"
 
-	4 to: 7 do: [ :i |
-		"From:   LoR|em ipSum 
-		 To:     LoRem |ipSum 
-		 Should be: Lo|Rem ipSum "
-		self assert: (editor previousWord: i stopOnUpperCase: true) equals: 3 ].
+	self assertPreviousJumpPointFrom: 'loRem ipSum¶' to: 'loRem ipS¶um' equals: 'loRem ip¶Sum'.
 
-	8 to: 9 do: [ :i |
-		"From:   LoRem i|pSum 
-		 To:     LoRem ip|Sum 
-		 Should be: Lorem |ipsum"
-		self assert: (editor previousWord: i stopOnUpperCase: true) equals: 7 ].
+	self assertPreviousJumpPointFrom: 'loRem ip¶Sum' to: 'loRem i¶pSum' equals: 'loRem ¶ipSum'.
+	self assertPreviousJumpPointOf: 'loRem ¶ipSum' equals: 'loRem¶ ipSum'.
 
-	10 to: 13 do: [ :i |
-		"From:   LoRem ipS|um 
-		 To:     LoRem ipSum|
-		 Should be: LoRem ip|Sum"
-		self assert: (editor previousWord: i stopOnUpperCase: true) equals: 9 ].
+	self assertPreviousJumpPointFrom: 'loRem¶ ipSum' to: 'loR¶em ipSum' equals: 'lo¶Rem ipSum'.
+	self assertPreviousJumpPointFrom: 'lo¶Rem ipSum' to: '¶loRem ipSum' equals: '¶loRem ipSum'.
 
-	self assert: (editor previousWord: 999 stopOnUpperCase: true) equals: 9. "Out of range"
+
+
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordStopOnUpperCaseComplex [
+
+	string := 'self loRem: [[ (1 + 2) // 100 ]]'.
+	editor addString: string.
+
+	self
+		assertPreviousJumpPointFrom: 	'self loRem: [[ (1 + 2) // 100 ]]¶'
+		to: 							  		'self loRem: [[ (1 + 2) // 100 ]¶]'
+		equals: 						  		'self loRem: [[ (1 + 2) // 100 ¶]]'.
+
+	self
+		assertPreviousJumpPointOf: 	'self loRem: [[ (1 + 2) // 100 ¶]]'
+		equals: 						  	'self loRem: [[ (1 + 2) // 100¶ ]]'.
+
+	self
+		assertPreviousJumpPointFrom:	'self loRem: [[ (1 + 2) // 100¶ ]]'
+		to: 							  		'self loRem: [[ (1 + 2) // 1¶00 ]]'
+		equals: 						  		'self loRem: [[ (1 + 2) // ¶100 ]]'.	
+
+	self
+		assertPreviousJumpPointOf: 'self loRem: [[ (1 + 2) // ¶100 ]]'
+		equals: 						  'self loRem: [[ (1 + 2) //¶ 100 ]]'.
+
+	self
+		assertPreviousJumpPointFrom:	'self loRem: [[ (1 + 2) //¶ 100 ]]'
+		to: 							  		'self loRem: [[ (1 + 2) /¶/ 100 ]]'
+		equals: 						  		'self loRem: [[ (1 + 2) ¶// 100 ]]'.	
+
+	self
+		assertPreviousJumpPointOf:	'self loRem: [[ (1 + 2) ¶// 100 ]]'
+		equals: 						  	'self loRem: [[ (1 + 2)¶ // 100 ]]'.
+
+	self
+		assertPreviousJumpPointOf:	'self loRem: [[ (1 + 2)¶ // 100 ]]'
+		equals: 						  	'self loRem: [[ (1 + 2¶) // 100 ]]'.
+
+	self
+		assertPreviousJumpPointOf:	'self loRem: [[ (1 + 2¶) // 100 ]]'
+		equals: 						  	'self loRem: [[ (1 + ¶2) // 100 ]]'.
+
+	self
+		assertPreviousJumpPointOf:	'self loRem: [[ (1 + ¶2) // 100 ]]'
+		equals: 						  	'self loRem: [[ (1 +¶ 2) // 100 ]]'.
+
+	self
+		assertPreviousJumpPointOf:	'self loRem: [[ (1 +¶ 2) // 100 ]]'
+		equals: 						  	'self loRem: [[ (1 ¶+ 2) // 100 ]]'.
+
+	self
+		assertPreviousJumpPointOf:	'self loRem: [[ (1 ¶+ 2) // 100 ]]'
+		equals: 						  	'self loRem: [[ (1¶ + 2) // 100 ]]'.
+
+	self
+		assertPreviousJumpPointOf:	'self loRem: [[ (1¶ + 2) // 100 ]]'
+		equals: 						  	'self loRem: [[ (¶1 + 2) // 100 ]]'.
+
+	self
+		assertPreviousJumpPointOf:	'self loRem: [[ (¶1 + 2) // 100 ]]'
+		equals: 						  	'self loRem: [[ ¶(1 + 2) // 100 ]]'.
+
+	self
+		assertPreviousJumpPointOf:	'self loRem: [[ ¶(1 + 2) // 100 ]]'
+		equals: 						  	'self loRem: [[¶ (1 + 2) // 100 ]]'.
+
+	self
+		assertPreviousJumpPointFrom:	'self loRem: [[¶ (1 + 2) // 100 ]]'
+		to: 							  		'self loRem: [¶[ (1 + 2) // 100 ]]'
+		equals: 						  		'self loRem: ¶[[ (1 + 2) // 100 ]]'.	
+
+	self
+		assertPreviousJumpPointOf:	'self loRem: ¶[[ (1 + 2) // 100 ]]'
+		equals: 						  	'self loRem:¶ [[ (1 + 2) // 100 ]]'.
+
+	self
+		assertPreviousJumpPointOf:	'self loRem:¶ [[ (1 + 2) // 100 ]]'
+		equals: 						  	'self loRem¶: [[ (1 + 2) // 100 ]]'.
+
+	self
+		assertPreviousJumpPointFrom: 	'self loRem¶: [[ (1 + 2) // 100 ]]'
+		to: 							  		'self loR¶em: [[ (1 + 2) // 100 ]]'
+		equals: 						  		'self lo¶Rem: [[ (1 + 2) // 100 ]]'.	
+	
+	self
+		assertPreviousJumpPointFrom: 	'self lo¶Rem: [[ (1 + 2) // 100 ]]'
+		to: 							  		'self l¶oRem: [[ (1 + 2) // 100 ]]'
+		equals: 						  		'self ¶loRem: [[ (1 + 2) // 100 ]]'.	
+
+	self
+		assertPreviousJumpPointOf:	'self ¶loRem: [[ (1 + 2) // 100 ]]'
+		equals: 						  	'self¶ loRem: [[ (1 + 2) // 100 ]]'.
+	
+	self
+		assertPreviousJumpPointFrom: 	'self¶ loRem: [[ (1 + 2) // 100 ]]'
+		to: 							  		'¶self loRem: [[ (1 + 2) // 100 ]]'
+		equals: 						  		'¶self loRem: [[ (1 + 2) // 100 ]]'.	
+	
+
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordStopOnUpperCaseManyUpercases [
+
+	string := 'AAAb'.
+	editor addString: string.
+
+	self
+		assertPreviousJumpPointFrom: 	'AAAb¶'
+		to: 							  		'AAA¶b'
+		equals: 						  		'AA¶Ab'.	
+
+	self
+		assertPreviousJumpPointFrom:	'AA¶Ab'
+		to: 							  		'¶AAAb'
+		equals: 						  		'¶AAAb'.	
+
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordStopOnUpperCaseWithSpecialCharacters [
+
+	string := '^[:x|(''#eur'',$$asString)]'.
+	editor addString: string.
+
+	self
+		assertPreviousJumpPointFrom:	  '^[:x|(''#eur'',$$asString)]¶'
+		to: 							  '^[:x|(''#eur'',$$asString)¶]'
+		equals: 						  '^[:x|(''#eur'',$$asString¶)]'.
+
+	self
+		assertPreviousJumpPointFrom:	  '^[:x|(''#eur'',$$asString¶)]'
+		to: 							  '^[:x|(''#eur'',$$asS¶tring)]'
+		equals: 						  '^[:x|(''#eur'',$$as¶String)]'.
+
+	self
+		assertPreviousJumpPointFrom:	  '^[:x|(''#eur'',$$as¶String)]'
+		to: 							  '^[:x|(''#eur'',$$a¶sString)]'
+		equals: 						  '^[:x|(''#eur'',$$¶asString)]'.
+
+	self
+		assertPreviousJumpPointFrom:	  '^[:x|(''#eur'',$$¶asString)]'
+		to: 							  '^[:x|(''#eur'',$¶$asString)]'
+		equals: 						  '^[:x|(''#eur'',¶$$asString)]'.
+
+	self
+		assertPreviousJumpPointOf:	  '^[:x|(''#eur'',¶$$asString)]'
+		equals: 						  '^[:x|(''#eur''¶,$$asString)]'.
+
+	self
+		assertPreviousJumpPointOf:	  '^[:x|(''#eur''¶,$$asString)]'
+		equals: 						  '^[:x|(''#eur¶'',$$asString)]'.
+
+	self
+		assertPreviousJumpPointFrom:	  '^[:x|(''#eur¶'',$$asString)]'
+		to: 							  '^[:x|(''#e¶ur'',$$asString)]'
+		equals: 						  '^[:x|(''#¶eur'',$$asString)]'.
+
+	self
+		assertPreviousJumpPointFrom:	  '^[:x|(''#¶eur'',$$asString)]'
+		to: 							  '^[:x|(¶''#eur'',$$asString)]'
+		equals: 						  '^[:x|¶(''#eur'',$$asString)]'.
+
+	self
+		assertPreviousJumpPointOf:	  '^[:x|¶(''#eur'',$$asString)]'
+		equals: 						  '^[:x¶|(''#eur'',$$asString)]'.
+
+	self
+		assertPreviousJumpPointOf:	  '^[:x¶|(''#eur'',$$asString)]'
+		equals: 						  '^[:¶x|(''#eur'',$$asString)]'.
+
+	self
+		assertPreviousJumpPointFrom:	  '^[:¶x|(''#eur'',$$asString)]'
+		to: 							  '¶^[:x|(''#eur'',$$asString)]'
+		equals: 						  '¶^[:x|(''#eur'',$$asString)]'.
+
+
 ]
 
 { #category : 'tests' }
