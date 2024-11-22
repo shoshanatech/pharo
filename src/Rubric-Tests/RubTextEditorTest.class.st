@@ -191,70 +191,6 @@ RubTextEditorTest >> testNextWordStopOnUpperCase [
 { #category : 'tests' }
 RubTextEditorTest >> testNextWordStopOnUpperCaseComplex [
 
-	string := 'AAAb'.
-	editor addString: string.
-
-	self
-		assertNextJumpPointFrom:	  '¶AAAb'
-		to: 							  'A¶AAb'
-		equals: 						  'AA¶Ab'.	
-
-	self
-		assertNextJumpPointFrom:	  'AA¶Ab'
-		to: 							  'AAA¶b'
-		equals: 						  'AAAb¶'.	
-
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testNextWordStopOnUpperCaseComplex2 [
-
-	string := '^[(''#eur'',$$asString)]'.
-	editor addString: string.
-
-	self
-		assertNextJumpPointFrom:	  '¶^[(''#eur'',$$asString)]'
-		to: 							  '^[(''¶#eur'',$$asString)]'
-		equals: 						  '^[(''#¶eur'',$$asString)]'.
-
-	self
-		assertNextJumpPointFrom:	  '^[(''#¶eur'',$$asString)]'
-		to: 							  '^[(''#eu¶r'',$$asString)]'
-		equals: 						  '^[(''#eur¶'',$$asString)]'.
-
-	self
-		assertNextJumpPointOf:	  '^[(''#eur¶'',$$asString)]'
-		equals: 						  '^[(''#eur''¶,$$asString)]'.
-
-	self
-		assertNextJumpPointOf:	  '^[(''#eur''¶,$$asString)]'
-		equals: 						  '^[(''#eur'',¶$$asString)]'.
-
-	self
-		assertNextJumpPointFrom:	  '^[(''#eur'',¶$$asString)]'
-		to: 							  '^[(''#eur'',$¶$asString)]'
-		equals: 						  '^[(''#eur'',$$¶asString)]'.
-
-	self
-		assertNextJumpPointFrom:	  '^[(''#eur'',$$¶asString)]'
-		to: 							  '^[(''#eur'',$$a¶sString)]'
-		equals: 						  '^[(''#eur'',$$as¶String)]'.
-
-	self
-		assertNextJumpPointFrom:	  '^[(''#eur'',$$as¶String)]'
-		to: 							  '^[(''#eur'',$$asStrin¶g)]'
-		equals: 						  '^[(''#eur'',$$asString¶)]'.
-
-	self
-		assertNextJumpPointFrom:	  '^[(''#eur'',$$asString¶)]'
-		to: 							  '^[(''#eur'',$$asString)¶]'
-		equals: 						  '^[(''#eur'',$$asString)]¶'.
-
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testNextWordStopOnUpperCaseWithSpecialCharacters [
-
 	string := 'self loRem: [[ (1 + 2) // 100 ]]'.
 	editor addString: string.
 
@@ -334,6 +270,83 @@ RubTextEditorTest >> testNextWordStopOnUpperCaseWithSpecialCharacters [
 		assertNextJumpPointFrom:	  'self loRem: [[ (1 + 2) // 100 ¶]]'
 		to: 							  'self loRem: [[ (1 + 2) // 100 ]¶]'
 		equals: 						  'self loRem: [[ (1 + 2) // 100 ]]¶'.	
+
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordStopOnUpperCaseManyUpercases [
+
+	string := 'AAAb'.
+	editor addString: string.
+
+	self
+		assertNextJumpPointFrom:	  '¶AAAb'
+		to: 							  'A¶AAb'
+		equals: 						  'AA¶Ab'.	
+
+	self
+		assertNextJumpPointFrom:	  'AA¶Ab'
+		to: 							  'AAA¶b'
+		equals: 						  'AAAb¶'.	
+
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordStopOnUpperCaseWithSpecialCharacters [
+
+	string := '^[:x|(''#eur'',$$asString)]'.
+	editor addString: string.
+
+	self
+		assertNextJumpPointFrom:	  '¶^[:x|(''#eur'',$$asString)]'
+		to: 							  '^[¶:x|(''#eur'',$$asString)]'
+		equals: 						  '^[:¶x|(''#eur'',$$asString)]'.
+
+	self
+		assertNextJumpPointOf:	  '^[:¶x|(''#eur'',$$asString)]'
+		equals: 						  '^[:x¶|(''#eur'',$$asString)]'.
+
+	self
+		assertNextJumpPointOf:	  '^[:x¶|(''#eur'',$$asString)]'
+		equals: 						  '^[:x|¶(''#eur'',$$asString)]'.
+
+	self
+		assertNextJumpPointFrom:	  '^[:x|¶(''#eur'',$$asString)]'
+		to: 							  '^[:x|(''¶#eur'',$$asString)]'
+		equals: 						  '^[:x|(''#¶eur'',$$asString)]'.
+
+	self
+		assertNextJumpPointFrom:	  '^[:x|(''#¶eur'',$$asString)]'
+		to: 							  '^[:x|(''#eu¶r'',$$asString)]'
+		equals: 						  '^[:x|(''#eur¶'',$$asString)]'.
+
+	self
+		assertNextJumpPointOf:	  '^[:x|(''#eur¶'',$$asString)]'
+		equals: 						  '^[:x|(''#eur''¶,$$asString)]'.
+
+	self
+		assertNextJumpPointOf:	  '^[:x|(''#eur''¶,$$asString)]'
+		equals: 						  '^[:x|(''#eur'',¶$$asString)]'.
+
+	self
+		assertNextJumpPointFrom:	  '^[:x|(''#eur'',¶$$asString)]'
+		to: 							  '^[:x|(''#eur'',$¶$asString)]'
+		equals: 						  '^[:x|(''#eur'',$$¶asString)]'.
+
+	self
+		assertNextJumpPointFrom:	  '^[:x|(''#eur'',$$¶asString)]'
+		to: 							  '^[:x|(''#eur'',$$a¶sString)]'
+		equals: 						  '^[:x|(''#eur'',$$as¶String)]'.
+
+	self
+		assertNextJumpPointFrom:	  '^[:x|(''#eur'',$$as¶String)]'
+		to: 							  '^[:x|(''#eur'',$$asStrin¶g)]'
+		equals: 						  '^[:x|(''#eur'',$$asString¶)]'.
+
+	self
+		assertNextJumpPointFrom:	  '^[:x|(''#eur'',$$asString¶)]'
+		to: 							  '^[:x|(''#eur'',$$asString)¶]'
+		equals: 						  '^[:x|(''#eur'',$$asString)]¶'.
 
 ]
 

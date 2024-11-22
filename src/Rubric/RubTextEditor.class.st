@@ -1689,7 +1689,8 @@ RubTextEditor >> nextWord2: position stopOnUpperCase: stopOnUpperCase [
 	index < size and: [ (finalGroup := self wordGroupAt: index in: string) = initialGroup ] ]
 		whileTrue: [ index := index + 1 ].
 
-	(initialGroup = #upper and: [ finalGroup = #lower ]) ifTrue: [ "Moving to the right from upper to lower, we want to stop in the last upper"
+	(initialGroup = #upper and: [ finalGroup = #lower ]) ifTrue: [ 
+		"Moving to the right from upper to lower, we want to stop in the last upper"
 		index := index - 1 ].
 
 	^ index
