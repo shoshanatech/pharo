@@ -457,8 +457,6 @@ RubTextEditor >> characterGroupAt: index in: aString [
 	(('^"''[](){}$#;:.' includes: character) or: [
 		 character = $= and: [ (aString at: (index - 1 max: 1)) = $: ] ]) 
 			ifTrue: [ ^ #syntax ].
-
-
 	^ #binary
 ]
 
@@ -1683,6 +1681,33 @@ RubTextEditor >> newDefaultKeymappingIndex [
 	^ defaultKeymappingIndex
 ]
 
+{ #category : 'private' }
+RubTextEditor >> nextCharacterGroup: position [
+	"Positions go from 1 to size + 1
+	Position N + 1 is after the Nth character"
+
+	| string index size initialGroup finalGroup |
+	string := self string.
+	size := string size + 1.
+	position >= size ifTrue: [ ^ size ].
+	index := 1 max: position.
+
+	initialGroup := self characterGroupAt: index in: string.
+	index := index + 1.
+	initialGroup = #upper ifTrue: [
+		(self characterGroupAt: index in: string) = #lower ifTrue: [ initialGroup := #lower ] ].
+
+	[
+	index < size and: [ (finalGroup := self characterGroupAt: index in: string) = initialGroup ] ]
+		whileTrue: [ index := index + 1 ].
+
+	"Moving to the right from upper to lower, we want to stop before the last upper"
+	(initialGroup = #upper and: [ finalGroup = #lower ]) ifTrue: [
+		index := index - 1 ].
+
+	^ index
+]
+
 { #category : 'accessing' }
 RubTextEditor >> nextCharacterIfAbsent: aBlock [
 
@@ -1866,6 +1891,32 @@ RubTextEditor >> pointBlock [
 { #category : 'accessing - selection' }
 RubTextEditor >> pointIndex [
 	^ textArea pointIndex
+]
+
+{ #category : 'private' }
+RubTextEditor >> previousCharacterGroup: position [
+	"Positions go from 1 to size + 1
+	Position N + 1 is after the Nth character"
+
+	| string index size initialGroup finalGroup |
+	position <= 2 ifTrue: [ ^ 1 ].
+	string := self string.
+	size := string size.
+	index := position - 1.
+
+	initialGroup := self characterGroupAt: index in: string.
+	initialGroup = #upper ifTrue: [
+		(self characterGroupAt: index + 1 in: string) = #lower ifTrue: [ initialGroup := #lower ] ].
+
+	[
+	index > 0 and: [ (finalGroup := self characterGroupAt: index in: string) = initialGroup ] ]
+		whileTrue: [ index := index - 1 ].
+
+	"Moving to the left from lower to upper, we want to stop before the upper"
+	(initialGroup = #lower and: [ finalGroup = #upper ]) ifFalse: [
+		index := index + 1 ].
+
+	^ index
 ]
 
 { #category : 'accessing' }

@@ -298,6 +298,37 @@ RubTextEditorTest >> testNextCharacterGroupWithSpecialCharacters [
 ]
 
 { #category : 'tests' }
+RubTextEditorTest >> testNextCharacterGroupWithSyntax [
+
+	string := '^"''|[](){}$#<>=;:.'.
+	editor addString: string.
+
+	self
+		assertNextCharGroupFrom:	'¶^"''|[](){}$#<>=;:.'
+		to: 							'^"¶''|[](){}$#<>=;:.'
+		equals: 						'^"''¶|[](){}$#<>=;:.'.
+
+	self
+		assertNextCharGroupOf:	'^"''¶|[](){}$#<>=;:.'
+		equals: 						'^"''|¶[](){}$#<>=;:.'.
+
+	self
+		assertNextCharGroupFrom:	'^"''|¶[](){}$#<>=;:.'
+		to: 							'^"''|[](){}$¶#<>=;:.'
+		equals: 						'^"''|[](){}$#¶<>=;:.'.
+
+	self
+		assertNextCharGroupFrom:	'^"''|[](){}$#¶<>=;:.'
+		to: 							'^"''|[](){}$#<>¶=;:.'
+		equals: 						'^"''|[](){}$#<>=¶;:.'.
+
+	self
+		assertNextCharGroupFrom:	'^"''|[](){}$#<>=¶;:.'
+		to: 							'^"''|[](){}$#<>=;:.¶'
+		equals: 						'^"''|[](){}$#<>=;:.¶'.
+]
+
+{ #category : 'tests' }
 RubTextEditorTest >> testNextWord [
 
 	| textSize |
@@ -594,6 +625,37 @@ RubTextEditorTest >> testPreviousCharacterGroupWithSpecialCharacters [
 		assertPreviousCharGroupFrom:	'^[:¶x|(''#eur'',$$asString)]'
 		to: 									'¶^[:x|(''#eur'',$$asString)]'
 		equals: 								'¶^[:x|(''#eur'',$$asString)]'.
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousCharacterGroupWithSyntax [
+
+	string := '^"''|[](){}$#<>=;:.'.
+	editor addString: string.
+
+	self
+		assertPreviousCharGroupFrom:	'^"''|[](){}$#<>=;:.¶'
+		to: 									'^"''|[](){}$#<>=;¶:.'
+		equals: 								'^"''|[](){}$#<>=¶;:.'.
+
+	self
+		assertPreviousCharGroupFrom:	'^"''|[](){}$#<>=¶;:.'
+		to: 									'^"''|[](){}$#<¶>=;:.'
+		equals: 								'^"''|[](){}$#¶<>=;:.'.
+
+	self
+		assertPreviousCharGroupFrom:	'^"''|[](){}$#¶<>=;:.'
+		to: 									'^"''|[¶](){}$#<>=;:.'
+		equals: 								'^"''|¶[](){}$#<>=;:.'.
+
+	self
+		assertPreviousCharGroupOf:		'^"''|¶[](){}$#<>=;:.'
+		equals: 								'^"''¶|[](){}$#<>=;:.'.
+
+	self
+		assertPreviousCharGroupFrom:	'^"''¶|[](){}$#<>=;:.'
+		to: 									'¶^"''|[](){}$#<>=;:.'
+		equals: 								'¶^"''|[](){}$#<>=;:.'.
 ]
 
 { #category : 'tests' }
