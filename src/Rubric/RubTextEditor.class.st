@@ -441,6 +441,27 @@ RubTextEditor >> changeLfToCr: aKeyboardEvent [
 	^ true
 ]
 
+{ #category : 'accessing' }
+RubTextEditor >> characterGroupAt: index in: aString [
+
+	| character |
+	character := aString at: index.
+
+	character isSeparator ifTrue: [ ^ #separator ].
+	character isAlphaNumeric ifTrue: [
+		character isUppercase
+			ifTrue: [ ^ #upper ]
+			ifFalse: [ ^ #lower ] ].
+
+	"exclude '|<>=' from the syntax and consider them binary"
+	(('^"''[](){}$#;:.' includes: character) or: [
+		 character = $= and: [ (aString at: (index - 1 max: 1)) = $: ] ]) 
+			ifTrue: [ ^ #syntax ].
+
+
+	^ #binary
+]
+
 { #category : 'menu messages' }
 RubTextEditor >> chooseAlignment [
 	self changeAlignment
