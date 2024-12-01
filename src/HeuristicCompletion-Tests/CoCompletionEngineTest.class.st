@@ -41,7 +41,7 @@ CoCompletionEngineTest >> setUp [
 { #category : 'accessing' }
 CoCompletionEngineTest >> tearDown [
 	super tearDown.
-   CompletionContext sorterClass: oldSort.
+	CompletionContext sorterClass: oldSort.
 ]
 
 { #category : 'tests - interaction' }
