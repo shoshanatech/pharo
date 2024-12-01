@@ -1,5 +1,5 @@
 "
-I'm a class that do sorting based on the size of the context itself.
+I'm a class that does sorting based on the size of the context itself.
 
 I return a list sorted by size.
 

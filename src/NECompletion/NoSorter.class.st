@@ -1,7 +1,7 @@
 "
-I'm a class that do nothing in the suggestion list.
+I'm a class that does nothing in the suggestion list.
 
-I return the list created from the compltion engine.
+I return the list created from the completion engine.
 
 This class is created to pass the test.
 "
