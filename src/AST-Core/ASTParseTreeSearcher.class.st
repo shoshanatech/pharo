@@ -96,7 +96,7 @@ ASTParseTreeSearcher class >> buildSelectorString: aSelector [
 { #category : 'private' }
 ASTParseTreeSearcher class >> buildSelectorTree: aSelector [
 	aSelector isEmpty ifTrue: [^nil].
-	^RBParser parseRewriteExpression: '``@receiver '
+	^Parser parseRewriteExpression: '``@receiver '
 				, (self buildSelectorString: aSelector)
 		onError: [:err :pos | ^nil]
 ]
@@ -104,8 +104,8 @@ ASTParseTreeSearcher class >> buildSelectorTree: aSelector [
 { #category : 'private' }
 ASTParseTreeSearcher class >> buildTree: aString method: aBoolean [
 	^aBoolean
-		ifTrue: [RBParser parseRewriteMethod: aString]
-		ifFalse: [RBParser parseRewriteExpression: aString]
+		ifTrue: [Parser parseRewriteMethod: aString]
+		ifFalse: [Parser parseRewriteExpression: aString]
 ]
 
 { #category : 'instance creation' }
@@ -155,7 +155,7 @@ ASTParseTreeSearcher class >> treeMatching: aString in: aParseTree [
 ASTParseTreeSearcher class >> treeMatchingStatements: subtreeSourceString in: aParseTree [
 	| notifier subtree |
 	notifier := self new.
-	subtree := RBParser parseExpression: subtreeSourceString.
+	subtree := Parser parseExpression: subtreeSourceString.
 	subtree isSequence
 		ifFalse: [subtree := ASTSequenceNode statements: (Array with: subtree)].
 	subtree temporaries: (Array with: (ASTPatternVariableNode named: '`@temps')).
@@ -165,7 +165,7 @@ ASTParseTreeSearcher class >> treeMatchingStatements: subtreeSourceString in: aP
 	notifier matchesTree: subtree
 		do: [:aNode :answer |
 				| sub | 
-				sub := RBParser parseExpression: subtreeSourceString.
+				sub := Parser parseExpression: subtreeSourceString.
 				sub parent: aNode parent. 
 				^ sub].
 	notifier executeTree: aParseTree.

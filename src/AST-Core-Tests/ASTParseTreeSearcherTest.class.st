@@ -31,13 +31,13 @@ ASTParseTreeSearcherTest >> assertCodeForVariableNodeNamed: name in: myContextDi
 { #category : 'helpers' }
 ASTParseTreeSearcherTest >> parseExpression: aString [
 
-	^ RBParser parseExpression: aString
+	^ Parser parseExpression: aString
 ]
 
 { #category : 'helpers' }
 ASTParseTreeSearcherTest >> parseMethod: aString [
 
-	^ RBParser parseMethod: aString
+	^ Parser parseMethod: aString
 ]
 
 { #category : 'helpers' }
@@ -136,7 +136,7 @@ ASTParseTreeSearcherTest >> testMatchesArgumentToTestImplicitAddArgument [
 
 	matchContextList := OrderedCollection new.
 	matchContextArgList := OrderedCollection new.
-	aParser := RBParser new.
+	aParser := Parser new.
 
 	search := self parseTreeSearcher.
 	tree := self parseMethod: '+ a
@@ -798,7 +798,7 @@ ASTParseTreeSearcherTest >> testSimpleAddSearch [
 
 	| res |
 	searcher addSearch: '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ].
-	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
+	searcher executeTree: (Parser parseExpression: ' Object << #Point').
 	self assert: res equals: #class
 ]
 
@@ -807,7 +807,7 @@ ASTParseTreeSearcherTest >> testSimpleAddSearches [
 
 	| res |
 	searcher addSearches: { '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ]}.
-	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
+	searcher executeTree: (Parser parseExpression: ' Object << #Point').
 	self assert: res equals: #class
 ]
 

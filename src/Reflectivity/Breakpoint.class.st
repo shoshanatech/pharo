@@ -460,7 +460,7 @@ Breakpoint >> options: anArray [
 
 { #category : 'api' }
 Breakpoint >> parserClass [
-	^ RBParser
+	^ Parser
 ]
 
 { #category : 'removing' }

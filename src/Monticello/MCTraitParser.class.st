@@ -18,7 +18,7 @@ MCTraitParser class >> pattern [
 MCTraitParser >> addDefinitionsTo: aCollection [
 
 	| node compositionIndex categoryIndex slotsIndex traitCompositionString slotsArray argumentNode categoryString converter |
-	node := RBParser parseExpression: source.
+	node := Parser parseExpression: source.
 
 	node selector
 		caseOf: {

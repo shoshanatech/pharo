@@ -288,7 +288,7 @@ RBExtractMethodRefactoring >> getIntervalForSource: aString [
 
 	| method expression searcher matchedNode |
 	method := class methodFor: selector.
-	expression := RBParser parseExpression: aString.
+	expression := Parser parseExpression: aString.
 
 	searcher := ASTParseTreeSearcher new.
 	searcher matchesTree: expression do: [ :aNode :answer | aNode ].

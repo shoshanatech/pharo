@@ -21,7 +21,7 @@ RBEntity >> initialize [
 { #category : 'initialization' }
 RBEntity >> parserClass [
 
-	^ RBParser
+	^ Parser
 ]
 
 { #category : 'factory access' }

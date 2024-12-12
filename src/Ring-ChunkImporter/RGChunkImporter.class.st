@@ -391,7 +391,7 @@ RGChunkImporter >> visitDoItChunk: aChunk [
 	contents := aChunk contents trimBoth.
 	(contents endsWith: '!') ifTrue: [ contents := contents allButLast ].
 
-	ast := RBParser parseExpression: contents onError: [
+	ast := Parser parseExpression: contents onError: [
 		doIts add: aChunk.
 		^ self ].
 

@@ -121,7 +121,7 @@ RBRefactoryClassChange >> methodSourceFor: aSymbol [
 { #category : 'accessing' }
 RBRefactoryClassChange >> parserClass [
 
-	^ RBParser
+	^ Parser
 ]
 
 { #category : 'printing' }

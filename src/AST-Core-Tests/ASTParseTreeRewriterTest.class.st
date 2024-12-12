@@ -40,7 +40,7 @@ ASTParseTreeRewriterTest >> parseRewriteMethod: aString [
 
 { #category : 'helpers' }
 ASTParseTreeRewriterTest >> parserClass [
-	^ RBParser
+	^ Parser
 ]
 
 { #category : 'running' }

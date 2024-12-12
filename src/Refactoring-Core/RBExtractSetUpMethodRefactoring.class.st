@@ -118,7 +118,7 @@ RBExtractSetUpMethodRefactoring >> privateTransform [
 	self nameNewMethod: #setUp.
 	(existingSelector isNil or: [ existingSelector ~= #setUp ]) ifTrue: [
 		self renameAllParameters.
-		extractedParseTree body addNodeFirst: (RBParser parseExpression: 'super setUp').
+		extractedParseTree body addNodeFirst: (Parser parseExpression: 'super setUp').
 		self generateChangesFor:
 			(RBAddMethodTransformation
 				sourceCode: extractedParseTree newSource

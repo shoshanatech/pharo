@@ -39,5 +39,5 @@ ASTParseTreeTest >> parseRewriteMethod: aString [
 
 { #category : 'helpers' }
 ASTParseTreeTest >> parserClass [
-	^ RBParser
+	^ Parser
 ]

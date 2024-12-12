@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ASTParserTest class >> parserClass [
-	^ RBParser
+	^ Parser
 ]
 
 { #category : 'accessing' }
@@ -1330,38 +1330,38 @@ ASTParserTest >> testParseGivesMethod [
 { #category : 'tests' }
 ASTParserTest >> testParseLiterals [
 
-	self assert: (RBParser parseLiterals: '') equals: #(  ).
+	self assert: (Parser parseLiterals: '') equals: #(  ).
 	self
-		assert: (RBParser parseLiterals: '10 1.1 true nil false')
+		assert: (Parser parseLiterals: '10 1.1 true nil false')
 		equals: #( 10 1.1 true nil false ).
 	self
-		assert: (RBParser parseLiterals: '#foo #foo: #foo:bar:baz')
+		assert: (Parser parseLiterals: '#foo #foo: #foo:bar:baz')
 		equals: #( #foo #foo: #'foo:bar:baz' ).
 	self
-		assert: (RBParser parseLiterals: 'foo foo: foo:bar:baz')
+		assert: (Parser parseLiterals: 'foo foo: foo:bar:baz')
 		equals: #( #foo #foo: #'foo:bar:baz' ).
 	self
-		assert: (RBParser parseLiterals:
+		assert: (Parser parseLiterals:
 				 '''foo'' ''foo:'' ''foo:bar:baz'' ''1'' ''true''')
 		equals: #( 'foo' 'foo:' 'foo:bar:baz' '1' 'true' ).
 	self
-		assert: (RBParser parseLiterals: '(1 2) #(1 2) #[1 2]')
+		assert: (Parser parseLiterals: '(1 2) #(1 2) #[1 2]')
 		equals: #( #( 1 2 ) #( 1 2 ) #[ 1 2 ] ).
 	self
-		assert: (RBParser parseLiterals: '.[];::=^')
+		assert: (Parser parseLiterals: '.[];::=^')
 		equals: #( #'.' #'[' #']' #';' #':' #':=' #'^' ).
 
 	self
-		should: [ RBParser parseLiterals: '#( unclosed' ]
+		should: [ Parser parseLiterals: '#( unclosed' ]
 		raise: CodeError.
 	self
-		should: [ RBParser parseLiterals: ') unopened' ]
+		should: [ Parser parseLiterals: ') unopened' ]
 		raise: CodeError.
 	self
-		should: [ RBParser parseLiterals: '#[ 1 1000 2 ] bad subliteral' ]
+		should: [ Parser parseLiterals: '#[ 1 1000 2 ] bad subliteral' ]
 		raise: CodeError.
 	self
-		should: [ RBParser parseLiterals: 'syntax¿error' ]
+		should: [ Parser parseLiterals: 'syntax¿error' ]
 		raise: CodeError
 ]
 

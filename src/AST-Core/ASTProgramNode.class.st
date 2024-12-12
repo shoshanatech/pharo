@@ -1082,7 +1082,7 @@ ASTProgramNode >> parent: aProgramNode [
 
 { #category : 'hook' }
 ASTProgramNode >> parserClass [
-	^ RBParser
+	^ Parser
 ]
 
 { #category : 'copying' }

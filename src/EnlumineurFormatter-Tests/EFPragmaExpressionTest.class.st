@@ -17,7 +17,7 @@ EFPragmaExpressionTest >> basicConfiguration [
 { #category : 'tests' }
 EFPragmaExpressionTest >> testPragmaNoExtraSpace [
 	| expr source |
-	expr := RBParser parsePragma:'<   Pragma   >'.
+	expr := Parser parsePragma:'<   Pragma   >'.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals: '<Pragma>'
@@ -26,7 +26,7 @@ EFPragmaExpressionTest >> testPragmaNoExtraSpace [
 { #category : 'tests' }
 EFPragmaExpressionTest >> testPragmaNoExtraSpace2 [
 	| expr source |
-	expr := RBParser parsePragma:'<func:     ''(3+4)''       res:      7>'.
+	expr := Parser parsePragma:'<func:     ''(3+4)''       res:      7>'.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals: '<func: ''(3+4)'' res: 7>'
@@ -35,7 +35,7 @@ EFPragmaExpressionTest >> testPragmaNoExtraSpace2 [
 { #category : 'tests' }
 EFPragmaExpressionTest >> testPragmaNoExtraSpaceBetweenMethodeAndArgument [
 	| expr source |
-	expr := RBParser parsePragma:'<primitive:    41>'.
+	expr := Parser parsePragma:'<primitive:    41>'.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals: '<primitive: 41>'
