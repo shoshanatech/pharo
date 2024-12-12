@@ -201,8 +201,8 @@ RubSmalltalkEditor >> bestNodeInTextArea [
 
 	"We build the AST (which can be faulty when we are scripting) then ask the best node for the interval."
 	^ (self isScripting
-		   ifTrue: [ RBParser parseFaultyExpression: self textArea string ]
-		   ifFalse: [ RBParser parseFaultyMethod: self textArea string ]) bestNodeFor: (self textArea startIndex to: self textArea stopIndex)
+		   ifTrue: [ Parser parseFaultyExpression: self textArea string ]
+		   ifFalse: [ Parser parseFaultyMethod: self textArea string ]) bestNodeFor: (self textArea startIndex to: self textArea stopIndex)
 ]
 
 { #category : 'source navigation' }
@@ -240,8 +240,8 @@ RubSmalltalkEditor >> bestNodeInTextAreaWithoutSelection [
 					 ifTrue: [ self textArea string ].
 
 	node := self isScripting
-		ifTrue: [ RBParser parseFaultyExpression: intervalTrimmedText ]
-		ifFalse: [ RBParser parseFaultyMethod: intervalTrimmedText ].
+		ifTrue: [ Parser parseFaultyExpression: intervalTrimmedText ]
+		ifFalse: [ Parser parseFaultyMethod: intervalTrimmedText ].
 
 	^node bestNodeFor: (start to: start)
 ]

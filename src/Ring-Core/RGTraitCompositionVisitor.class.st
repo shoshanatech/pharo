@@ -31,7 +31,7 @@ Class {
 RGTraitCompositionVisitor >> parse: anExpressionString for: anRGTraitCompositionDefinition [
 
 	| ast result |
-	ast := (RBParser parseExpression: anExpressionString).
+	ast := (Parser parseExpression: anExpressionString).
 	self traitComposition: anRGTraitCompositionDefinition.
 	result := ast acceptVisitor: self.
 

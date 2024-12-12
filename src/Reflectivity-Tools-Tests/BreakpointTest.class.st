@@ -24,7 +24,7 @@ BreakpointTest >> newDummyClass [
 
 { #category : 'tests' }
 BreakpointTest >> parserClass [
-	^ RBParser
+	^ Parser
 ]
 
 { #category : 'running' }

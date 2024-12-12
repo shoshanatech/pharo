@@ -318,7 +318,7 @@ ReAbstractTransformation >> parseTreeSearcherClass [
 
 { #category : 'parsing' }
 ReAbstractTransformation >> parserClass [
-	^ RBParser
+	^ Parser
 ]
 
 { #category : 'transforming' }

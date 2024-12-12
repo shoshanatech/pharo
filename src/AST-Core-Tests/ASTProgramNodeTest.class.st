@@ -31,7 +31,7 @@ ASTProgramNodeTest >> getAllNodesFromAST [
 		"Sixth comment" cascade node; nodeux "Seventh comment"; notrois.
 		^ "return" nil
 		'.
-	^ RBParser parseMethod: methodText
+	^ Parser parseMethod: methodText
 ]
 
 { #category : 'accessing' }
@@ -352,7 +352,7 @@ ASTProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size + 6).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size + 6).
 	self assert: ast isVariable
 ]
 
@@ -369,7 +369,7 @@ a := 1.
 | a |
 ' size.
 		
-	ast := (RBParser parseMethod: body) bestNodeFor: (start to: start + 6).
+	ast := (Parser parseMethod: body) bestNodeFor: (start to: start + 6).
 	self assert: ast isAssignment .
 	self assert: ast sourceCode equals: 'a := 1'
 ]
@@ -379,7 +379,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
 	| ast string start |
 	string := '"Fourth comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Fourth comment'
 ]
@@ -389,7 +389,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
 	| ast string start |
 	string := '"Seventh comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Seventh comment'
 ]
@@ -399,7 +399,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
 	| ast string start |
 	string := '"Sixth comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Sixth comment'
 ]
@@ -409,7 +409,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
 	| ast string start |
 	string := '" Third comment "'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: ' Third comment '
 ]
@@ -419,7 +419,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
 	| ast string start |
 	string := '"Fifth comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Fifth comment'
 ]
@@ -429,7 +429,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'First comment'
 ]
@@ -439,7 +439,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
 	| ast string start |
 	string := '"return"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'return'
 ]
@@ -449,7 +449,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
 	| ast string start |
 	string := '"Second comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Second comment'
 ]
@@ -467,7 +467,7 @@ a := 1111111111111111.
 | a |
 ' size.
 		
-	ast := (RBParser parseMethod: body) bestNodeFor: (start to: start + 6).
+	ast := (Parser parseMethod: body) bestNodeFor: (start to: start + 6).
 	self assert: ast isAssignment.
 	self assert: ast sourceCode equals: 'a := 1111111111111111'
 ]
@@ -488,7 +488,7 @@ a := 1111111111111111.
 | a |
 ' size.
 		
-	ast := (RBParser parseMethod: body) bestNodeFor: (start + 2 to: start + 6).
+	ast := (Parser parseMethod: body) bestNodeFor: (start + 2 to: start + 6).
 	self assert: ast isAssignment.
 	self assert: ast sourceCode equals: 'a := 1111111111111111'.
 	
@@ -500,7 +500,7 @@ ASTProgramNodeTest >> testBestNodeForStatementInsideMethodNodeReturnsStatement [
 	| bestNode string |
 
 	string := self getMethodString findString: '.'.
-	bestNode := (RBParser parseMethod: self getMethodString)
+	bestNode := (Parser parseMethod: self getMethodString)
 		        bestNodeForPosition: string + 1.
 	self
 		assert: bestNode isAssignment;
@@ -525,7 +525,7 @@ a := 3.
 	selection := 'a := 1.
 a := 2.' size.
 		
-	ast := (RBParser parseMethod: body) bestNodeFor: (start to: start + selection).
+	ast := (Parser parseMethod: body) bestNodeFor: (start to: start + selection).
 	self assert: ast isSequence.
 	self assert: ast sourceCode equals: '| a |
 a := 1.
@@ -538,7 +538,7 @@ ASTProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedValue [
 	| ast string start |
 	string := '#node'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isLiteralNode.
 	self assert: ast value equals: #node
 ]
@@ -548,7 +548,7 @@ ASTProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedVariable [
 	| ast string start |
 	string := 'assignement'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isVariable.
 	self assert: ast name equals: 'assignement'
 ]
@@ -558,7 +558,7 @@ ASTProgramNodeTest >> testBestNodeWithMethodSelectorGivesCommentNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (1 to: start + string size - 1).
+	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (1 to: start + string size - 1).
 	self assert: ast isCommentNode
 ]
 
@@ -569,7 +569,7 @@ ASTProgramNodeTest >> testCursorAfterArgumentReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 9.
 
 	self assert: bestNode isVariable
@@ -585,7 +585,7 @@ ASTProgramNodeTest >> testCursorAfterColonReturnsPreviousStatement [
 	var m1.
 	var m2'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 13.
 
 	self assert: bestNode isMessage.
@@ -602,7 +602,7 @@ ASTProgramNodeTest >> testCursorAfterMessageAndBeforeNewlineReturnsMessageNode [
 	               arg m1
 	 m2'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 33.
 
 	self assert: bestNode isMessage.
@@ -617,7 +617,7 @@ ASTProgramNodeTest >> testCursorAfterMessageAndSpaceReturnsMessageNode [
 	sourceCode := 'toto: arg
 	               arg m1  m2'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 33.
 
 	self assert: bestNode isMessage.
@@ -632,7 +632,7 @@ ASTProgramNodeTest >> testCursorAfterMessageReturnsMessageNode [
 	sourceCode := 'toto: arg
 	               arg m1 m2'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 32.
 
 	self assert: bestNode isMessage.
@@ -647,7 +647,7 @@ ASTProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 28.
 
 	self assert: bestNode isVariable
@@ -660,7 +660,7 @@ ASTProgramNodeTest >> testCursorBeforeArgumentNextToSelectorReturnsMethodNode [
 	sourceCode := 'toto:m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 6.
 
 	self assert: bestNode isMethod
@@ -673,7 +673,7 @@ ASTProgramNodeTest >> testCursorBeforeArgumentReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 7.
 
 	self assert: bestNode isVariable
@@ -689,7 +689,7 @@ ASTProgramNodeTest >> testCursorBeforeMessageAndAfterNewlineReturnsMessageNode [
 	               arg m1
 	 m2'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 34.
 
 	self assert: bestNode isMessage.
@@ -703,7 +703,7 @@ ASTProgramNodeTest >> testCursorBeforeVariableReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 26.
 
 	self assert: bestNode isVariable
@@ -716,7 +716,7 @@ ASTProgramNodeTest >> testCursorInMiddleOfVariableReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := Parser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 27.
 
 	self assert: bestNode isVariable
@@ -733,7 +733,7 @@ ASTProgramNodeTest >> testHasProperty [
 ASTProgramNodeTest >> testHasSameExitPointWhenBlockWithoutReturnExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							[ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -743,7 +743,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenBlockWithoutReturnExpectTrue [
 ASTProgramNodeTest >> testHasSameExitPointWhenMessageWithReturnBlockExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							instVar at: #foo ifAbsentPut: [ ^ 2 ]'.
 	statement := ast body statements last.
 	self deny: statement hasSameExitPoint 
@@ -753,7 +753,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenMessageWithReturnBlockExpectFalse 
 ASTProgramNodeTest >> testHasSameExitPointWhenMessageWithoutReturnBlockExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							instVar at: #foo ifAbsentPut: [ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -763,7 +763,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenMessageWithoutReturnBlockExpectTru
 ASTProgramNodeTest >> testHasSameExitPointWhenReturnNodeExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							^ 2'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -773,7 +773,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenReturnNodeExpectTrue [
 ASTProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithAssignmentExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							^ a := 3'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -783,7 +783,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithAssignmentExpectTrue
 ASTProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithMessageSendExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							^ self foo: 2'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -793,7 +793,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithMessageSendExpectTru
 ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockAndSequenceWithNestedBlockWithoutReturnExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							^ [ self foo: [ :a | a + 1 ]. ^ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -803,7 +803,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockAndSequenceWithNest
 ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockWithoutReturnExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							^ [ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -813,7 +813,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockWithoutReturnExpect
 ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithEmptyBlockExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							^ [ ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -823,7 +823,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithEmptyBlockExpectTrue [
 ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithReturnBlockExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							^ instVar at: #foo ifAbsentPut: [ ^ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -833,7 +833,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithReturnBlockEx
 ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithoutReturnBlockExpecTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							^ instVar at: #foo ifAbsentPut: [ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -843,7 +843,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithoutReturnBloc
 ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithWhileFalseBlockWithReturnExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							[ ^ false ] whileFalse: [ true ]'.
 	statement := ast body statements last.
 	self deny: statement hasSameExitPoint 
@@ -853,7 +853,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithWhileFalseBlockWithRetur
 ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnAndNonLocalReturnExpectTrue [
 
 	| ast sequence |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							self foo.
 							instVar := true ifFalse: [ ^ 1 ].
 							instVar isOdd ifTrue: [ instVar := instVar + 1 ].
@@ -867,7 +867,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnAndNonLocalR
 ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnExpectTrue [
 
 	| ast sequence |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							self foo.
 							instVar := true ifFalse: [ 1 ].
 							^ 2'.
@@ -880,7 +880,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnExpectTrue [
 ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutAnyReturnsExpectTrue [
 
 	| ast sequence |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							self foo.
 							instVar := true ifFalse: [ 1 ]
 							self end'.
@@ -893,7 +893,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutAnyReturnsExpectTru
 ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndMultipleNonLocalReturnExpectFalse [
 
 	| ast sequence |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							self foo.
 							[  instVar isOdd ifTrue: [ ^ 2 ]. 
 								instVar := instVar + 1] 
@@ -909,7 +909,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndMultip
 ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndNonLocalReturnExpectFalse [
 
 	| ast sequence |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							self foo.
 							instVar := true ifFalse: [ ^ 1 ]
 							self end'.
@@ -922,7 +922,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndNonLoc
 ASTProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo; bar; end'.
 	statement := ast body statements last messages first.
 	self deny: statement isEssential 
@@ -932,7 +932,7 @@ ASTProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectFalse [
 ASTProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo bar'.
 	statement := ast body statements last receiver.
 	self assert: statement isEssential 
@@ -942,7 +942,7 @@ ASTProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
 ASTProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsEssentialExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               a := self foo; bar; end'.
 	statement := ast body statements last value messages last.
 	self deny: statement isEssential 
@@ -952,7 +952,7 @@ ASTProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsEssent
 ASTProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsNotEssentialExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo; bar; end'.
 	statement := ast body statements last value messages last.
 	self deny: statement isEssential 
@@ -962,7 +962,7 @@ ASTProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsNotEss
 ASTProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo; bar; end'.
 	statement := ast body statements last messages second.
 	self deny: statement isEssential 
@@ -972,7 +972,7 @@ ASTProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectFalse [
 ASTProgramNodeTest >> testIsEssentialWhenNodeIsArgumentExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self ars: self foo'.
 	statement := ast body statements first arguments first.
 	self assert: statement isEssential 
@@ -982,7 +982,7 @@ ASTProgramNodeTest >> testIsEssentialWhenNodeIsArgumentExpectTrue [
 ASTProgramNodeTest >> testIsEssentialWhenOnlyNodeInABlockNodeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               [self foo]'.
 	statement := ast body statements last body statements first.
 	self deny: statement isEssential 
@@ -992,7 +992,7 @@ ASTProgramNodeTest >> testIsEssentialWhenOnlyNodeInABlockNodeExpectFalse [
 ASTProgramNodeTest >> testIsEssentialWhenPartOfABlockNodeExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               [self foo]'.
 	statement := ast body statements last.
 	self deny: statement isEssential 
@@ -1002,7 +1002,7 @@ ASTProgramNodeTest >> testIsEssentialWhenPartOfABlockNodeExpectTrue [
 ASTProgramNodeTest >> testIsEssentialWhenPartOfAReturnStatementExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               ^ self foo'.
 	statement := ast body statements last value.
 	self assert: statement isEssential 
@@ -1012,7 +1012,7 @@ ASTProgramNodeTest >> testIsEssentialWhenPartOfAReturnStatementExpectTrue [
 ASTProgramNodeTest >> testIsEssentialWhenPartOfASequenceExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. self bar. ^ 1'.
 	statement := ast body statements first.
 	self deny: statement isEssential 
@@ -1022,7 +1022,7 @@ ASTProgramNodeTest >> testIsEssentialWhenPartOfASequenceExpectFalse [
 ASTProgramNodeTest >> testIsEssentialWhenPartOfASequenceLastNodeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. self bar'.
 	statement := ast body statements last.
 	self deny: statement isEssential 
@@ -1032,7 +1032,7 @@ ASTProgramNodeTest >> testIsEssentialWhenPartOfASequenceLastNodeExpectFalse [
 ASTProgramNodeTest >> testIsEssentialWhenPartOfASequenceOneStatementOnlyExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo'.
 	statement := ast body statements last.
 	self deny: statement isEssential 
@@ -1042,7 +1042,7 @@ ASTProgramNodeTest >> testIsEssentialWhenPartOfASequenceOneStatementOnlyExpectFa
 ASTProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               [ a := self foo]'.
 	statement := ast body statements last body statements first value.
 	self assert: statement isEssential 
@@ -1052,7 +1052,7 @@ ASTProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTru
 ASTProgramNodeTest >> testIsEssentialWhenTwoMessagesInACascadeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               a := self foo; bar'.
 	statement := ast body statements last value messages last.
 	self deny: statement isEssential 
@@ -1062,7 +1062,7 @@ ASTProgramNodeTest >> testIsEssentialWhenTwoMessagesInACascadeExpectFalse [
 ASTProgramNodeTest >> testIsEssentialWhenValueOfAnAssignmentExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               |m1| m1 := self foo'.
 	statement := ast body statements last value.
 	self assert: statement isEssential 
@@ -1072,7 +1072,7 @@ ASTProgramNodeTest >> testIsEssentialWhenValueOfAnAssignmentExpectTrue [
 ASTProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               |m1| m1 := self foo'.
 	statement := ast body statements last variable.
 	self assert: statement isEssential 
@@ -1082,7 +1082,7 @@ ASTProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenBlockNodeInSequenceNodeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. [self bar]. ^ self end'.
 	statement := ast body statements second.
 	self deny: statement isUsedAsReturnValue 
@@ -1092,7 +1092,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenBlockNodeInSequenceNodeExpectFa
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenFirstNodeInSequenceNodeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. self bar. ^ self end'.
 	statement := ast body statements first.
 	self deny: statement isUsedAsReturnValue 
@@ -1102,7 +1102,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenFirstNodeInSequenceNodeExpectFa
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenInSequenceNodeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. self bar. ^ self end'.
 	statement := ast body statements second.
 	self deny: statement isUsedAsReturnValue 
@@ -1112,7 +1112,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenInSequenceNodeExpectFalse [
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeInSequenceExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. self end'.
 	statement := ast body statements last.
 	self deny: statement isUsedAsReturnValue 
@@ -1122,7 +1122,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeInSequenceExpectFalse [
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSequenceExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. ^ self end'.
 	statement := ast body statements last.
 	self assert: statement isUsedAsReturnValue 
@@ -1132,7 +1132,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSequ
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsArrayExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               { self foo . a := self end }'.
 	statement := ast body statements last.
 	self deny: statement isUsedAsReturnValue 
@@ -1142,7 +1142,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsArrayExpectFalse [
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. a := self end'.
 	statement := ast body statements last.
 	self deny: statement isUsedAsReturnValue 
@@ -1152,7 +1152,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentInSequenceExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. a := self end. ^ 1'.
 	statement := ast body statements second.
 	self deny: statement isUsedAsReturnValue 
@@ -1162,7 +1162,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentInSequenceExpec
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. a := self end'.
 	statement := ast body statements last value.
 	self assert: statement isUsedAsReturnValue 
@@ -1172,7 +1172,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self foo. a := self end'.
 	statement := ast body statements last variable.
 	self deny: statement isUsedAsReturnValue 
@@ -1182,7 +1182,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectF
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               [ self foo. self bar ]'.
 	statement := ast body statements first body statements second.
 	self deny: statement isUsedAsReturnValue 
@@ -1192,7 +1192,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectFalse [
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsNotLastInBlockExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               [ self foo. self bar ]'.
 	statement := ast body statements first body statements first.
 	self deny: statement isUsedAsReturnValue 
@@ -1202,7 +1202,7 @@ ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsNotLastInBlockExpectFalse
 ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsPartOfArrayExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               { self foo . a := self end }'.
 	statement := ast body statements last statements first.
 	self assert: statement isUsedAsReturnValue 
@@ -1495,7 +1495,7 @@ ASTProgramNodeTest >> testWithAllParents [
 ASTProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							{ ^ 1 . #a }'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1505,7 +1505,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
 ASTProgramNodeTest >> testlastIsReturnWhenArrayNodeWithLastReturnExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							{ ^ 1 }'.
 	statement := ast body statements last.
 	self assert: statement lastIsReturn 
@@ -1515,7 +1515,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenArrayNodeWithLastReturnExpectTrue [
 ASTProgramNodeTest >> testlastIsReturnWhenBlockNodeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							[ 2 ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1525,7 +1525,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenBlockNodeExpectFalse [
 ASTProgramNodeTest >> testlastIsReturnWhenEmptyArrayNodeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							{ }'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1535,7 +1535,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenEmptyArrayNodeExpectFalse [
 ASTProgramNodeTest >> testlastIsReturnWhenEmptySequenceExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1'.
+	ast := Parser parseMethod: 'a1'.
 	statement := ast body.
 	self deny: statement lastIsReturn 
 ]
@@ -1544,7 +1544,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenEmptySequenceExpectFalse [
 ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasOneArgumentExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							true ifTrue: [ ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1554,7 +1554,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasOneArgumen
 ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							true ifTrue: [ ] ifFalse: [ ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1564,7 +1564,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumen
 ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndBothArgsHaveReturnExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							true ifTrue: [ ^ 1 ] ifFalse: [ ^ 1 ]'.
 	statement := ast body statements last.
 	self assert: statement lastIsReturn 
@@ -1574,7 +1574,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumen
 ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndFirstArgHasReturnExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							true ifTrue: [ ^ 1 ] ifFalse: [ ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1584,7 +1584,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumen
 ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndSecondArgHasReturnExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							true ifTrue: [ ] ifFalse: [ ^ 1 ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1594,7 +1594,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumen
 ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsNotInlinedIfExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							self foo'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1604,7 +1604,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsNotInlinedIfExpectFalse [
 ASTProgramNodeTest >> testlastIsReturnWhenMethodNodeWithLastReturnExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							^ 1'.
 	statement := ast.
 	self assert: statement lastIsReturn 
@@ -1614,7 +1614,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenMethodNodeWithLastReturnExpectTrue [
 ASTProgramNodeTest >> testlastIsReturnWhenNodeIsNotReturnExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self bar'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1624,7 +1624,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenNodeIsNotReturnExpectFalse [
 ASTProgramNodeTest >> testlastIsReturnWhenNodeIsReturnExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               ^ self bar'.
 	statement := ast body statements last.
 	self assert: statement lastIsReturn 
@@ -1634,7 +1634,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenNodeIsReturnExpectTrue [
 ASTProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithLastReturnNodeExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               ^ self bar'.
 	statement := ast body.
 	self assert: statement lastIsReturn 
@@ -1644,7 +1644,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithLastReturnNodeExpect
 ASTProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithoutLastReturnNodeExpectFalse [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 	               self bar'.
 	statement := ast body.
 	self deny: statement lastIsReturn 
@@ -1654,7 +1654,7 @@ ASTProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithoutLastReturnNodeExp
 ASTProgramNodeTest >> testlastIsReturnWhenReturnNodeWithBlockNodeExpectTrue [
 
 	| ast statement |
-	ast := RBParser parseMethod: 'a1
+	ast := Parser parseMethod: 'a1
 							^ [ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement lastIsReturn 

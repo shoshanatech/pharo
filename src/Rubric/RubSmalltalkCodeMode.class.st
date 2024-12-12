@@ -189,13 +189,13 @@ RubSmalltalkCodeMode >> hasBindingOf: aString [
 { #category : 'parsing' }
 RubSmalltalkCodeMode >> parseExpression: aString [
 
-	^RBParser parseFaultyExpression: aString
+	^Parser parseFaultyExpression: aString
 ]
 
 { #category : 'parsing' }
 RubSmalltalkCodeMode >> parseSource: aString [
 
-	^RBParser parseFaultyMethod: aString
+	^Parser parseFaultyMethod: aString
 ]
 
 { #category : 'shout' }

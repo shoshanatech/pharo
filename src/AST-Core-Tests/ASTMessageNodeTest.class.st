@@ -67,9 +67,9 @@ ASTMessageNodeTest >> testIntersectsInterval [
 { #category : 'tests' }
 ASTMessageNodeTest >> testIsInlineToDo [
 	| messageNode |
-	messageNode := (RBParser parseExpression: '1 to: 2 by: 2 do: [:each |]').
+	messageNode := (Parser parseExpression: '1 to: 2 by: 2 do: [:each |]').
 	self assert: messageNode isInlineToDo.
-	messageNode := (RBParser parseExpression: '1 to: 2 by: nil do: [:each |]').
+	messageNode := (Parser parseExpression: '1 to: 2 by: nil do: [:each |]').
 	self deny: messageNode isInlineToDo
 ]
 

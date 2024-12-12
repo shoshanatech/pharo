@@ -27,19 +27,19 @@ RFOperationReification >> genForASTArrayNode [
 { #category : 'generate' }
 RFOperationReification >> genForASTAssignmentNode [
 	entity variable isLocalVariable ifTrue: [
-		^RBParser parseExpression: ('RFTempWrite new
+		^Parser parseExpression: ('RFTempWrite new
 			assignedValue: RFNewValueReificationVar;
 			context: thisContext;
 			variableName: #{1}.' format: {entity variable name})].
 
 	entity variable isInstanceVariable ifTrue: [
-		^RBParser parseExpression: ('RFSlotWrite new
+		^Parser parseExpression: ('RFSlotWrite new
 			assignedValue: RFNewValueReificationVar;
 			object: self;
 			variableName: #{1}.' format: {entity variable name})].
 
 	entity variable variable isLiteralVariable ifTrue: [ | ast |
-		ast := RBParser parseExpression: ('RFGlobalWrite new
+		ast := Parser parseExpression: ('RFGlobalWrite new
 			assignedValue: RFNewValueReificationVar;
 			variable: #toReplace.').
 		ast messages second arguments: {(ASTLiteralNode value: entity variable binding)}.
@@ -52,7 +52,7 @@ RFOperationReification >> genForASTBlockNode [
 	"we just compile the block again"
 	| blockNode |
 
-	blockNode := RBParser parseExpression: entity formattedCode.
+	blockNode := Parser parseExpression: entity formattedCode.
 	^ASTMessageNode
 		receiver: (ASTVariableNode named: #RFBlockOperation)
 		selector: #block:
@@ -73,7 +73,7 @@ RFOperationReification >> genForASTLiteralValueNode [
 
 { #category : 'generate' }
 RFOperationReification >> genForASTMessageNode [
-	^RBParser parseExpression: ('RFMessageOperation
+	^Parser parseExpression: ('RFMessageOperation
 			receiver: RFReceiverReificationVar
 			selector: #{1}
 			arguments: RFArgumentsReificationVar.' format: {entity selector})
@@ -82,7 +82,7 @@ RFOperationReification >> genForASTMessageNode [
 { #category : 'generate' }
 RFOperationReification >> genForASTMethodNode [
 	| ast |
-	ast := RBParser parseExpression: 'RFMethodOperation new
+	ast := Parser parseExpression: 'RFMethodOperation new
 			receiver: self;
 			method: #toReplace;
 			arguments: RFArgumentsReificationVar.'.
@@ -93,7 +93,7 @@ RFOperationReification >> genForASTMethodNode [
 
 { #category : 'generate' }
 RFOperationReification >> genForASTReturnNode [
-	^RBParser parseExpression: 'RFReturnOperation new
+	^Parser parseExpression: 'RFReturnOperation new
 			context: thisContext;
 			returnValue: RFReifyValueVar'
 ]
@@ -101,17 +101,17 @@ RFOperationReification >> genForASTReturnNode [
 { #category : 'generate' }
 RFOperationReification >> genForASTVariableNode [
 	entity isInstanceVariable ifTrue: [
-		^RBParser parseExpression: ('RFSlotRead new
+		^Parser parseExpression: ('RFSlotRead new
 			object: self;
 			variableName: #{1}.' format: {entity name})].
 
 	entity isLocalVariable ifTrue: [
-		^RBParser parseExpression: ('RFTempRead new
+		^Parser parseExpression: ('RFTempRead new
 			context: thisContext;
 			variableName: #{1}.' format: {entity name})].
 
 	entity variable isLiteralVariable ifTrue: [ | ast |
-			ast := RBParser parseExpression: 'RFGlobalRead new
+			ast := Parser parseExpression: 'RFGlobalRead new
 				variable: #toReplace'.
 			ast arguments: {(ASTLiteralNode value: entity binding)}.
 

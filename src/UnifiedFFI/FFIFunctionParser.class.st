@@ -292,7 +292,7 @@ FFIFunctionParser >> setOn: aStreamSource [
 
 	| functionDeclarationArray |
 	functionDeclarationArray := aStreamSource isString ifTrue: [ | node |
-			node := RBParser parseExpression: '#(', aStreamSource, ')'.
+			node := Parser parseExpression: '#(', aStreamSource, ')'.
 			node evaluate
 		] ifFalse: [ aStreamSource ].
 

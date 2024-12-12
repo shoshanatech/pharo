@@ -66,7 +66,7 @@ ASTParseTreeRule >> owner: aParseTreeSearcher [
 
 { #category : 'initialization' }
 ASTParseTreeRule >> parserClass [
-	^ RBParser
+	^ Parser
 ]
 
 { #category : 'matching' }

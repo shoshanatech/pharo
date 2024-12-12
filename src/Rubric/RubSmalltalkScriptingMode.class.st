@@ -32,7 +32,7 @@ RubSmalltalkScriptingMode >> isScripting [
 { #category : 'parsing' }
 RubSmalltalkScriptingMode >> parseSource: aString [
 
-	^RBParser parseFaultyExpression: aString
+	^Parser parseFaultyExpression: aString
 ]
 
 { #category : 'shout' }
