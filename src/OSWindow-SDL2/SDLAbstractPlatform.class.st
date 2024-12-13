@@ -28,6 +28,12 @@ SDLAbstractPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 	self subclassResponsibility
 ]
 
+{ #category : 'configuration' }
+SDLAbstractPlatform >> defaultRendererFlags [
+	"We have no special flags for the renderer"
+	^ 0
+]
+
 { #category : 'initialization' }
 SDLAbstractPlatform >> initPlatformSpecific [
 

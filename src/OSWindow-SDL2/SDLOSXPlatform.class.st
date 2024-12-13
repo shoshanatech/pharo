@@ -56,6 +56,12 @@ SDLOSXPlatform >> allowTouchpadInertia [
 	ObjCLibrary uniqueInstance release: key.
 ]
 
+{ #category : 'configuration' }
+SDLOSXPlatform >> defaultRendererFlags [ 
+
+	^ super defaultRendererFlags | SDL_RENDERER_PRESENTVSYNC
+]
+
 { #category : 'initialization' }
 SDLOSXPlatform >> initPlatformSpecific [
 
