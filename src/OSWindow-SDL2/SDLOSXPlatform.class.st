@@ -59,6 +59,7 @@ SDLOSXPlatform >> allowTouchpadInertia [
 { #category : 'configuration' }
 SDLOSXPlatform >> defaultRendererFlags [ 
 
+	"SDL_RENDERER_PRESENTVSYNC is required on MacOS for certain screens to avoid rendering issues"
 	^ super defaultRendererFlags | SDL_RENDERER_PRESENTVSYNC
 ]
 
