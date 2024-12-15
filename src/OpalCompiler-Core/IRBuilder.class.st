@@ -1,6 +1,9 @@
 "
-I provide a simple interface for constructing an IRMethod.  For example, to create an ir method that compares first instVar to first arg and returns 'yes' or 'no' (same example as in BytecodeGenerator), do:
+I provide a simple interface for constructing an `IRMethod`.  
 
+For example, to create an ir method that compares first instVar to first arg and returns 'yes' or 'no' (same example as in `BytecodeGenerator`), do:
+
+```
 	IRBuilder new
 		numArgs: 1;
 		addTemps: #(a z);
@@ -15,8 +18,9 @@ I provide a simple interface for constructing an IRMethod.  For example, to crea
 		pushLiteral: 'no';
 		returnTop;
 		ir
+```
 
-Sending #compiledMethod to an ir method will generate its compiledMethod.  Sending #methodNode to it will decompile to its parse tree.
+Sending the message `compiledMethod` to an ir method generates its compiledMethod.  Sending the message `methodNode` to it decompiles to its parse tree.
 
 "
 Class {
