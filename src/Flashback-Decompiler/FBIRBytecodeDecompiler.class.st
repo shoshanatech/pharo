@@ -31,7 +31,7 @@ FBIRBytecodeDecompiler >> checkIfJumpTarget [
 { #category : 'public access' }
 FBIRBytecodeDecompiler >> decompile: aCompiledMethod [
 	instructionStream := InstructionStream on: aCompiledMethod.
-	irBuilder := IRReconstructor new.
+	irBuilder := IRReconstructorBuilder new.
 	scopeStack := Stack new.
 	self pushScope: #() numArgs: aCompiledMethod numArgs.
 	irBuilder irPrimitive: aCompiledMethod irPrimitive.
