@@ -1,5 +1,7 @@
 "
-Instruction ""pushLiteral: object""
+I represent the instruction ""pushLiteral: object"".
+
+From the bytecode perspective: The bytecode will be either specialized for literals that are not placed in the method literal frame or the bytecode will refer to the literal in the method literal frame using an offset.
 "
 Class {
 	#name : 'IRPushLiteral',

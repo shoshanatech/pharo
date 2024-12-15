@@ -1,5 +1,6 @@
 "
-I model the pushRemoteTemporary Bytecode
+I model the pushRemoteTemporary bytecode. In particular for temporary that outlives their existing context
+and are stored into so called tempVector.
 "
 Class {
 	#name : 'IRRemoteTempAccess',
