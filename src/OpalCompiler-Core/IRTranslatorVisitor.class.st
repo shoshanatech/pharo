@@ -1,8 +1,12 @@
 "
-I should be deprecated in favor a IRTranslatorVisitor.
+I responsible to translate the IR instructions into bytecode. 
+I delegate, however such a task to a BytecodeGenerator.
+So I visit IRMethod instructions, sending the appropriate messages to my BytecodeGenerator (gen). 
+
+Check `IRMethod>>#generate`.
 "
 Class {
-	#name : 'IRTranslator',
+	#name : 'IRTranslatorVisitor',
 	#superclass : 'IRVisitor',
 	#instVars : [
 		'gen',
@@ -16,69 +20,69 @@ Class {
 }
 
 { #category : 'instance creation' }
-IRTranslator class >> context: aCompilationContext [
+IRTranslatorVisitor class >> context: aCompilationContext [
 	^self basicNew
 		initialize;
 		compilationContext: aCompilationContext
 ]
 
 { #category : 'instance creation' }
-IRTranslator class >> new [
+IRTranslatorVisitor class >> new [
 	^self context: CompilationContext default
 ]
 
 { #category : 'accessing' }
-IRTranslator >> compilationContext [
+IRTranslatorVisitor >> compilationContext [
 	^ compilationContext
 ]
 
 { #category : 'accessing' }
-IRTranslator >> compilationContext: aContext [
+IRTranslatorVisitor >> compilationContext: aContext [
 	compilationContext := aContext.
 	gen := compilationContext bytecodeGeneratorClass newWithEncoderClass: compilationContext encoderClass.
 	gen compilationContext: aContext
 ]
 
 { #category : 'results' }
-IRTranslator >> compiledBlock [
+IRTranslatorVisitor >> compiledBlock [
 	^ gen compiledBlock
 ]
 
 { #category : 'results' }
-IRTranslator >> compiledMethod [
+IRTranslatorVisitor >> compiledMethod [
 	^ gen compiledMethod
 ]
 
 { #category : 'private' }
-IRTranslator >> currentScope [
+IRTranslatorVisitor >> currentScope [
 	^currentScope top
 ]
 
 { #category : 'initialization' }
-IRTranslator >> initialize [
+IRTranslatorVisitor >> initialize [
 	currentScope := Stack new.
 	tempVectorStack := Stack new
 ]
 
 { #category : 'private' }
-IRTranslator >> label: seqNum [
+IRTranslatorVisitor >> label: seqNum [
 
 	gen label: seqNum
 ]
 
 { #category : 'private' }
-IRTranslator >> popScope [
+IRTranslatorVisitor >> popScope [
 
 	currentScope size = 1 ifFalse: [currentScope pop]
 ]
 
 { #category : 'private' }
-IRTranslator >> pragmas: aCollection [
+IRTranslatorVisitor >> pragmas: aCollection [
 	gen pragmas: aCollection
 ]
 
 { #category : 'results' }
-IRTranslator >> pushOuterVectors: scope [
+IRTranslatorVisitor >> pushOuterVectors: scope [
 	| scopesWithVector sc |
 	scopesWithVector := OrderedCollection new.
 	sc := scope.
@@ -93,31 +97,31 @@ IRTranslator >> pushOuterVectors: scope [
 ]
 
 { #category : 'private' }
-IRTranslator >> pushScope: anIRBlockOrMethod [
+IRTranslatorVisitor >> pushScope: anIRBlockOrMethod [
 
 	currentScope push: anIRBlockOrMethod
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitBlockReturnTop: blockReturnTop [
+IRTranslatorVisitor >> visitBlockReturnTop: blockReturnTop [
 
 	gen blockReturnTop
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitInstruction: instr [
+IRTranslatorVisitor >> visitInstruction: instr [
 	gen mapBytesTo: instr.
 	self visitNode: instr
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitJump: jump [
+IRTranslatorVisitor >> visitJump: jump [
 
 	gen goto: jump destination orderNumber
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitJumpIf: jumpIf [
+IRTranslatorVisitor >> visitJumpIf: jumpIf [
 
 	gen
 		if: jumpIf boolean
@@ -126,7 +130,7 @@ IRTranslator >> visitJumpIf: jumpIf [
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitMethod: anIr [
+IRTranslatorVisitor >> visitMethod: anIr [
 	IRFix new visitNode: anIr.
 	self pushScope: anIr.
 	gen irPrimitive: anIr irPrimitive.
@@ -143,24 +147,24 @@ IRTranslator >> visitMethod: anIr [
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPop: pop [
+IRTranslatorVisitor >> visitPop: pop [
 
 	gen popTop
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPopIntoInstVar: instVar [
+IRTranslatorVisitor >> visitPopIntoInstVar: instVar [
 	gen storePopInstVar: instVar index
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPopIntoLiteralVariable: var [
+IRTranslatorVisitor >> visitPopIntoLiteralVariable: var [
 
 	gen storePopIntoLiteralVariable: var association
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPopIntoRemoteTemp: remoteTemp [
+IRTranslatorVisitor >> visitPopIntoRemoteTemp: remoteTemp [
 	| tempIndex tempVectorIndex tempVector |
 
 	tempVector := tempVectorStack detect: [ :each | each name = remoteTemp tempVectorName ].
@@ -171,13 +175,13 @@ IRTranslator >> visitPopIntoRemoteTemp: remoteTemp [
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPopIntoTemp: tmp [
+IRTranslatorVisitor >> visitPopIntoTemp: tmp [
 
    	gen storePopTemp: (self currentScope indexForVarNamed: tmp name)
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushArray: array [
+IRTranslatorVisitor >> visitPushArray: array [
 
 	array cons
 		ifTrue: [
@@ -187,13 +191,13 @@ IRTranslator >> visitPushArray: array [
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushDup: dup [
+IRTranslatorVisitor >> visitPushDup: dup [
 
 	gen pushDup
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushFullClosure: fullBlock [
+IRTranslatorVisitor >> visitPushFullClosure: fullBlock [
 
 	fullBlock copiedValues do: [:name |
 		gen pushTemp: (self currentScope indexForVarNamed: name)].
@@ -202,30 +206,30 @@ IRTranslator >> visitPushFullClosure: fullBlock [
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushInstVar: instVar [
+IRTranslatorVisitor >> visitPushInstVar: instVar [
 
 	gen pushInstVar: instVar index
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushLiteral: lit [
+IRTranslatorVisitor >> visitPushLiteral: lit [
 	^ gen pushLiteral: lit literal beReadOnlyLiteral
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushLiteralVariable: var [
+IRTranslatorVisitor >> visitPushLiteralVariable: var [
 
 	gen pushLiteralVariable: var association
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushReceiver: receiver [
+IRTranslatorVisitor >> visitPushReceiver: receiver [
 
 	gen pushReceiver
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushRemoteTemp: remoteTemp [
+IRTranslatorVisitor >> visitPushRemoteTemp: remoteTemp [
 	| tempIndex tempVectorIndex tempVector |
 
 	tempVector := tempVectorStack detect: [:each | each name = remoteTemp tempVectorName].
@@ -236,48 +240,48 @@ IRTranslator >> visitPushRemoteTemp: remoteTemp [
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushTemp: tmp [
+IRTranslatorVisitor >> visitPushTemp: tmp [
 
 	gen pushTemp: (self currentScope indexForVarNamed: tmp name)
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushThisContext: ctxt [
+IRTranslatorVisitor >> visitPushThisContext: ctxt [
 
 	gen pushThisContext
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitPushThisProcess: pushThisProcess [
+IRTranslatorVisitor >> visitPushThisProcess: pushThisProcess [
 	gen pushThisProcess
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitReturn: ret [
+IRTranslatorVisitor >> visitReturn: ret [
 
 	gen returnTop
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitReturnInstVar: instVar [
+IRTranslatorVisitor >> visitReturnInstVar: instVar [
 
 	gen returnInstVar: instVar index
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitReturnLiteral: lit [
+IRTranslatorVisitor >> visitReturnLiteral: lit [
 
 	gen returnConstant: lit literal
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitReturnReceiver: rec [
+IRTranslatorVisitor >> visitReturnReceiver: rec [
 
 	gen returnReceiver
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitSend: send [
+IRTranslatorVisitor >> visitSend: send [
 
 	send superOf
 		ifNil: [ gen send: send selector ]
@@ -285,30 +289,30 @@ IRTranslator >> visitSend: send [
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitSequence: instructionSequence [
+IRTranslatorVisitor >> visitSequence: instructionSequence [
 	self label: instructionSequence orderNumber.
 	super visitSequence: instructionSequence
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitSequences:  irSequences [
+IRTranslatorVisitor >> visitSequences:  irSequences [
 	irSequences withIndexDo: [ :seq :i | seq orderNumber: i].
 	self visitNodes: irSequences
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitStoreInstVar: instVar [
+IRTranslatorVisitor >> visitStoreInstVar: instVar [
 	gen storeInstVar: instVar index
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitStoreLiteralVariable: var [
+IRTranslatorVisitor >> visitStoreLiteralVariable: var [
 
 	gen storeIntoLiteralVariable: var association
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitStoreRemoteTemp: remoteTemp [
+IRTranslatorVisitor >> visitStoreRemoteTemp: remoteTemp [
 	| tempIndex tempVectorIndex tempVector |
 
 	tempVector := tempVectorStack detect: [:each | each name = remoteTemp tempVectorName].
@@ -319,13 +323,13 @@ IRTranslator >> visitStoreRemoteTemp: remoteTemp [
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitStoreTemp: tmp [
+IRTranslatorVisitor >> visitStoreTemp: tmp [
 
    	gen storeTemp: (self currentScope indexForVarNamed: tmp name)
 ]
 
 { #category : 'visiting' }
-IRTranslator >> visitTempVector: tempVector [
+IRTranslatorVisitor >> visitTempVector: tempVector [
 
 	tempVectorStack push: tempVector.
 	gen pushNewArray: tempVector vars size.
