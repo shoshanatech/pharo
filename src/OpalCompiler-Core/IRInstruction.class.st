@@ -355,7 +355,7 @@ IRInstruction >> nonBodySuccessorSequences [
 
 { #category : 'printing' }
 IRInstruction >> printOn: aStream [
-	IRPrinter new
+	IRPrinterVisitor new
 			stream: aStream;
 			visitNode: self
 ]

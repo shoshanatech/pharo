@@ -221,7 +221,7 @@ IRMethod >> isSend [
 IRMethod >> longPrintString [
 
 	^ String streamContents: [ :stream |
-		IRPrinter new
+		IRPrinterVisitor new
 			stream: stream;
 			visitNode: self ]
 ]
