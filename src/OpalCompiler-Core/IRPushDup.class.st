@@ -1,5 +1,7 @@
 "
-Instruction ""pushDup""
+I'm quite badly named. 
+
+Instruction ""pushDup"" I'm basically emitting a bytecode that duplicate the top stack.
 "
 Class {
 	#name : 'IRPushDup',

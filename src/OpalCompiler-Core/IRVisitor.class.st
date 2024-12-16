@@ -1,5 +1,5 @@
 "
-I visit an IRMethod instructions and write them out to a print stream.
+I visit an IRMethod instructions. See my subclasses for useful cases.
 "
 Class {
 	#name : 'IRVisitor',

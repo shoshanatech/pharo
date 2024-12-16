@@ -1,9 +1,9 @@
 "
-LiteralVariables are 
+I represent access to the following variables:
 
--> Globals
--> Pool access
--> Class Var access
+- Global variables
+- Shared pools
+- Shared variables
 "
 Class {
 	#name : 'IRLiteralVariableAccess',

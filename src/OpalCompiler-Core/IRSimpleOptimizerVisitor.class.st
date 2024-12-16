@@ -1,8 +1,12 @@
 "
-Should be deprecated and user should use IRSimpleOptimizerVisitor
+I perform some simple optimizations by changing IR nodes.
+I transform:
+
+- sequence of store, pop into popInto
+- some returns into quick returns
 "
 Class {
-	#name : 'IRFix',
+	#name : 'IRSimpleOptimizerVisitor',
 	#superclass : 'IRVisitor',
 	#instVars : [
 		'prevInstr',
@@ -15,7 +19,7 @@ Class {
 }
 
 { #category : 'private' }
-IRFix >> convertRet: assoc forSeq: seq [
+IRSimpleOptimizerVisitor >> convertReturn: assoc forInstructionSequence: seq [
 	| push ret |
 	push := assoc key.
 	ret := assoc value.
@@ -24,7 +28,7 @@ IRFix >> convertRet: assoc forSeq: seq [
 ]
 
 { #category : 'private' }
-IRFix >> convertStorePop: assoc forSeq: seq [
+IRSimpleOptimizerVisitor >> convertStorePop: assoc forinstructionSequence: seq [
 	| store pop |
 	store := assoc key.
 	pop := assoc value.
@@ -33,7 +37,7 @@ IRFix >> convertStorePop: assoc forSeq: seq [
 ]
 
 { #category : 'initialization' }
-IRFix >> initialize [
+IRSimpleOptimizerVisitor >> initialize [
 
 	super initialize.
 
@@ -42,13 +46,13 @@ IRFix >> initialize [
 ]
 
 { #category : 'visiting' }
-IRFix >> visitInstruction: instr [
+IRSimpleOptimizerVisitor >> visitInstruction: instr [
 	self visitNode: instr.
 	prevInstr := instr
 ]
 
 { #category : 'visiting' }
-IRFix >> visitPop: pop [
+IRSimpleOptimizerVisitor >> visitPop: pop [
 	prevInstr ifNil: [ ^ self ].
 	prevInstr isStore ifFalse: [ ^ self ].
 	"store then pop, however, cannot remove instr while iterating over the collection"
@@ -56,18 +60,18 @@ IRFix >> visitPop: pop [
 ]
 
 { #category : 'visiting' }
-IRFix >> visitReturn: ret [
+IRSimpleOptimizerVisitor >> visitReturn: ret [
 	prevInstr ifNil: [ ^ self ].
 	prevInstr canBeQuickReturn ifFalse: [ ^ self ].
 	retToFix add: prevInstr -> ret
 ]
 
 { #category : 'visiting' }
-IRFix >> visitSequence: instructionSequence [
+IRSimpleOptimizerVisitor >> visitSequence: instructionSequence [
 	prevInstr := nil.
 	storePopToFix reset.
 	retToFix reset.
 	super visitSequence: instructionSequence.
-	retToFix do: [ :each | self convertRet: each forSeq: instructionSequence ].
-	storePopToFix do: [ :each | self convertStorePop: each forSeq: instructionSequence ]
+	retToFix do: [ :each | self convertReturn: each forInstructionSequence: instructionSequence ].
+	storePopToFix do: [ :each | self convertStorePop: each forinstructionSequence: instructionSequence ]
 ]

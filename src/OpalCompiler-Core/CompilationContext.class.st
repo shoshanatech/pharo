@@ -1,15 +1,14 @@
 "
 The compilationContext holds all information that is needed in the whole compiler chain.
 
-requestor <Object> usually a textEditor. This can be used to bind editor variables (typically variables local to a workspace/playground) and to properly write error messages inlined.
-failBlock <BlockClosure> block with non local return used to abort the compilation (like an exception).
-noPattern <Boolean> false if compiling a method which has selector and arguments at the beginning (the so-called pattern) and true if compiling something without selector and arguments (such as a DoIt).
-class <Behavior> the behavior in which the code is compiled into (used to know inst var names & methodClass for example)
-semanticScope <SemapticScope> defines the meaning of the code which is compiled into (used to know inst var names & methodClass for example)
-logged <Boolean> true if the sources will be logged in external logging system (change file, epicea, ...)
-interactive <Boolean> Interactive mode is typically used in the IDE (showing errors when compiling code inlined,  pop-ups for some errors/warnings, ...), non-interactive mode is used for headless & code loading to compile code by logging into stdout or Transcript but no interaction required by the user.
-options <Set of Symbols> See optionsDescription method comment class side
-environment <SystemEnvironment> place to look for literal variables (Globals for instance)
+- requestor <Object> usually a textEditor. This can be used to bind editor variables (typically variables local to a workspace/playground) and to properly write error messages inlined.
+- failBlock <BlockClosure> block with non local return used to abort the compilation (like an exception).
+- noPattern <Boolean> false if compiling a method which has selector and arguments at the beginning (the so-called pattern) and true if compiling something without selector and arguments (such as a DoIt).
+- class <Behavior> the behavior in which the code is compiled into (used to know inst var names & methodClass for example)
+- semanticScope <SemapticScope> defines the meaning of the code which is compiled into (used to know inst var names & methodClass for example)
+- logged <Boolean> true if the sources will be logged in external logging system (change file, epicea, ...)
+- interactive <Boolean> Interactive mode is typically used in the IDE (showing errors when compiling code inlined,  pop-ups for some errors/warnings, ...), non-interactive mode is used for headless & code loading to compile code by logging into stdout or Transcript but no interaction required by the user.
+- options <Set of Symbols> See `optionsDescription` method comment class side environment <SystemEnvironment> place to look for literal variables (Globals for instance)
 
 "
 Class {

@@ -1,5 +1,7 @@
 "
-I am a method in the IR (intermediate representation) language consisting of IRInstructions grouped by IRSequence (basic block).  The IRSequences form a control graph (therefore I only have to hold onto the starting sequence).  #compiledMethod will convert me to a CompiledMethod.  #methodNode will convert me back to a parse tree.
+I am a method in the IR (intermediate representation) language consisting of IRInstructions grouped by IRSequence (basic block).  The IRSequences form a control graph (therefore I only have to hold onto the starting sequence).  
+- The message `compiledMethod` will convert me to a CompiledMethod.  
+- The message `methodNode` will convert me back to a parse tree.
 
 "
 Class {
@@ -221,7 +223,7 @@ IRMethod >> isSend [
 IRMethod >> longPrintString [
 
 	^ String streamContents: [ :stream |
-		IRPrinter new
+		IRPrinterVisitor new
 			stream: stream;
 			visitNode: self ]
 ]

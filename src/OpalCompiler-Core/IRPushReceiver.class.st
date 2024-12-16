@@ -1,5 +1,5 @@
 "
-I am modelling the push self bytecode
+I model the push self bytecode.
 "
 Class {
 	#name : 'IRPushReceiver',

@@ -1,5 +1,6 @@
 "
 A sequence is corresponds to a block in the control flow graph.
+In an IRMethod a sequence is sorted by its orderNumber.
 "
 Class {
 	#name : 'IRSequence',
@@ -152,6 +153,7 @@ IRSequence >> ifNotEmpty: aBlock [
 
 { #category : 'initialization' }
 IRSequence >> initialize [
+	super initialize.
 	sequence := OrderedCollection new
 ]
 
