@@ -156,7 +156,7 @@ ReRenameMethodDriver >> requestDialogWith: methodName [
 { #category : 'interaction' }
 ReRenameMethodDriver >> requestNewMessage [
 
-	| methodName dialog  parametersAreWrong parameters |
+	| methodName dialog parameters |
 	
 	"when we rename from a method list or clicking on the method signature in the method body
 	the parameters passed to the refactoring are ok. 
