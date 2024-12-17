@@ -131,7 +131,7 @@ IRTranslatorVisitor >> visitJumpIf: jumpIf [
 
 { #category : 'visiting' }
 IRTranslatorVisitor >> visitMethod: anIr [
-	IRFix new visitNode: anIr.
+	IRSimpleOptimizerVisitor new visitNode: anIr.
 	self pushScope: anIr.
 	gen irPrimitive: anIr irPrimitive.
 	gen numArgs: anIr numArgs.
