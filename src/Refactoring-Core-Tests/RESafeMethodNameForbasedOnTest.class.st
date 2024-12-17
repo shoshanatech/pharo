@@ -1,15 +1,16 @@
 Class {
-	#name : 'RESafeMethodNameForbasedOnTest',
+	#name : 'ReSafeMethodNameForbasedOnTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'model'
 	],
-	#category : 'Refactoring-Core-Tests',
-	#package : 'Refactoring-Core-Tests'
+	#category : 'Refactoring-Core-Tests-Model',
+	#package : 'Refactoring-Core-Tests',
+	#tag : 'Model'
 }
 
-{ #category : 'accessing' }
-RESafeMethodNameForbasedOnTest >> model [
+{ #category : 'tests' }
+ReSafeMethodNameForbasedOnTest >> model [
 
 	^ model ifNil: [ model := RBNamespace onEnvironment: (RBClassEnvironment classes: {
 				   MyClassBetaSubSub .
@@ -21,8 +22,8 @@ RESafeMethodNameForbasedOnTest >> model [
 					 })]
 ]
 
-{ #category : 'accessing' }
-RESafeMethodNameForbasedOnTest >> testBinaryMessages [
+{ #category : 'tests' }
+ReSafeMethodNameForbasedOnTest >> testBinaryMessages [
 
 	| myClassNumber myClassInteger tempSymbol |
 	
@@ -48,8 +49,38 @@ RESafeMethodNameForbasedOnTest >> testBinaryMessages [
 
 ]
 
-{ #category : 'accessing' }
-RESafeMethodNameForbasedOnTest >> testKeywordMessages [
+{ #category : 'tests - parameters' }
+ReSafeMethodNameForbasedOnTest >> testBuildParametersForSelectorForBinary [
+
+	| parameters |
+	parameters := ReAbstractTransformation new buildParamtersForSelector: #+.
+	self assert: parameters asArray equals: #('param1').
+	
+	
+]
+
+{ #category : 'tests - parameters' }
+ReSafeMethodNameForbasedOnTest >> testBuildParametersForSelectorForKeywords [
+
+	| parameters |
+	parameters := ReAbstractTransformation new buildParamtersForSelector: #foo:bar:.
+	self assert: parameters asArray equals: #('param1' 'param2').
+	
+	
+]
+
+{ #category : 'tests - parameters' }
+ReSafeMethodNameForbasedOnTest >> testBuildParametersForSelectorForUnary [
+
+	| parameters |
+	parameters := ReAbstractTransformation new buildParamtersForSelector: #class.
+	self assert: parameters asArray equals: #().
+	
+	
+]
+
+{ #category : 'tests' }
+ReSafeMethodNameForbasedOnTest >> testKeywordMessages [
 
 	| myClassAlpha myClassBeta myClassBetaSub myClassBetaSubSub tempSymbol |
 	
@@ -77,8 +108,8 @@ RESafeMethodNameForbasedOnTest >> testKeywordMessages [
 
 ]
 
-{ #category : 'accessing' }
-RESafeMethodNameForbasedOnTest >> testUnaryMessages [
+{ #category : 'tests' }
+ReSafeMethodNameForbasedOnTest >> testUnaryMessages [
 
 	| myClassBeta myClassBetaSub myClassBetaSubSub tempSymbol |
 	
