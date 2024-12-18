@@ -113,14 +113,12 @@ ReExtractMethodDriver >> requestDialogWith: methodName [
 ReExtractMethodDriver >> requestNewMessage [
 
 	| methodName dialog  |
-	
 	methodName := RBMethodName
 		              selector: (refactoring selectorStartingFrom: 'f' argumentsSize: refactoring arguments size)
 		              arguments: refactoring arguments.
 	dialog := self requestDialogWith: methodName.
-	
-	dialog ifNil: [ shouldEscape := true. ^ self ].
-
+	dialog ifNil: [ shouldEscape := true. 
+						^ self ].
 	^ dialog methodName
 ]
 
@@ -130,6 +128,5 @@ ReExtractMethodDriver >> runRefactoring [
 	self configureRefactoring.
 	newMessage := self requestNewMessage.
 	refactoring newSelector: newMessage selector.
-	"self configureMessage."
 	self applyChanges 
 ]

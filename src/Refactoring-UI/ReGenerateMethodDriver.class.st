@@ -51,18 +51,12 @@ ReGenerateMethodDriver >> refactoringClass [
 { #category : 'execution' }
 ReGenerateMethodDriver >> runRefactoring [
 
-	| changes |
-	
 	self selectDialog
 		ifNil: [ ^ self ]
 		ifNotNil: [ selectedVariables := self selectDialog selectedItems ].
 	selectedVariables ifEmpty: [ ^ self ].
-
 	self configureRefactoring.
-	changes := refactoring generateChanges.
-	self openPreviewWithChanges: changes 
-
-
+	self applyChanges.
 ]
 
 { #category : 'accessing' }

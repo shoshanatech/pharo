@@ -33,9 +33,6 @@ RePushUpVariableDriver >> refactoringClass [
 RePushUpVariableDriver >> runRefactoring [
 
 	self configureRefactoring.
-	
-	"refactoring preconditionDirectlyDefinesVariable check ifFalse: [ ^ self ]."
-
 	self applyChanges
 ]
 
