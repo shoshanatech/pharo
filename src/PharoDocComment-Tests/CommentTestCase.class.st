@@ -1,6 +1,13 @@
 "
-I am a TestCase created from a comment.
+I am a TestCase created from a comment so my test `testIt` is not run normally. 
 To create a new instance you can call one of my factory methods, if you want to understand it better you can look at the example in my class side.
+
+## Explanation 
+We want to run one test for each doc comment, therefore we need to have a testCase for those and this is this class.
+The class itself is not a test in itself, but it is instantiated for each DocComment.
+it is used by DrTest when you check all doc comments, and it is used by DocCommentsReleaseTest to check that all doc comments are correct. (see #buildSuite)
+
+
 
 "
 Class {
