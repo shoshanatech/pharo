@@ -160,6 +160,15 @@ RBScanner class >> patternVariableCharacter [
 RBScanner class >> scanTokenObjects: aStringOrStream [
 	"Return the tokens objects."
 
+	self deprecated: 'Use scanTokens:' on: '18/12/2024'  in: #pharo13  transformWith:  '`@receiver scanTokenObjects: `@arg '
+						-> '`@receiver scanTokens: `@arg '.
+	^ self scanTokens: aStringOrStream
+]
+
+{ #category : 'public api' }
+RBScanner class >> scanTokens: aStringOrStream [
+	"Return the tokens objects."
+
 	| scanner |
 	scanner := self on: aStringOrStream readStream.
 	^ scanner contents
@@ -598,8 +607,10 @@ RBScanner >> scanSymbolOrNamedLiteral [
 		source: (self scanBackFrom: tokenStart)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - scanning' }
 RBScanner >> scanToken [
+	"Private method so don't call me. Use next to get the following token. If needed use classSide scanTokens."
+	
 	"fast-n-ugly. Don't write stuff like this. Has been found to cause cancer in laboratory rats. Basically a
 	case statement. Didn't use Dictionary because lookup is pretty slow."
 
