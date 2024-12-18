@@ -146,7 +146,7 @@ IRMethod >> firstInstructionMatching: aBlock [
 IRMethod >> generate [
 
 	| irTranslator |
-   irTranslator := IRTranslator context: self compilationContext.
+   irTranslator := IRTranslatorVisitor context: self compilationContext.
 	irTranslator
 		visitNode: self;
 		pragmas: pragmas.
@@ -164,7 +164,7 @@ IRMethod >> generate [
 { #category : 'translating' }
 IRMethod >> generateBlockWithScope: scope [
 	| irTranslator |
-      irTranslator := IRTranslator context: self compilationContext.
+      irTranslator := IRTranslatorVisitor context: self compilationContext.
 	irTranslator
 		pushOuterVectors: scope;
 		visitNode: self;
