@@ -36,14 +36,6 @@ ReExtractMethodDriver >> canRenameArgs [
 ]
 
 { #category : 'execution' }
-ReExtractMethodDriver >> changes [
-	"Remember should not call generateChanges"
-	^ refactoring privateTransform; changes
-
-
-]
-
-{ #category : 'execution' }
 ReExtractMethodDriver >> configureMessage [
 
 	refactoring newSelector: newMessage selector.

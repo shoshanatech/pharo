@@ -16,14 +16,6 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'execution' }
-ReRenameArgumentOrTemporaryDriver >> changes [
-
-	^ refactoring
-		  privateTransform;
-		  changes
-]
-
 { #category : 'resources' }
 ReRenameArgumentOrTemporaryDriver >> configureRefactoring [
 

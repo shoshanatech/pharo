@@ -16,12 +16,6 @@ Class {
 }
 
 { #category : 'execution' }
-ReRenameVariableDriver >> changes [
-
-	^ refactoring privateTransform; changes
-]
-
-{ #category : 'execution' }
 ReRenameVariableDriver >> configureRefactoring [
 
 	refactoring := self refactoringClass

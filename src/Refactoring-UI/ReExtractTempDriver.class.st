@@ -12,12 +12,6 @@ Class {
 	#tag : 'Driver'
 }
 
-{ #category : 'execution' }
-ReExtractTempDriver >> changes [ 
-
-	^ refactoring privateTransform; changes
-]
-
 { #category : 'resources' }
 ReExtractTempDriver >> configureRefactoring [
 

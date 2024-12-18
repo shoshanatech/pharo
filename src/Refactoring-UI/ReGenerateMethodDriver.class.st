@@ -14,15 +14,6 @@ Class {
 }
 
 { #category : 'execution' }
-ReGenerateMethodDriver >> changes [
-	"Remember should not call generateChanges"
-
-	^ refactoring privateTransform; changes
-
-
-]
-
-{ #category : 'execution' }
 ReGenerateMethodDriver >> configureRefactoring [
 
 	refactoring := self refactoringClass 

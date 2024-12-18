@@ -14,12 +14,6 @@ Class {
 }
 
 { #category : 'execution' }
-RePushUpVariableDriver >> changes [
-
-	^ refactoring privateTransform; changes
-]
-
-{ #category : 'execution' }
 RePushUpVariableDriver >> configureRefactoring [
 
 	" we should manage multiple instance variables"

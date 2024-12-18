@@ -11,15 +11,6 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'execution' }
-ReConvertTemporaryToInstanceVariableDriver >> changes [
-	"We only perform the changes."
-
-	^ refactoring
-		  privateTransform;
-		  changes
-]
-
 { #category : 'instance creation' }
 ReConvertTemporaryToInstanceVariableDriver >> class: aClass selector: aSelector variable: aVariable [
 
