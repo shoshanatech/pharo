@@ -167,7 +167,7 @@ ReInteractionDriver >> openPreviewWithChanges: changes [
 		 scopes: scopes)
 		application: self application;
 		refactoring: self refactoring;
-		openModal
+		openDialog
 ]
 
 { #category : 'configuration' }
