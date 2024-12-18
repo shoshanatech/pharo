@@ -93,7 +93,7 @@ ReAbstractTransformation >> applicabilityPreconditions [
 
 { #category : 'private' }
 ReAbstractTransformation >> buildParametersForSelector: aSelector [
-	"self new buildParametersForSelector: #cratpoc:freeFloc: >>> #('param1' 'param2)'"
+	"(self new buildParametersForSelector: #cratpoc:freeFloc:) >>> #('param1' 'param2)'"
 	
 	| params |
 	params := OrderedCollection new. 
