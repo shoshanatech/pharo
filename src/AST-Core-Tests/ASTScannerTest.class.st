@@ -1628,6 +1628,45 @@ package: ''UndefinedClasses-Experiment'.
 	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
 ]
 
+{ #category : 'tests - ScanTokens' }
+ASTScannerTest >> testScanTokensDoesNotBreak [
+
+	"Pay attention the scanToken instance side method is brittle and it can break 
+	with simple code such as
+	
+	| tok |
+tok := OrderedCollection new. 
+scan := RBScanner on: 'end - level' readStream.
+[ scan atEnd ] whileFalse: [ 
+	tok add: scan scanToken ].
+tok 
+	
+	While the same is working with scan next
+	"
+
+	"Now this test is validating the class side method scanTokens"
+	
+	| tokens |
+	tokens := RBScanner scanTokens: 'end - level'.
+	self assert: tokens size equals: 3.
+	self assert: tokens first value equals: 'end'.
+	self assert: tokens second value equals: #-.
+	self assert: tokens third value equals: 'level'.
+	
+]
+
+{ #category : 'tests - ScanTokens' }
+ASTScannerTest >> testScanTokensHandleParentheses [
+	
+	| tokens |
+	tokens := RBScanner scanTokens: '( end - level ) '.
+	self assert: tokens size equals: 5.
+	self assert: tokens first value equals: $(.
+	self assert: tokens second value equals: 'end'.
+	self assert: tokens fifth value equals: $).
+	
+]
+
 { #category : 'utilities' }
 ASTScannerTest >> verifyErrorToken: scannedToken message: message valueExpected: valueExpected [
 	self assert: scannedToken isError.
