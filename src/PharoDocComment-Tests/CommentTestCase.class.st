@@ -69,7 +69,8 @@ CommentTestCase >> printString [
 
 { #category : 'tests' }
 CommentTestCase >> testIt [
-
+	"pay attention this test is not meant to be executed normally. 
+	It is part of the infrastructure to turn an expression into a test."
 	| value |
 	value := self evaluate.
 	self assert: value isAssociation.
