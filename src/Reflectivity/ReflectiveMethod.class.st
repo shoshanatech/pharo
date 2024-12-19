@@ -105,18 +105,18 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 	| wrappedMethod send wrapperMethod assignmentNode |
 	wrappedMethod := self compileAST.
 
-	send := ASTMessageNode
-		        receiver: ASTVariableNode selfNode
+	send := OCMessageNode
+		        receiver: OCVariableNode selfNode
 		        selector: #rFwithArgs:executeMethod:
 		        arguments: {
-				        (ASTArrayNode statements: ast arguments).
-				        (ASTLiteralNode value: self compiledMethod) }.
+				        (OCArrayNode statements: ast arguments).
+				        (OCLiteralNode value: self compiledMethod) }.
 
-	assignmentNode := ASTAssignmentNode
-		                  variable: (ASTVariableNode named: #RFReifyValueVar)
+	assignmentNode := OCAssignmentNode
+		                  variable: (OCVariableNode named: #RFReifyValueVar)
 		                  value: send.
 
-	wrapperMethod := ASTMethodNode
+	wrapperMethod := OCMethodNode
 		                 selector: ast selector
 		                 arguments: ast arguments
 		                 body: assignmentNode asSequenceNode.
@@ -141,7 +141,7 @@ ReflectiveMethod >> increaseLinkCount [
 { #category : 'invalidate' }
 ReflectiveMethod >> installCompiledMethod [
 	self installMethod: compiledMethod.
-	ASTCache default at: compiledMethod put: ast
+	OCCache default at: compiledMethod put: ast
 ]
 
 { #category : 'invalidate' }

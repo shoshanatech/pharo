@@ -144,7 +144,7 @@ OpalCompiler class >> overlayStep3FixSuperclassPointers [
 OpalCompiler class >> overlayStep4SetImageCompiler [
 	"make the copy the default compiler for the image"
 	SmalltalkImage compilerClass: (self overlayEnvironment at: #OpalCompiler).
-	ASTCache reset
+	OCCache reset
 ]
 
 { #category : 'overlay' }
@@ -190,7 +190,7 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 	<script>
 	SmalltalkImage compilerClass: nil.
 	overlayEnvironment := nil.
-	ASTCache reset
+	OCCache reset
 ]
 
 { #category : 'plugins' }
@@ -420,8 +420,8 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 		at: #FBDDecompiler
 		ifPresent: [ :decompilerClass | [ decompilerClass new decompile: aCompiledMethod ]
 			on: Error
-			do: [ ASTMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
-		ifAbsent: [ ASTMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
+			do: [ OCMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
+		ifAbsent: [ OCMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
 ]
 
 { #category : 'private' }

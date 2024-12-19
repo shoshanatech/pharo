@@ -38,5 +38,5 @@ BaselineOfReflectivity >> baseline: spec [
 { #category : 'baselines' }
 BaselineOfReflectivity >> postload: loader package: packageSpec [
 
-	ASTCache cacheMissStrategy: RFReflectivityASTCacheStrategy new
+	OCCache cacheMissStrategy: RFReflectivityASTCacheStrategy new
 ]

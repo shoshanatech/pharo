@@ -11,8 +11,8 @@ Class {
 
 { #category : 'tests - misc' }
 MetaLinkTest >> testAvailableReifications [
-	self assert: (ASTMessageNode new availableReifications includes: #receiver).
-	self assert: (ASTMessageNode new availableReifications includes: #value).
+	self assert: (OCMessageNode new availableReifications includes: #receiver).
+	self assert: (OCMessageNode new availableReifications includes: #value).
 	self assert: ((ReflectivityExamples classVariableNamed: #ClassVar) availableReifications includes: #name).
 	self deny: ((ReflectivityExamples classVariableNamed: #ClassVar) availableReifications includes: #selector)
 ]

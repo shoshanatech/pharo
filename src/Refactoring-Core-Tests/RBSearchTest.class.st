@@ -161,7 +161,7 @@ RBSearchTest >> currentSelector [
 
 { #category : 'accessing' }
 RBSearchTest >> parseTreeSearcher [
-	^ ASTParseTreeSearcher new
+	^ OCParseTreeSearcher new
 ]
 
 { #category : 'running' }

@@ -685,14 +685,14 @@ RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 	answerBlock := [ :aNode :answer | ^ aNode sourceInterval ].
 	self searchStrings do: [ :each |
 		| matcher tree |
-		matcher := ASTParseTreeSearcher new.
-		matcher matchesTree: (ASTLiteralNode value: each) do: answerBlock.
+		matcher := OCParseTreeSearcher new.
+		matcher matchesTree: (OCLiteralNode value: each) do: answerBlock.
 		each isSymbol
 			ifTrue: [
-				tree := ASTParseTreeSearcher buildSelectorTree: each.
+				tree := OCParseTreeSearcher buildSelectorTree: each.
 				tree ifNotNil: [ matcher matchesTree: tree do: answerBlock ] ]
 			ifFalse: [
-				tree := ASTVariableNode named: each.
+				tree := OCVariableNode named: each.
 				matcher
 					matchesTree: tree do: answerBlock;
 					matchesArgumentTree: tree do: answerBlock ].

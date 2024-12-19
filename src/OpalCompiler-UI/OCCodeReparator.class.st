@@ -209,7 +209,7 @@ OCCodeReparator >> substituteVariable: varName atInterval: anInterval [
 		substituteWord: varName
 		wordInterval: anInterval.
 	node methodNode source: self requestor text.
-	node replaceWith:((ASTVariableNode named: varName) binding: (node owningScope lookupVar: varName))
+	node replaceWith:((OCVariableNode named: varName) binding: (node owningScope lookupVar: varName))
 ]
 
 { #category : 'correcting' }

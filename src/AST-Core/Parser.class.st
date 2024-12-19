@@ -135,12 +135,12 @@ Parser >> addPragma: aPragma [
 
 { #category : 'private - classes' }
 Parser >> arrayNodeClass [
-	^ ASTArrayNode
+	^ OCArrayNode
 ]
 
 { #category : 'private - classes' }
 Parser >> assignmentNodeClass [
-	^ ASTAssignmentNode
+	^ OCAssignmentNode
 ]
 
 { #category : 'testing' }
@@ -164,12 +164,12 @@ Parser >> basicParsePragma [
 
 { #category : 'private - classes' }
 Parser >> blockNodeClass [
-	^ ASTBlockNode
+	^ OCBlockNode
 ]
 
 { #category : 'private - classes' }
 Parser >> cascadeNodeClass [
-	^ ASTCascadeNode
+	^ OCCascadeNode
 ]
 
 { #category : 'accessing' }
@@ -179,12 +179,12 @@ Parser >> currentToken [
 
 { #category : 'private - classes' }
 Parser >> doItMethodNodeClass [
-	^ ASTDoItMethodNode
+	^ OCDoItMethodNode
 ]
 
 { #category : 'private - classes' }
 Parser >> englobingErrorNodeClass [
-	^ASTEnglobingErrorNode
+	^OCEnglobingErrorNode
 ]
 
 { #category : 'error handling' }
@@ -208,7 +208,7 @@ Parser >> errorPosition [
 Parser >> extractCommentsFrom: aToken [
 
 	aToken comments
-		collect: [:commentToken | ASTCommentNode with: commentToken ]
+		collect: [:commentToken | OCCommentNode with: commentToken ]
 		into: comments
 ]
 
@@ -241,27 +241,27 @@ Parser >> initializeParserWith: aString [
 
 { #category : 'private - classes' }
 Parser >> literalArrayNodeClass [
-	^ ASTLiteralArrayNode
+	^ OCLiteralArrayNode
 ]
 
 { #category : 'private - classes' }
 Parser >> literalNodeClass [
-	^ ASTLiteralNode
+	^ OCLiteralNode
 ]
 
 { #category : 'private - classes' }
 Parser >> literalValueNodeClass [
-	^ ASTLiteralValueNode
+	^ OCLiteralValueNode
 ]
 
 { #category : 'private - classes' }
 Parser >> messageNodeClass [
-	^ ASTMessageNode
+	^ OCMessageNode
 ]
 
 { #category : 'private - classes' }
 Parser >> methodNodeClass [
-	^ ASTMethodNode
+	^ OCMethodNode
 ]
 
 { #category : 'private' }
@@ -295,7 +295,7 @@ Parser >> parseAssignment [
 		err := self parseErrorNode: 'variable expected in assigment'.
 		self step. "Consume the :="
 		node := self parseAssignment. "parse the right side"
-		node := ASTAssignmentErrorNode from: err contents: { node }.
+		node := OCAssignmentErrorNode from: err contents: { node }.
 		node value: ':='.
 		^ node
 	].
@@ -454,7 +454,7 @@ Parser >> parseCascadeMessage [
 		If in faulty mode, continue the execution and generate a faulty cascade node.
 		Note that this bad cascade node will be added to the list of messages."
 		err := self parseErrorNode: 'Message expected'.
-		node := ASTInvalidCascadeErrorNode from: err contents: { node }
+		node := OCInvalidCascadeErrorNode from: err contents: { node }
 	].
 	receiver := node receiver.
  	messages add: node.
@@ -527,7 +527,7 @@ Parser >> parseErrorNode: aMessageString [
 	currentToken isError
 		ifTrue: [
 			"The current token is an error, consume it and use its content for the error node."
-			errorNode := ASTParseErrorNode new
+			errorNode := OCParseErrorNode new
 				errorMessage: currentToken cause;
 				value: currentToken value;
 				start: self errorPosition;
@@ -537,7 +537,7 @@ Parser >> parseErrorNode: aMessageString [
 			^ errorNode].
 	"The current token is not an error but is unexpected. Maybe something is missing?
 	Anyway, the error node is an empty string and the current token will be used to continue the parsing."
-	^ ASTParseErrorNode new
+	^ OCParseErrorNode new
 		errorMessage: aMessageString;
 		value: '' asString;
 		start: self errorPosition;
@@ -660,7 +660,7 @@ Parser >> parseLiteralArray [
 	scanner state: prevState.
 	self step.
 	faulty ifTrue: [
-		^ ASTLiteralArrayErrorNode new
+		^ OCLiteralArrayErrorNode new
 			value: startToken value asString;
 		 	start: startToken start;
 			contents: literals;
@@ -725,7 +725,7 @@ Parser >> parseLiteralByteArray [
 	stop := currentToken stop.
 	self step.
 	faulty ifTrue: [
-		^ ASTLiteralByteArrayErrorNode new
+		^ OCLiteralByteArrayErrorNode new
 			value: startToken value asString;
 		 	start: startToken start;
 			contents: stream contents;
@@ -941,7 +941,7 @@ Parser >> parsePrimitiveObject [
 		| position |
 		position := currentToken start.
 		self step. "@"
-		^ ASTAnnotationMarkNode new start: position ].
+		^ OCAnnotationMarkNode new start: position ].
 
 	":id is only acceptable at the begin of a block. So just consume them as unexpected"
 	((currentToken isSpecial: $:) and: [ self nextToken isIdentifier ])
@@ -949,7 +949,7 @@ Parser >> parsePrimitiveObject [
 			| start |
 			start := currentToken start.
 			self step. ":"
-			errorNode := ASTParseErrorNode new
+			errorNode := OCParseErrorNode new
 				             errorMessage: 'Unexpected block parameter';
 				             start: start;
 				             errorPosition: start;
@@ -997,7 +997,7 @@ Parser >> parseStatementInto: statementList periodList: periods withAcceptedStat
 				err := self parseErrorNode: 'Missing opener for closer: ', currentToken value asString.
 				"If the parsing failed because it did not match anything, there was nothing before the unexpected closer"
 				contents := startOfStatementToken = currentToken ifTrue: [ #() ] ifFalse: [ { node } ].
-				node := (ASTUnfinishedStatementErrorNode from: err contents: contents)
+				node := (OCUnfinishedStatementErrorNode from: err contents: contents)
 					valueAfter: currentToken value asString;
 					stop: currentToken stop.
 				self step ].
@@ -1006,7 +1006,7 @@ Parser >> parseStatementInto: statementList periodList: periods withAcceptedStat
 	startOfStatementToken = currentToken ifTrue: [
 		"We did not progress, its mean that 1. we have a error node and 2. we are missing something (or found something unexpected, its the same thing)."
 		"Solution to recover. Consume the token to create the statement."
-		node := ASTParseErrorNode new
+		node := OCParseErrorNode new
 			errorMessage: 'Unexpected token';
 			value: currentToken value asString;
 			start: currentToken start;
@@ -1029,7 +1029,7 @@ Parser >> parseStatementInto: statementList periodList: periods withAcceptedStat
 		 A better design is needed."
 		node isParseError ifFalse: [
 			err := self parseErrorNode: 'End of statement expected'.
-			node := ASTUnfinishedStatementErrorNode from: err contents: { node } ]
+			node := OCUnfinishedStatementErrorNode from: err contents: { node } ]
 	].
 
 	"Then consume all dots and comments coming after this well formed statement, if there was any"
@@ -1208,11 +1208,11 @@ Parser >> parseVariableNode [
 Parser >> patchLiteralMessage [
 
 	currentToken value == true
-		ifTrue: [ ^ currentToken := ASTIdentifierToken value: 'true' start: currentToken start ].
+		ifTrue: [ ^ currentToken := OCIdentifierToken value: 'true' start: currentToken start ].
 	currentToken value == false
-		ifTrue: [ ^ currentToken := ASTIdentifierToken value: 'false' start: currentToken start ].
+		ifTrue: [ ^ currentToken := OCIdentifierToken value: 'false' start: currentToken start ].
 	currentToken value
-		ifNil: [ ^ currentToken := ASTIdentifierToken value: 'nil' start: currentToken start ]
+		ifNil: [ ^ currentToken := OCIdentifierToken value: 'nil' start: currentToken start ]
 ]
 
 { #category : 'private' }
@@ -1229,9 +1229,9 @@ Parser >> patchNegativeLiteral [
 						and: [(source at: (currentToken start min: source size)) = $-]])
 				ifFalse: [^self]].
 	nextToken := currentToken.
-	currentToken := ASTBinarySelectorToken value: #- start: nextToken start.
+	currentToken := OCBinarySelectorToken value: #- start: nextToken start.
 	nextToken value: nextToken value negated.
-	(nextToken isKindOf: ASTNumberLiteralToken)
+	(nextToken isKindOf: OCNumberLiteralToken)
 		ifTrue:
 			[nextToken source: (nextToken source allButFirst)].
 	nextToken start: nextToken start + 1
@@ -1239,12 +1239,12 @@ Parser >> patchNegativeLiteral [
 
 { #category : 'private - classes' }
 Parser >> pragmaNodeClass [
-	^ ASTPragmaNode
+	^ OCPragmaNode
 ]
 
 { #category : 'private - classes' }
 Parser >> returnNodeClass [
-	^ ASTReturnNode
+	^ OCReturnNode
 ]
 
 { #category : 'private - parsing' }
@@ -1277,12 +1277,12 @@ Parser >> scannerNext [
 
 { #category : 'private - classes' }
 Parser >> selectorNodeClass [
-	^ ASTSelectorNode
+	^ OCSelectorNode
 ]
 
 { #category : 'private - classes' }
 Parser >> sequenceNodeClass [
-	^ ASTSequenceNode
+	^ OCSequenceNode
 ]
 
 { #category : 'accessing' }
@@ -1320,5 +1320,5 @@ Parser >> stepBar [
 
 { #category : 'private - classes' }
 Parser >> variableNodeClass [
-	^ ASTVariableNode
+	^ OCVariableNode
 ]

@@ -19,11 +19,11 @@ ClassHierarchyPrinterTest >> setUp [
 ClassHierarchyPrinterTest >> testOnlyASTNodes [
 
 	printer
-		forClass: ASTNode;
+		forClass: OCNode;
 		doNotShowState;
 		doNotShowSuperclasses;
-		excludedClasses: (ASTNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
-		limitedToClasses: (ASTNode withAllSubclasses select: [:each | (each name beginsWith: 'RB') or: [ each name beginsWith: 'AST' ]]).
+		excludedClasses: (OCNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
+		limitedToClasses: (OCNode withAllSubclasses select: [:each | (each name beginsWith: 'RB') or: [ each name beginsWith: 'AST' ]]).
 	self assert: printer print equals:
 	'ASTNode
 	ASTProgramNode

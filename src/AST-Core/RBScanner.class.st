@@ -354,7 +354,7 @@ RBScanner >> scanBinary: aClass [
 { #category : 'private - scanning' }
 RBScanner >> scanBinarySelector [
 	"Used when binary characters are encountered and not beginning with #"
-	^self scanBinary: ASTBinarySelectorToken
+	^self scanBinary: OCBinarySelectorToken
 ]
 
 { #category : 'private - scanning' }
@@ -373,7 +373,7 @@ RBScanner >> scanComment [
 	stop := self atEnd
 		ifTrue: [ stream position ]
 		ifFalse: [ stream position - 1 ].
-	^ ASTCommentToken value: buffer contents start: start stop: stop
+	^ OCCommentToken value: buffer contents start: start stop: stop
 ]
 
 { #category : 'private - scanning' }
@@ -387,7 +387,7 @@ RBScanner >> scanError: theCause from: aPosition [
 	"The value of the error token is the verbatim text from aPosition (included) to the current position (not included).
 	The error location is index of the current (problematic) character. Or index of the last character + 1 if eof."
 
-	^ ASTErrorToken
+	^ OCErrorToken
 		  value: (self scanBackFrom: aPosition)
 		  start: aPosition
 		  cause: theCause
@@ -408,10 +408,10 @@ RBScanner >> scanIdentifierOrKeyword [
 			buffer nextPut: currentCharacter.
 			self step.
 			name := buffer contents.
-			^ASTKeywordToken value: name start: tokenStart ].
+			^OCKeywordToken value: name start: tokenStart ].
 	name := buffer contents.
 	(self scanNamedLiteral: name) ifNotNil: [ :token | ^ token ].
-	^ASTIdentifierToken value: name start: tokenStart
+	^OCIdentifierToken value: name start: tokenStart
 ]
 
 { #category : 'private - scanning' }
@@ -441,7 +441,7 @@ RBScanner >> scanLiteralArrayToken [
 	"This scan accepts any character but is only meant to be used when a # is followed by ( or [ ."
 	| token |
 	self step.
-	token := ASTLiteralArrayToken
+	token := OCLiteralArrayToken
 				value: (self scanBackFrom: tokenStart)
 				start: tokenStart.
 	^token
@@ -450,7 +450,7 @@ RBScanner >> scanLiteralArrayToken [
 { #category : 'private - scanning' }
 RBScanner >> scanLiteralBinary [
 	"Used when binary characters are encountered and beginning with #"
-	^ (self scanBinary: ASTLiteralToken) stop: self previousStepPosition
+	^ (self scanBinary: OCLiteralToken) stop: self previousStepPosition
 ]
 
 { #category : 'private - scanning' }
@@ -469,7 +469,7 @@ RBScanner >> scanLiteralCharacter [
 { #category : 'private - scanning' }
 RBScanner >> scanLiteralForValue: aValue [
 
-	^ ASTLiteralToken
+	^ OCLiteralToken
 		  value: aValue
 		  start: tokenStart
 		  stop: self previousStepPosition
@@ -487,7 +487,7 @@ RBScanner >> scanLiteralString [
 		So if the stream did not move of if the last char is not a quote, then we have a problem."
 		self step. "to handle eof"
 		string := self scanBackFrom: tokenStart. "the whole token, including ' (and #')"
-		^ ASTErrorToken
+		^ OCErrorToken
 			value: string
 			start: tokenStart
 			cause: 'Unmatched '' in string literal.'
@@ -533,13 +533,13 @@ RBScanner >> scanNumber [
 	self step.
 	string := self scanBackFrom: start.
 	gotError ifNotNil: [
-	^ ASTErrorToken
+	^ OCErrorToken
 		value: string
 		start: tokenStart
 		cause: gotError
 		location: stop+1
 		].
-	^ASTNumberLiteralToken
+	^OCNumberLiteralToken
 		value: number
 		start: start
 		stop: stop
@@ -558,12 +558,12 @@ RBScanner >> scanSpecialCharacter [
 			^ currentCharacter = $=
 				ifTrue: [
 					self step.
-					ASTAssignmentToken start: tokenStart]
-				ifFalse: [ ASTSpecialCharacterToken value: $: start: tokenStart ]].
+					OCAssignmentToken start: tokenStart]
+				ifFalse: [ OCSpecialCharacterToken value: $: start: tokenStart ]].
 
 	character := currentCharacter.
 	self step.
-	^ ASTSpecialCharacterToken value: character start: tokenStart
+	^ OCSpecialCharacterToken value: character start: tokenStart
 ]
 
 { #category : 'private - scanning' }
@@ -600,7 +600,7 @@ RBScanner >> scanSymbolOrNamedLiteral [
 	self scanSymbolContent.
 	text := buffer contents.
 	(self scanNamedLiteral: text) ifNotNil: [ :token | ^ token ].
-	^ ASTLiteralToken
+	^ OCLiteralToken
 		value: text asSymbol
 		start: tokenStart
 		stop: self previousStepPosition
@@ -614,7 +614,7 @@ RBScanner >> scanToken [
 	"fast-n-ugly. Don't write stuff like this. Has been found to cause cancer in laboratory rats. Basically a
 	case statement. Didn't use Dictionary because lookup is pretty slow."
 
-	characterType = #eof ifTrue: [ ^ ASTEOFToken start: tokenStart + 1 ]. "The EOF token should occur after the end of input"
+	characterType = #eof ifTrue: [ ^ OCEOFToken start: tokenStart + 1 ]. "The EOF token should occur after the end of input"
 	characterType = #alphabetic ifTrue: [
 		^ state = #literalArray
 			ifTrue: [self scanSymbolOrNamedLiteral]

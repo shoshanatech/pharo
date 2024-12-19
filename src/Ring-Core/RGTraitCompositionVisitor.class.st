@@ -18,7 +18,7 @@ ast acceptVisitor: visitor.
 "
 Class {
 	#name : 'RGTraitCompositionVisitor',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'traitComposition'
 	],

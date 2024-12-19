@@ -97,12 +97,12 @@ EpFileOutModificationsTest >> testFileOutMultipleMethodAddition [
 	self assert: methodNode1 selector equals: #fortyTwo.
 	self 
 		assert: methodNode1 body value 
-		equals: (ASTSequenceNode statements:{ (ASTReturnNode value: (ASTLiteralValueNode value: 42)) }).
+		equals: (OCSequenceNode statements:{ (OCReturnNode value: (OCLiteralValueNode value: 42)) }).
 		
 	self assert: methodNode2 selector equals: #thirtyTwo.
 	self 
 		assert: methodNode2 body value 
-		equals: (ASTSequenceNode statements:{ (ASTReturnNode value: (ASTLiteralValueNode value: 32)) })
+		equals: (OCSequenceNode statements:{ (OCReturnNode value: (OCLiteralValueNode value: 32)) })
 ]
 
 { #category : 'tests' }
@@ -128,7 +128,7 @@ EpFileOutModificationsTest >> testFileOutMultipleMethodModification [
 	self assert: methodNode selector equals: #fortyTwo.
 	self 
 		assert: methodNode body value 
-		equals: (ASTSequenceNode statements:{ (ASTReturnNode value: (ASTLiteralValueNode value: 0.042)) }).
+		equals: (OCSequenceNode statements:{ (OCReturnNode value: (OCLiteralValueNode value: 0.042)) }).
 
 ]
 
@@ -158,12 +158,12 @@ EpFileOutModificationsTest >> testFileOutMultipleMethodRemoval [
 	self assert: methodNode1 selector equals: #removeSelector:.
 	self 
 		assertCollection: methodNode1 arguments 
-		hasSameElements: { ASTVariableNode named: #fortyTwo }.
+		hasSameElements: { OCVariableNode named: #fortyTwo }.
 		
 	self assert: methodNode2 selector equals: #removeSelector:.
 	self 
 		assertCollection: methodNode2 arguments 
-		hasSameElements: { ASTVariableNode named: #thirtyTwo }.
+		hasSameElements: { OCVariableNode named: #thirtyTwo }.
 ]
 
 { #category : 'tests' }
@@ -247,7 +247,7 @@ EpFileOutModificationsTest >> testFileOutSingleMethodAddition [
 	self assert: methodNode selector equals: #fortyTwo.
 	self 
 		assert: methodNode body value 
-		equals: (ASTSequenceNode statements:{ (ASTReturnNode value: (ASTLiteralValueNode value: 42)) })
+		equals: (OCSequenceNode statements:{ (OCReturnNode value: (OCLiteralValueNode value: 42)) })
 ]
 
 { #category : 'tests' }
@@ -293,7 +293,7 @@ EpFileOutModificationsTest >> testFileOutSingleMethodModificationOfSourceCode [
 	self assert: methodNode selector equals: #fortyTwo.
 	self 
 		assert: methodNode body value 
-		equals: (ASTSequenceNode statements:{ (ASTReturnNode value: (ASTLiteralValueNode value: 0.42)) }).
+		equals: (OCSequenceNode statements:{ (OCReturnNode value: (OCLiteralValueNode value: 0.42)) }).
 
 ]
 
@@ -318,7 +318,7 @@ EpFileOutModificationsTest >> testFileOutSingleMethodRemoval [
 	self assert: methodNode selector equals: #removeSelector:.
 	self 
 		assertCollection: methodNode arguments 
-		hasSameElements: { ASTVariableNode named: #fortyTwo }
+		hasSameElements: { OCVariableNode named: #fortyTwo }
 ]
 
 { #category : 'tests' }

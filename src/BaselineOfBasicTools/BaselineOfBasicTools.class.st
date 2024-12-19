@@ -104,86 +104,86 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 
 	"This should be removed in Pharo 14."
-	ASTNode deprecatedAliases: { #RBNode }.
-	ASTProgramNode deprecatedAliases: { #RBProgramNode }.
-	ASTValueNode deprecatedAliases: { #RBValueNode }.
-	ASTLiteralNode deprecatedAliases: { #RBLiteralNode }.
-	ASTLiteralArrayNode deprecatedAliases: { #RBLiteralArrayNode }.
-	ASTLiteralValueNode deprecatedAliases: { #RBLiteralValueNode }.
-	ASTArrayNode deprecatedAliases: { #RBArrayNode }.
-	ASTAssignmentNode deprecatedAliases: { #RBAssignmentNode }.
-	ASTCascadeNode deprecatedAliases: { #RBCascadeNode }.
-	ASTReturnNode deprecatedAliases: { #RBReturnNode }.
-	ASTVariableNode deprecatedAliases: { #RBVariableNode }.
-	ASTCommentNode deprecatedAliases: { #RBComment }.
-	ASTBlockNode deprecatedAliases: { #RBBlockNode }.
-	ASTMessageNode deprecatedAliases: { #RBMessageNode }.
-	ASTSelectorNode deprecatedAliases: { #RBSelectorNode }.
-	ASTPragmaNode deprecatedAliases: { #RBPragmaNode }.
-	ASTSequenceNode deprecatedAliases: { #RBSequenceNode }.
-	ASTAnnotationMarkNode deprecatedAliases: { #RBAnnotationMarkNode }.
-	ASTMethodNode deprecatedAliases: { #RBMethodNode }.
-	ASTDoItMethodNode deprecatedAliases: { #RBDoItMethodNode }.
-	ASTEnglobingErrorNode deprecatedAliases: { #RBEnglobingErrorNode }.
-	ASTArrayErrorNode deprecatedAliases: { #RBArrayErrorNode }.
-	ASTUnfinishedStatementErrorNode deprecatedAliases: { #RBUnfinishedStatementErrorNode }.
-	ASTLiteralByteArrayErrorNode deprecatedAliases: { #RBLiteralByteArrayErrorNode }.
-	ASTPragmaErrorNode deprecatedAliases: { #RBPragmaErrorNode }.
-	ASTLiteralArrayErrorNode deprecatedAliases: { #RBLiteralArrayErrorNode }.
-	ASTParenthesesErrorNode deprecatedAliases: { #RBParenthesesErrorNode }.
-	ASTAssignmentErrorNode deprecatedAliases: { #RBAssignmentErrorNode }.
-	ASTBlockErrorNode deprecatedAliases: { #RBBlockErrorNode }.
-	ASTTemporariesErrorNode deprecatedAliases: { #RBTemporariesErrorNode }.
-	ASTInvalidCascadeErrorNode deprecatedAliases: { #RBInvalidCascadeErrorNode }.
-	ASTParseErrorNode deprecatedAliases: { #RBParseErrorNode }.
+	OCNode deprecatedAliases: { #RBNode }.
+	OCProgramNode deprecatedAliases: { #RBProgramNode }.
+	OCValueNode deprecatedAliases: { #RBValueNode }.
+	OCLiteralNode deprecatedAliases: { #RBLiteralNode }.
+	OCLiteralArrayNode deprecatedAliases: { #RBLiteralArrayNode }.
+	OCLiteralValueNode deprecatedAliases: { #RBLiteralValueNode }.
+	OCArrayNode deprecatedAliases: { #RBArrayNode }.
+	OCAssignmentNode deprecatedAliases: { #RBAssignmentNode }.
+	OCCascadeNode deprecatedAliases: { #RBCascadeNode }.
+	OCReturnNode deprecatedAliases: { #RBReturnNode }.
+	OCVariableNode deprecatedAliases: { #RBVariableNode }.
+	OCCommentNode deprecatedAliases: { #RBComment }.
+	OCBlockNode deprecatedAliases: { #RBBlockNode }.
+	OCMessageNode deprecatedAliases: { #RBMessageNode }.
+	OCSelectorNode deprecatedAliases: { #RBSelectorNode }.
+	OCPragmaNode deprecatedAliases: { #RBPragmaNode }.
+	OCSequenceNode deprecatedAliases: { #RBSequenceNode }.
+	OCAnnotationMarkNode deprecatedAliases: { #RBAnnotationMarkNode }.
+	OCMethodNode deprecatedAliases: { #RBMethodNode }.
+	OCDoItMethodNode deprecatedAliases: { #RBDoItMethodNode }.
+	OCEnglobingErrorNode deprecatedAliases: { #RBEnglobingErrorNode }.
+	OCArrayErrorNode deprecatedAliases: { #RBArrayErrorNode }.
+	OCUnfinishedStatementErrorNode deprecatedAliases: { #RBUnfinishedStatementErrorNode }.
+	OCLiteralByteArrayErrorNode deprecatedAliases: { #RBLiteralByteArrayErrorNode }.
+	OCPragmaErrorNode deprecatedAliases: { #RBPragmaErrorNode }.
+	OCLiteralArrayErrorNode deprecatedAliases: { #RBLiteralArrayErrorNode }.
+	OCParenthesesErrorNode deprecatedAliases: { #RBParenthesesErrorNode }.
+	OCAssignmentErrorNode deprecatedAliases: { #RBAssignmentErrorNode }.
+	OCBlockErrorNode deprecatedAliases: { #RBBlockErrorNode }.
+	OCTemporariesErrorNode deprecatedAliases: { #RBTemporariesErrorNode }.
+	OCInvalidCascadeErrorNode deprecatedAliases: { #RBInvalidCascadeErrorNode }.
+	OCParseErrorNode deprecatedAliases: { #RBParseErrorNode }.
 	
-	ASTAbstractFormatter deprecatedAliases: { #RBAbstractFormatter }.
-	ASTSimpleFormatter deprecatedAliases: { #RBSimpleFormatter }.
+	OCAbstractFormatter deprecatedAliases: { #RBAbstractFormatter }.
+	OCSimpleFormatter deprecatedAliases: { #RBSimpleFormatter }.
 	
-	ASTParseTreeSearcher deprecatedAliases: { #RBParseTreeSearcher }.
-	ASTParseTreeRule deprecatedAliases: { #RBParseTreeRule }.
-	ASTReplaceRule deprecatedAliases: { #RBReplaceRule }.
-	ASTSearchRule deprecatedAliases: { #RBSearchRule }.
-	ASTBlockReplaceRule deprecatedAliases: { #RBBlockReplaceRule }.
-	ASTParseTreeRewriter deprecatedAliases: { #RBParseTreeRewriter }.
-	ASTStringReplacement deprecatedAliases: { #RBStringReplacement }.
-	ASTStringReplaceRule deprecatedAliases: { #RBStringReplaceRule }.
+	OCParseTreeSearcher deprecatedAliases: { #RBParseTreeSearcher }.
+	OCParseTreeRule deprecatedAliases: { #RBParseTreeRule }.
+	OCReplaceRule deprecatedAliases: { #RBReplaceRule }.
+	OCSearchRule deprecatedAliases: { #RBSearchRule }.
+	OCBlockReplaceRule deprecatedAliases: { #RBBlockReplaceRule }.
+	OCParseTreeRewriter deprecatedAliases: { #RBParseTreeRewriter }.
+	OCStringReplacement deprecatedAliases: { #RBStringReplacement }.
+	OCStringReplaceRule deprecatedAliases: { #RBStringReplaceRule }.
 	
-	ASTReadBeforeWrittenTester deprecatedAliases: { #RBReadBeforeWrittenTester }.
-	ASTProgramNodeVisitor deprecatedAliases: { #RBProgramNodeVisitor }.
-	ASTReturnNodeAdderVisitor deprecatedAliases: { #RBReturnNodeAdderVisitor }.
-	ASTParseErrorNodeVisitor deprecatedAliases: { #RBParseErrorNodeVisitor }.
-	ASTCommentNodeVisitor deprecatedAliases: { #RBCommentNodeVisitor }.
-	ASTGenericNodeVisitor deprecatedAliases: { #RBGenericNodeVisitor }.
-	ASTDumpVisitor deprecatedAliases: { #RBDumpVisitor }.
-	ASTAbstractBlockVisitor deprecatedAliases: { #RBAbstractBlockVisitor }.
+	OCReadBeforeWrittenTester deprecatedAliases: { #RBReadBeforeWrittenTester }.
+	OCProgramNodeVisitor deprecatedAliases: { #RBProgramNodeVisitor }.
+	OCReturnNodeAdderVisitor deprecatedAliases: { #RBReturnNodeAdderVisitor }.
+	OCParseErrorNodeVisitor deprecatedAliases: { #RBParseErrorNodeVisitor }.
+	OCCommentNodeVisitor deprecatedAliases: { #RBCommentNodeVisitor }.
+	OCGenericNodeVisitor deprecatedAliases: { #RBGenericNodeVisitor }.
+	OCDumpVisitor deprecatedAliases: { #RBDumpVisitor }.
+	OCAbstractBlockVisitor deprecatedAliases: { #RBAbstractBlockVisitor }.
 	
-	ASTErrorNotice deprecatedAliases: { #RBErrorNotice }.
-	ASTWarningNotice deprecatedAliases: { #RBWarningNotice }.
-	ASTSyntaxErrorNotice deprecatedAliases: { #RBSyntaxErrorNotice }.
-	ASTNotice deprecatedAliases: { #RBNotice }.
+	OCErrorNotice deprecatedAliases: { #RBErrorNotice }.
+	OCWarningNotice deprecatedAliases: { #RBWarningNotice }.
+	OCSyntaxErrorNotice deprecatedAliases: { #RBSyntaxErrorNotice }.
+	OCNotice deprecatedAliases: { #RBNotice }.
 	
-	ASTCommentToken deprecatedAliases: { #RBCommentToken}.
-	ASTLiteralToken deprecatedAliases: { #RBLiteralToken}.
-	ASTSpecialCharacterToken deprecatedAliases: { #RBSpecialCharacterToken}.
-	ASTIdentifierToken deprecatedAliases: { #RBIdentifierToken}.
-	ASTNumberLiteralToken deprecatedAliases: { #RBNumberLiteralToken}.
-	ASTToken deprecatedAliases: { #RBToken}.
-	ASTBinarySelectorToken deprecatedAliases: { #RBBinarySelectorToken}.
-	ASTKeywordToken deprecatedAliases: { #RBKeywordToken}.
-	ASTAssignmentToken deprecatedAliases: { #RBAssignmentToken}.
-	ASTErrorToken deprecatedAliases: { #RBErrorToken}.
-	ASTValueToken deprecatedAliases: { #RBValueToken}.
-	ASTEOFToken deprecatedAliases: { #RBEOFToken}.
-	ASTLiteralArrayToken deprecatedAliases: { #RBLiteralArrayToken}.
-	ASTPatternBlockToken deprecatedAliases: { #RBPatternBlockToken}.
+	OCCommentToken deprecatedAliases: { #RBCommentToken}.
+	OCLiteralToken deprecatedAliases: { #RBLiteralToken}.
+	OCSpecialCharacterToken deprecatedAliases: { #RBSpecialCharacterToken}.
+	OCIdentifierToken deprecatedAliases: { #RBIdentifierToken}.
+	OCNumberLiteralToken deprecatedAliases: { #RBNumberLiteralToken}.
+	OCToken deprecatedAliases: { #RBToken}.
+	OCBinarySelectorToken deprecatedAliases: { #RBBinarySelectorToken}.
+	OCKeywordToken deprecatedAliases: { #RBKeywordToken}.
+	OCAssignmentToken deprecatedAliases: { #RBAssignmentToken}.
+	OCErrorToken deprecatedAliases: { #RBErrorToken}.
+	OCValueToken deprecatedAliases: { #RBValueToken}.
+	OCEOFToken deprecatedAliases: { #RBEOFToken}.
+	OCLiteralArrayToken deprecatedAliases: { #RBLiteralArrayToken}.
+	OCPatternBlockToken deprecatedAliases: { #RBPatternBlockToken}.
 
-	ASTPatternMessageNode deprecatedAliases: { #RBPatternMessageNode }.
-	ASTPatternBlockNode deprecatedAliases: { #RBPatternBlockNode }.
-	ASTPatternWrapperBlockNode deprecatedAliases: { #RBPatternWrapperBlockNode }.
-	ASTPatternMethodNode deprecatedAliases: { #RBPatternMethodNode }.
-	ASTPatternVariableNode deprecatedAliases: { #RBPatternVariableNode }.
-	ASTPatternPragmaNode deprecatedAliases: { #RBPatternPragmaNode }.
+	OCPatternMessageNode deprecatedAliases: { #RBPatternMessageNode }.
+	OCPatternBlockNode deprecatedAliases: { #RBPatternBlockNode }.
+	OCPatternWrapperBlockNode deprecatedAliases: { #RBPatternWrapperBlockNode }.
+	OCPatternMethodNode deprecatedAliases: { #RBPatternMethodNode }.
+	OCPatternVariableNode deprecatedAliases: { #RBPatternVariableNode }.
+	OCPatternPragmaNode deprecatedAliases: { #RBPatternPragmaNode }.
 	
 	CompletionSorter register.
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.

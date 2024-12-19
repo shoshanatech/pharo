@@ -304,7 +304,7 @@ IRSequence >> sourceInterval [
 { #category : 'inspector' }
 IRSequence >> sourceNode [
 	"we should do better here"
-	^ASTSequenceNode new
+	^OCSequenceNode new
 ]
 
 { #category : 'manipulating' }

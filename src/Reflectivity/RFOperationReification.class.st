@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFOperationReification class >> entities [
-	^{ASTVariableNode. ASTMessageNode. ASTMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. ASTBlockNode . ASTLiteralArrayNode. ASTArrayNode}
+	^{OCVariableNode. OCMessageNode. OCMethodNode . OCReturnNode. OCAssignmentNode. OCLiteralNode. OCBlockNode . OCLiteralArrayNode. OCArrayNode}
 ]
 
 { #category : 'plugin interface' }
@@ -21,7 +21,7 @@ RFOperationReification class >> key [
 
 { #category : 'generate' }
 RFOperationReification >> genForASTArrayNode [
-	^ASTVariableNode named: #RFReifyValueVar
+	^OCVariableNode named: #RFReifyValueVar
 ]
 
 { #category : 'generate' }
@@ -42,7 +42,7 @@ RFOperationReification >> genForASTAssignmentNode [
 		ast := Parser parseExpression: ('RFGlobalWrite new
 			assignedValue: RFNewValueReificationVar;
 			variable: #toReplace.').
-		ast messages second arguments: {(ASTLiteralNode value: entity variable binding)}.
+		ast messages second arguments: {(OCLiteralNode value: entity variable binding)}.
 		^ast].
 	self error: 'not supported'
 ]
@@ -53,8 +53,8 @@ RFOperationReification >> genForASTBlockNode [
 	| blockNode |
 
 	blockNode := Parser parseExpression: entity formattedCode.
-	^ASTMessageNode
-		receiver: (ASTVariableNode named: #RFBlockOperation)
+	^OCMessageNode
+		receiver: (OCVariableNode named: #RFBlockOperation)
 		selector: #block:
 		arguments: {blockNode}
 ]
@@ -62,13 +62,13 @@ RFOperationReification >> genForASTBlockNode [
 { #category : 'generate' }
 RFOperationReification >> genForASTLiteralArrayNode [
 	"same as #value, no need to wrap as the literal understands #value"
-	^ASTLiteralArrayNode value: entity value
+	^OCLiteralArrayNode value: entity value
 ]
 
 { #category : 'generate' }
 RFOperationReification >> genForASTLiteralValueNode [
 	"same as #value, no need to wrap as the literal understands #value"
-	^ASTLiteralNode value: entity value
+	^OCLiteralNode value: entity value
 ]
 
 { #category : 'generate' }
@@ -87,7 +87,7 @@ RFOperationReification >> genForASTMethodNode [
 			method: #toReplace;
 			arguments: RFArgumentsReificationVar.'.
 
-	ast messages second arguments: {(ASTLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
+	ast messages second arguments: {(OCLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
 	^ast
 ]
 
@@ -113,7 +113,7 @@ RFOperationReification >> genForASTVariableNode [
 	entity variable isLiteralVariable ifTrue: [ | ast |
 			ast := Parser parseExpression: 'RFGlobalRead new
 				variable: #toReplace'.
-			ast arguments: {(ASTLiteralNode value: entity binding)}.
+			ast arguments: {(OCLiteralNode value: entity binding)}.
 
 			^ast.
 		].
@@ -137,9 +137,9 @@ RFOperationReification >> preambleForArray: aNode [
 	(1 to: aNode size) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (ASTVariableNode named: name).
+			arguments add:  (OCVariableNode named: name).
 	].
-	preamble addAll: (ASTArrayNode statements: arguments).
+	preamble addAll: (OCArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFReifyValueVar').
 	preamble addAll: arguments.
 	^ preamble
@@ -168,9 +168,9 @@ RFOperationReification >> preambleForMessage: aNode [
 	(1 to: aNode numArgs) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (ASTVariableNode named: name).
+			arguments add:  (OCVariableNode named: name).
 	].
-	preamble addAll: (ASTArrayNode statements: arguments).
+	preamble addAll: (OCArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	preamble addAll: arguments.
 	^ preamble
@@ -180,8 +180,8 @@ RFOperationReification >> preambleForMessage: aNode [
 RFOperationReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
-	arguments := aNode argumentNames collect: [ :name | ASTVariableNode named: name].
-	preamble addAll: (ASTArrayNode statements: arguments).
+	arguments := aNode argumentNames collect: [ :name | OCVariableNode named: name].
+	preamble addAll: (OCArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	^ preamble
 ]
