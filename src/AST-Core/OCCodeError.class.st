@@ -4,7 +4,7 @@ I represent a syntax or a semantic error in some pharo code.
 My instances are signaled by the parser or the compiler.
 "
 Class {
-	#name : 'CodeError',
+	#name : 'OCCodeError',
 	#superclass : 'Error',
 	#instVars : [
 		'notice'
@@ -15,65 +15,65 @@ Class {
 }
 
 { #category : 'accessing' }
-CodeError >> description [
+OCCodeError >> description [
 
 	^ self class name , ':' , self notice description
 ]
 
 { #category : 'private - testing' }
-CodeError >> isResumable [
+OCCodeError >> isResumable [
 
 	"When resumed, faulty AST are produced"
 	^true
 ]
 
 { #category : 'accessing' }
-CodeError >> location [
+OCCodeError >> location [
 
 	^ self position
 ]
 
 { #category : 'accessing' }
-CodeError >> messageText [
+OCCodeError >> messageText [
 
 	^ self notice messageText
 ]
 
 { #category : 'accessing' }
-CodeError >> methodClass [
+OCCodeError >> methodClass [
 	^ self methodNode methodClass
 ]
 
 { #category : 'accessing' }
-CodeError >> methodNode [
+OCCodeError >> methodNode [
 	^ self node methodNode
 ]
 
 { #category : 'accessing' }
-CodeError >> node [
+OCCodeError >> node [
 	^ self notice node
 ]
 
 { #category : 'accessing' }
-CodeError >> notice [
+OCCodeError >> notice [
 
 	^ notice
 ]
 
 { #category : 'accessing' }
-CodeError >> notice: anObject [
+OCCodeError >> notice: anObject [
 
 	notice := anObject
 ]
 
 { #category : 'accessing' }
-CodeError >> position [
+OCCodeError >> position [
 
 	^ self notice position
 ]
 
 { #category : 'accessing' }
-CodeError >> sourceCode [
+OCCodeError >> sourceCode [
 
 	^ self methodNode sourceCode
 ]

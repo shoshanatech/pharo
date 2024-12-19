@@ -46,7 +46,7 @@ OCCodeSnippetScriptingTest >> testEvaluateOnError [
 
 	snippet isFaulty
 		ifTrue: [
-			self should: runBlock raise: CodeError.
+			self should: runBlock raise: OCCodeError.
 			self assert: value equals: #tag ]
 		ifFalse: [ self testExecuteBlock: runBlock ]
 ]
@@ -60,7 +60,7 @@ OCCodeSnippetScriptingTest >> testEvaluateOnErrorResume [
 	value := #tag.
 	runBlock := [
 	            [ OpalCompiler new evaluate: snippet source ]
-		            on: CodeError
+		            on: OCCodeError
 		            do: [ :e | e resume ] ].
 
 	self testExecuteBlock: runBlock

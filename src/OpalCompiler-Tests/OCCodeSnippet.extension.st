@@ -7,7 +7,7 @@ OCCodeSnippet >> compile [
 		  permitFaulty: true;
 		  isScripting: isScripting;
 		  compile: self source ]
-	on: CodeError do: [ :e |
+	on: OCCodeError do: [ :e |
 		"Compilation should success, because its the *faulty* mode".
 		"If this is expected, then just return nil"
 		self ifSkip: #compile then: [^ nil ].
@@ -20,7 +20,7 @@ OCCodeSnippet >> compileOnError: aBlock [
 
 	^ [ OpalCompiler new
 		  isScripting: isScripting;
-		  compile: self source ] on: CodeError do: [ :e | aBlock cull: e ]
+		  compile: self source ] on: OCCodeError do: [ :e | aBlock cull: e ]
 ]
 
 { #category : '*OpalCompiler-Tests' }
@@ -44,5 +44,5 @@ OCCodeSnippet >> doSemanticAnalysisOnError: aBlock [
 	^ [ OpalCompiler new
 		  isScripting: isScripting;
 		  permitFaulty: false;
-		  parse: self source ] on: CodeError do: [ :e | aBlock value: e ]
+		  parse: self source ] on: OCCodeError do: [ :e | aBlock value: e ]
 ]

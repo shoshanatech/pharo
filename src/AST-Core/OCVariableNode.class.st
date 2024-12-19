@@ -114,7 +114,7 @@ OCVariableNode >> hash [
 { #category : 'initialization' }
 OCVariableNode >> initialize [
 	super initialize.
-	variable := UnresolvedVariable instance.
+	variable := OCUnresolvedVariable instance.
 	name := ''.
 	start := 0
 ]

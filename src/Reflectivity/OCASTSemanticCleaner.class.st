@@ -31,5 +31,5 @@ OCASTSemanticCleaner >> visitMethodNode: aMethodNode [
 
 { #category : 'visiting' }
 OCASTSemanticCleaner >> visitVariableNode: aVariableNode [
-	aVariableNode variable: UnresolvedVariable instance
+	aVariableNode variable: OCUnresolvedVariable instance
 ]

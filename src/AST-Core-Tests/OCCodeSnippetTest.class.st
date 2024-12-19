@@ -71,7 +71,7 @@ OCCodeSnippetTest >> testCodeImporter [
 
 	"Importer should fail when faulty"
 	snippet isFaulty ifTrue: [
-		self should: [ importer evaluate ] raise: CodeError.
+		self should: [ importer evaluate ] raise: OCCodeError.
 		snippet isScripting ifFalse: [ class removeFromSystem ].
 		^ self ].
 
@@ -127,7 +127,7 @@ OCCodeSnippetTest >> testMonticello [
 	self assert: MCMockClassE methods size equals: 0.
 
 	snippet isFaultyMinusUndeclared ifTrue: [
-			self should: [ 	[ definition load ] on: Warning do: [ :e | e resume ]. "Ignore Selector missmatches" ] raise: CodeError.
+			self should: [ 	[ definition load ] on: Warning do: [ :e | e resume ]. "Ignore Selector missmatches" ] raise: OCCodeError.
 			self assert: MCMockClassE methods size equals: 0.
 			^ self ].
 

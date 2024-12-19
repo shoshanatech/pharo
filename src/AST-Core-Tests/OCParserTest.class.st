@@ -106,19 +106,19 @@ OCParserTest >> testArrayNodesContainRightAmountOfStatementsAndPeriods [
 { #category : 'garbage tests' }
 OCParserTest >> testAssignToMessageRaisesSyntaxError [
 	"Raising a syntax exception when trying to do an assignement on a message."
-	self should: [self parserClass parseExpression: 'receiver selector := 1 + 2'] raise: CodeError
+	self should: [self parserClass parseExpression: 'receiver selector := 1 + 2'] raise: OCCodeError
 ]
 
 { #category : 'garbage tests' }
 OCParserTest >> testAssignementRightValueWithUnfortunatePontuationRaisesSyntaxError [
 	"The idea is for the parser to realise the first dot isn't supposed to be here and select it. Also add a side note to give suggestion     on the provenance of the error."
-	self should: [self parserClass parseExpression: 'temp := .1 + 2.'] raise: CodeError.
-	self should: [self parserClass parseExpression: 'temp := 1. + 2.'] raise: CodeError.
-	self should: [self parserClass parseExpression: 'temp := 1 +. 2.'] raise: CodeError.
+	self should: [self parserClass parseExpression: 'temp := .1 + 2.'] raise: OCCodeError.
+	self should: [self parserClass parseExpression: 'temp := 1. + 2.'] raise: OCCodeError.
+	self should: [self parserClass parseExpression: 'temp := 1 +. 2.'] raise: OCCodeError.
 
 	"The same could be made for other special characters."
-	self should: [self parserClass parseExpression: 'temp := ;1 + 2.'] raise: CodeError.
-	self should: [self parserClass parseExpression: 'temp := ,1 + 2.'] raise: CodeError
+	self should: [self parserClass parseExpression: 'temp := ;1 + 2.'] raise: OCCodeError.
+	self should: [self parserClass parseExpression: 'temp := ,1 + 2.'] raise: OCCodeError
 ]
 
 { #category : 'error testing' }
@@ -126,16 +126,16 @@ OCParserTest >> testBadlyPlacedPragmaRaiseError [
 	"The placement in the string will have an impact on the parsing methods involved.
 	 Pragmas are supposed to be written in the beginning of a method."
 	self shouldnt: [(self parserClass parseMethod: 'foo | token | <some: #tag> ^true')]
-		  raise: CodeError.
+		  raise: OCCodeError.
 
 	self should: [(self parserClass parseMethod: 'foo | token | ^true <some: #tag>')]
-		  raise: 	CodeError.
+		  raise: 	OCCodeError.
 
 	self should: [(self parserClass parseMethod: 'foo | token | token:= 5 <some: #tag> ^token')]
-		  raise: 	CodeError.
+		  raise: 	OCCodeError.
 
 	self should: [(self parserClass parseMethod: 'foo | token |  token messaged <some: #tag> ^token')]
-		  raise: 	CodeError
+		  raise: 	OCCodeError
 ]
 
 { #category : 'tests - Interval' }
@@ -208,9 +208,9 @@ OCParserTest >> testBlockReturnNode [
 OCParserTest >> testCascade [
 	self assert: (self parserClass parseExpression: ' self msg; yourself') isCascade.
 	self assert: (self parserClass parseExpression: ' self msg:(arg msg:arg); yourself') isCascade.
-	self should: [ self parserClass parseExpression: ' (self msg); yourself' ] raise: CodeError.
-	self should: [ self parserClass parseExpression: ' self ; yourself' ] raise: CodeError.
-	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: CodeError
+	self should: [ self parserClass parseExpression: ' (self msg); yourself' ] raise: OCCodeError.
+	self should: [ self parserClass parseExpression: ' self ; yourself' ] raise: OCCodeError.
+	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: OCCodeError
 ]
 
 { #category : 'tests - Cascade' }
@@ -312,10 +312,10 @@ OCParserTest >> testCascadeWithMissingSelectorRaisesError [
 
 { #category : 'error testing' }
 OCParserTest >> testCascadeWithNoMessageRaiseError [
-	self should: [ self parserClass parseExpression: ' (self msg); yourself' ] raise: CodeError.
-	self should: [ self parserClass parseExpression: ' self ; yourself' ] raise: CodeError.
-	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: CodeError.
-	self should: [ self parserClass parseExpression: ' self msg ;  ; yourself' ] raise: CodeError
+	self should: [ self parserClass parseExpression: ' (self msg); yourself' ] raise: OCCodeError.
+	self should: [ self parserClass parseExpression: ' self ; yourself' ] raise: OCCodeError.
+	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: OCCodeError.
+	self should: [ self parserClass parseExpression: ' self msg ;  ; yourself' ] raise: OCCodeError
 ]
 
 { #category : 'tests - comparing' }
@@ -551,7 +551,7 @@ OCParserTest >> testErrorNodeForBadParenthesesStopAtEnd [
 OCParserTest >> testFaultyLiteralRaiseSyntaxError [
 	#('#"bar"foo' '# foo' '#1' '#12' '#12.3' '# 1' '##1' '#"bar"1')
 		do: [ :expr |
-		self should: [self parserClass parseExpression: expr] raise: CodeError ]
+		self should: [self parserClass parseExpression: expr] raise: OCCodeError ]
 ]
 
 { #category : 'tests' }
@@ -566,7 +566,7 @@ OCParserTest >> testFormatter [
 { #category : 'garbage tests' }
 OCParserTest >> testGarbageForgottenDotAfterAssignement [
 	| tree child error |
-	self shouldnt: [self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'] raise: CodeError.
+	self shouldnt: [self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'] raise: OCCodeError.
 
 	tree := self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'.
 	self assert: tree isSequence.
@@ -588,7 +588,7 @@ OCParserTest >> testGarbageForgottenReceiver [
 	"Test made in sight of implementing the search of previous litterals when encountering an unknown
 	 variable in case it is, in fact, a selector. This works for cascade (forgotten ;) or missing
 	 receiver like self ..."
-	self should: [self parserClass parseExpression: '|temp | temp := 1 + 2. + 3'] raise: CodeError
+	self should: [self parserClass parseExpression: '|temp | temp := 1 + 2. + 3'] raise: OCCodeError
 ]
 
 { #category : 'garbage tests' }
@@ -870,13 +870,13 @@ OCParserTest >> testInvalidPragmaPosition [
 	'foo [:x | <foo: $a> ] value'
 	'foo ^ <foo: $a>'
 	)
-	do: [ :each | self should: [ self parserClass parseMethod: each ] raise: CodeError ]
+	do: [ :each | self should: [ self parserClass parseMethod: each ] raise: OCCodeError ]
 ]
 
 { #category : 'garbage tests' }
 OCParserTest >> testInvalidSelectorRaisesSyntaxError [
 	"Could propose multiple reparations like assignement, period, array..."
-	self should: [self parserClass parseExpression: 'temp 1 + 3'] raise: CodeError
+	self should: [self parserClass parseExpression: 'temp 1 + 3'] raise: OCCodeError
 ]
 
 { #category : 'tests' }
@@ -1099,7 +1099,7 @@ OCParserTest >> testModifying [
 
 { #category : 'error testing' }
 OCParserTest >> testNegativeNumberError [
-	self should: [ self parserClass parseExpression: '- 2' ] raise: CodeError
+	self should: [ self parserClass parseExpression: '- 2' ] raise: OCCodeError
 ]
 
 { #category : 'error testing' }
@@ -1353,16 +1353,16 @@ OCParserTest >> testParseLiterals [
 
 	self
 		should: [ OCParser parseLiterals: '#( unclosed' ]
-		raise: CodeError.
+		raise: OCCodeError.
 	self
 		should: [ OCParser parseLiterals: ') unopened' ]
-		raise: CodeError.
+		raise: OCCodeError.
 	self
 		should: [ OCParser parseLiterals: '#[ 1 1000 2 ] bad subliteral' ]
-		raise: CodeError.
+		raise: OCCodeError.
 	self
 		should: [ OCParser parseLiterals: 'syntax¿error' ]
-		raise: CodeError
+		raise: OCCodeError
 ]
 
 { #category : 'tests - Pattern' }
@@ -1650,9 +1650,9 @@ OCParserTest >> testPragmaConstantLiteralArgument [
 	validPragma := 'foo <return: #Point> ^ 0@0'.
 	"Point as argument is not allowed"
 	invalidPragma := 'foo <return: Point> ^ 0@0'.
-	self shouldnt:[self parserClass parseMethod: primitiveDeclartion] raise: CodeError.
-	self shouldnt:[self parserClass 	parseMethod: validPragma] raise: CodeError.
-	self should:[self parserClass parseMethod: invalidPragma] raise: CodeError
+	self shouldnt:[self parserClass parseMethod: primitiveDeclartion] raise: OCCodeError.
+	self shouldnt:[self parserClass 	parseMethod: validPragma] raise: OCCodeError.
+	self should:[self parserClass parseMethod: invalidPragma] raise: OCCodeError
 ]
 
 { #category : 'error testing' }
@@ -1664,21 +1664,21 @@ OCParserTest >> testPragmaImplicitLiteralArrayIsInvalid [
 	pragmaWithExpressionAsArgument := 'foo
 	<func: (3+4) res: 7>
 	^ self'.
-	self should:[self parserClass parseMethod: pragmaWithExpressionAsArgument] raise: CodeError.
+	self should:[self parserClass parseMethod: pragmaWithExpressionAsArgument] raise: OCCodeError.
 
 	"an explicit literal array is allowed"
 	pragmaWithLiteralArrayAsArgument := 'foo
 	<func: #(3+4) res: 7>
 	^ self'.
 	"Should work"
-	self shouldnt: [self parserClass parseMethod: pragmaWithLiteralArrayAsArgument] raise: CodeError.
+	self shouldnt: [self parserClass parseMethod: pragmaWithLiteralArrayAsArgument] raise: OCCodeError.
 
 	"and of course a string literal"
 	pragmaWithStringAsArgument := 'foo
 	<func: ''(3+4)'' res: 7>
 	^ self'.
 	"should work"
-	self shouldnt: [self parserClass parseMethod: pragmaWithStringAsArgument] raise: CodeError
+	self shouldnt: [self parserClass parseMethod: pragmaWithStringAsArgument] raise: OCCodeError
 ]
 
 { #category : 'tests' }
@@ -1692,7 +1692,7 @@ OCParserTest >> testPragmaInExpression [
 	self assert: (node methodNode hasPragmaNamed: #some:).
 
 	self should: [(self parserClass parseExpression: '| token | 1+2. <some: #tag> true')]
-		  raise: CodeError
+		  raise: OCCodeError
 ]
 
 { #category : 'error testing' }
@@ -1754,7 +1754,7 @@ OCParserTest >> testPragmas [
 		"comment2"
 		<a>
 		<.
-		^1'] raise: CodeError
+		^1'] raise: OCCodeError
 ]
 
 { #category : 'tests - parsing' }
@@ -1950,7 +1950,7 @@ OCParserTest >> testSymbolLiteral [
 	('# 1' 1)
 	('##1' 1)
 	('#"bar"1' 1)) do: [ :pair |
-		self should: [self parserClass parseExpression: pair first] raise: CodeError ]
+		self should: [self parserClass parseExpression: pair first] raise: OCCodeError ]
 ]
 
 { #category : 'tests - Literal' }
@@ -2002,7 +2002,7 @@ OCParserTest >> testUnclosedParenthesesErrorNodeContainsRightValue [
 { #category : 'garbage tests' }
 OCParserTest >> testUnclosedParenthesesRaiseSyntaxError [
 	"Should propose a closing parenthese before the end of the statement. Should also offer possibility to quickly erase it."
-	self should: [self parserClass parseExpression: '(temp := 1 + 3 .'] raise: CodeError
+	self should: [self parserClass parseExpression: '(temp := 1 + 3 .'] raise: OCCodeError
 ]
 
 { #category : 'error testing' }
@@ -2017,21 +2017,21 @@ OCParserTest >> testUnclosedTemporariesErrorNodeContainsRightValue [
 OCParserTest >> testUnfinishedStatementWithLeadingBracesRaisesError [
 
 	self should: [(self parserClass parseExpression: '[]}')]
-		  raise: CodeError
+		  raise: OCCodeError
 ]
 
 { #category : 'error testing' }
 OCParserTest >> testUnfinishedStatementWithLeadingBracketRaisesError [
 
 	self should: [(self parserClass parseExpression: '[]]')]
-		  raise: CodeError
+		  raise: OCCodeError
 ]
 
 { #category : 'error testing' }
 OCParserTest >> testUnfinishedStatementWithLeadingParenthesisRaisesError [
 
 	self should: [(self parserClass parseExpression: '[])')]
-		  raise: CodeError
+		  raise: OCCodeError
 ]
 
 { #category : 'private' }

@@ -1878,7 +1878,7 @@ OCCodeSnippet class >> badSemantic [
 			         source: 'CodeError signal: ''false error''';
 			         nodeAt: '1111111110000000002222222222222';
 			         styled: 'ggggggggg sssssss ''''''''''''''''''''''''''';
-			         raise: CodeError;
+			         raise: OCCodeError;
 			         skip: #testEvaluateOnErrorResume). "evaluate cannot distinguishes runtime errors and compiletime errors"
 		        (self new
 			         source:
@@ -3110,7 +3110,7 @@ OCCodeSnippet >> parseOnError: aBlock [
 	^ [ isScripting
 			  ifTrue: [ OCParser parseExpression: self source ]
 			  ifFalse: [ OCParser parseMethod: self source ] ]
-		  on: CodeError
+		  on: OCCodeError
 		  do: [ :e | aBlock value: e ]
 ]
 

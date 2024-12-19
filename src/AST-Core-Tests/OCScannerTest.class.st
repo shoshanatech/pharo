@@ -2,7 +2,7 @@
 SUnit tests for RBScanner
 "
 Class {
-	#name : 'ASTScannerTest',
+	#name : 'OCScannerTest',
 	#superclass : 'TestCase',
 	#category : 'AST-Core-Tests-Parser',
 	#package : 'AST-Core-Tests',
@@ -10,17 +10,17 @@ Class {
 }
 
 { #category : 'initialize' }
-ASTScannerTest >> buildScannerForText: source [
+OCScannerTest >> buildScannerForText: source [
 	^ self scannerClass on: source readStream
 ]
 
 { #category : 'initialize' }
-ASTScannerTest >> scannerClass [
+OCScannerTest >> scannerClass [
 	^ OCScanner
 ]
 
 { #category : 'tests - Comment' }
-ASTScannerTest >> testCommentTokenHasTheRightValue [
+OCScannerTest >> testCommentTokenHasTheRightValue [
 	| scanner token |
 	scanner := self buildScannerForText: String tab, ' "simple comment" firstToken'.
 	token := scanner next comments first.
@@ -36,7 +36,7 @@ ASTScannerTest >> testCommentTokenHasTheRightValue [
 ]
 
 { #category : 'tests - Comment' }
-ASTScannerTest >> testCommentTokenStartAtFirstQuote [
+OCScannerTest >> testCommentTokenStartAtFirstQuote [
 	| scanner token str comment |
 	str := ' "simple comment" firstToken'.
 	comment := '"simple comment"'.
@@ -61,7 +61,7 @@ ASTScannerTest >> testCommentTokenStartAtFirstQuote [
 ]
 
 { #category : 'tests - Comment' }
-ASTScannerTest >> testCommentTokenStopAtLastQuote [
+OCScannerTest >> testCommentTokenStopAtLastQuote [
 	| scanner token str comment |
 	str := ' "simple comment" firstToken'.
 	comment := '"simple comment"'.
@@ -86,7 +86,7 @@ ASTScannerTest >> testCommentTokenStopAtLastQuote [
 ]
 
 { #category : 'tests - Comment' }
-ASTScannerTest >> testMultipleCommentTokensAreWellSeparated [
+OCScannerTest >> testMultipleCommentTokensAreWellSeparated [
 	| scanner token comments |
 	scanner := self buildScannerForText: String tab, ' "first comment" " second comment" firstToken'.
 	comments := scanner next comments.
@@ -100,7 +100,7 @@ ASTScannerTest >> testMultipleCommentTokensAreWellSeparated [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextAcceptAllAlphabeticAsLiteral [
+OCScannerTest >> testNextAcceptAllAlphabeticAsLiteral [
 	| scanner token |
 	scanner := self buildScannerForText: '#alpha'.
 	token := scanner next.
@@ -108,7 +108,7 @@ ASTScannerTest >> testNextAcceptAllAlphabeticAsLiteral [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextAcceptFloatNumbers [
+OCScannerTest >> testNextAcceptFloatNumbers [
 
 	| scanner token |
 	scanner := self buildScannerForText: '3.2'.
@@ -117,7 +117,7 @@ ASTScannerTest >> testNextAcceptFloatNumbers [
 ]
 
 { #category : 'tests - SpecialCharacters' }
-ASTScannerTest >> testNextAcceptLiteralArrayWithBracket [
+OCScannerTest >> testNextAcceptLiteralArrayWithBracket [
 	"Note: RBScanner only spots the beginning of the array."
 	| scanner token |
 
@@ -127,7 +127,7 @@ ASTScannerTest >> testNextAcceptLiteralArrayWithBracket [
 ]
 
 { #category : 'tests - SpecialCharacters' }
-ASTScannerTest >> testNextAcceptLiteralArrayWithParenthesis [
+OCScannerTest >> testNextAcceptLiteralArrayWithParenthesis [
 	"Note: RBScanner only spots the beginning of the array."
 	| scanner token |
 	scanner := self buildScannerForText: '#('.
@@ -136,7 +136,7 @@ ASTScannerTest >> testNextAcceptLiteralArrayWithParenthesis [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextAcceptRadixNumbers [
+OCScannerTest >> testNextAcceptRadixNumbers [
 
 	| scanner token |
 	scanner := self buildScannerForText: '10r10'.
@@ -157,7 +157,7 @@ ASTScannerTest >> testNextAcceptRadixNumbers [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextAllAlphabeticEndingWithColonGiveKeyword [
+OCScannerTest >> testNextAllAlphabeticEndingWithColonGiveKeyword [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken:'.
 	token := scanner next.
@@ -165,7 +165,7 @@ ASTScannerTest >> testNextAllAlphabeticEndingWithColonGiveKeyword [
 ]
 
 { #category : 'tests - Identifiers' }
-ASTScannerTest >> testNextAllAlphabeticsGiveIdentifier [
+OCScannerTest >> testNextAllAlphabeticsGiveIdentifier [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken'.
 	token := scanner next.
@@ -173,7 +173,7 @@ ASTScannerTest >> testNextAllAlphabeticsGiveIdentifier [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextAlphabeticAndDigitEndingWithColonGiveKeyword [
+OCScannerTest >> testNextAlphabeticAndDigitEndingWithColonGiveKeyword [
 	| scanner token |
 	scanner := self buildScannerForText: 'first123Token:'.
 	token := scanner next.
@@ -181,7 +181,7 @@ ASTScannerTest >> testNextAlphabeticAndDigitEndingWithColonGiveKeyword [
 ]
 
 { #category : 'tests - Identifiers' }
-ASTScannerTest >> testNextAlphabeticsAndDigitGiveIdentifier [
+OCScannerTest >> testNextAlphabeticsAndDigitGiveIdentifier [
 	| scanner token |
 	scanner := self buildScannerForText: 'first123Token'.
 	token := scanner next.
@@ -189,7 +189,7 @@ ASTScannerTest >> testNextAlphabeticsAndDigitGiveIdentifier [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextAssignementStartAtColon [
+OCScannerTest >> testNextAssignementStartAtColon [
 	| scanner token |
 	scanner := self buildScannerForText: ':='.
 	token := scanner next.
@@ -197,7 +197,7 @@ ASTScannerTest >> testNextAssignementStartAtColon [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextAssignementStopAtEqual [
+OCScannerTest >> testNextAssignementStopAtEqual [
 	| scanner token |
 	scanner := self buildScannerForText: ':='.
 	token := scanner next.
@@ -205,7 +205,7 @@ ASTScannerTest >> testNextAssignementStopAtEqual [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextBaseOfRadixNumbersCanNotBeOne [
+OCScannerTest >> testNextBaseOfRadixNumbersCanNotBeOne [
 
 	| scanner token |
 	scanner := self buildScannerForText: '1r1a'.
@@ -215,7 +215,7 @@ ASTScannerTest >> testNextBaseOfRadixNumbersCanNotBeOne [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextBeginningWithDigitIsNumber [
+OCScannerTest >> testNextBeginningWithDigitIsNumber [
 
 	| scanner token |
 	scanner := self buildScannerForText: '1'.
@@ -240,7 +240,7 @@ ASTScannerTest >> testNextBeginningWithDigitIsNumber [
 ]
 
 { #category : 'tests - BinarySelector' }
-ASTScannerTest >> testNextBinaryGivesBinarySelector [
+OCScannerTest >> testNextBinaryGivesBinarySelector [
 	| scanner token |
 	scanner := self buildScannerForText: '+'.
 	token := scanner next.
@@ -248,7 +248,7 @@ ASTScannerTest >> testNextBinaryGivesBinarySelector [
 ]
 
 { #category : 'tests - BinarySelector' }
-ASTScannerTest >> testNextBinarySelectorCanBeMultipleBinaries [
+OCScannerTest >> testNextBinarySelectorCanBeMultipleBinaries [
 	| scanner token |
 	scanner := self buildScannerForText: '+-=/'.
 	token := scanner next.
@@ -257,7 +257,7 @@ ASTScannerTest >> testNextBinarySelectorCanBeMultipleBinaries [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextBinarySelectorStartAtFirstLetter [
+OCScannerTest >> testNextBinarySelectorStartAtFirstLetter [
 	| scanner token |
 	scanner := self buildScannerForText: '+-=/'.
 	token := scanner next.
@@ -266,7 +266,7 @@ ASTScannerTest >> testNextBinarySelectorStartAtFirstLetter [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextBinarySelectorStopAtLastLetter [
+OCScannerTest >> testNextBinarySelectorStopAtLastLetter [
 	| scanner token |
 	scanner := self buildScannerForText: '+-=/'.
 	token := scanner next.
@@ -275,7 +275,7 @@ ASTScannerTest >> testNextBinarySelectorStopAtLastLetter [
 ]
 
 { #category : 'tests - BinarySelector' }
-ASTScannerTest >> testNextBinarySelectorStopsAtNonBinary [
+OCScannerTest >> testNextBinarySelectorStopsAtNonBinary [
 	| scanner token |
 	scanner := self buildScannerForText: '+a'.
 	token := scanner next.
@@ -299,7 +299,7 @@ ASTScannerTest >> testNextBinarySelectorStopsAtNonBinary [
 ]
 
 { #category : 'tests - BinarySelector' }
-ASTScannerTest >> testNextBinarySelectorValueIsBinary [
+OCScannerTest >> testNextBinarySelectorValueIsBinary [
 	| scanner token |
 	scanner := self buildScannerForText: '+'.
 	token := scanner next.
@@ -307,7 +307,7 @@ ASTScannerTest >> testNextBinarySelectorValueIsBinary [
 ]
 
 { #category : 'tests - Comment' }
-ASTScannerTest >> testNextCommentIsCommentToken [
+OCScannerTest >> testNextCommentIsCommentToken [
 	| scanner token |
 	scanner := self buildScannerForText: String tab, ' "simple comment" firstToken'.
 	token := scanner next comments first.
@@ -323,7 +323,7 @@ ASTScannerTest >> testNextCommentIsCommentToken [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextDoesNotAddLineBreakToComments [
+OCScannerTest >> testNextDoesNotAddLineBreakToComments [
 	| scanner token |
 	scanner := self buildScannerForText: '
 firstToken'.
@@ -332,7 +332,7 @@ firstToken'.
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextDoesNotAddSpacesToComments [
+OCScannerTest >> testNextDoesNotAddSpacesToComments [
 	| scanner token |
 	scanner := self buildScannerForText: String space, String space,'firstToken'.
 	token := scanner next.
@@ -340,7 +340,7 @@ ASTScannerTest >> testNextDoesNotAddSpacesToComments [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextDoesNotAddTabToComments [
+OCScannerTest >> testNextDoesNotAddTabToComments [
 	| scanner token |
 	scanner := self buildScannerForText: String tab, 'firstToken'.
 	token := scanner next.
@@ -348,7 +348,7 @@ ASTScannerTest >> testNextDoesNotAddTabToComments [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextDollarSignErrorHasDollarValue [
+OCScannerTest >> testNextDollarSignErrorHasDollarValue [
 	| scanner token |
 	scanner := self buildScannerForText: '$'.
 	token := scanner next.
@@ -356,7 +356,7 @@ ASTScannerTest >> testNextDollarSignErrorHasDollarValue [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextDollarSignExpectedACharacter [
+OCScannerTest >> testNextDollarSignExpectedACharacter [
 	| scanner token |
 	scanner := self buildScannerForText: '$'.
 	token := scanner next.
@@ -364,7 +364,7 @@ ASTScannerTest >> testNextDollarSignExpectedACharacter [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextDollarSignIsError [
+OCScannerTest >> testNextDollarSignIsError [
 	| scanner token |
 	scanner := self buildScannerForText: '$'.
 	token := scanner next.
@@ -372,7 +372,7 @@ ASTScannerTest >> testNextDollarSignIsError [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextEOFContainsCommentsWhenNoOtherToken [
+OCScannerTest >> testNextEOFContainsCommentsWhenNoOtherToken [
 	| scanner token |
 	scanner := self buildScannerForText: '"start comment"'.
 
@@ -383,7 +383,7 @@ ASTScannerTest >> testNextEOFContainsCommentsWhenNoOtherToken [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextErrorStartAtFirstCharacter [
+OCScannerTest >> testNextErrorStartAtFirstCharacter [
 	| scanner token |
 	scanner := self buildScannerForText: '$'.
 	token := scanner next.
@@ -396,7 +396,7 @@ ASTScannerTest >> testNextErrorStartAtFirstCharacter [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextErrorStopAtErrorCharacter [
+OCScannerTest >> testNextErrorStopAtErrorCharacter [
 	| scanner token |
 	scanner := self buildScannerForText: '$'.
 	token := scanner next.
@@ -409,7 +409,7 @@ ASTScannerTest >> testNextErrorStopAtErrorCharacter [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextFalseIsLiteral [
+OCScannerTest >> testNextFalseIsLiteral [
 	| scanner token |
 	scanner := self buildScannerForText: 'false'.
 	token := scanner next.
@@ -418,7 +418,7 @@ ASTScannerTest >> testNextFalseIsLiteral [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextFirstTokenContainsFollowingComments [
+OCScannerTest >> testNextFirstTokenContainsFollowingComments [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken "following comment"'.
 
@@ -429,7 +429,7 @@ ASTScannerTest >> testNextFirstTokenContainsFollowingComments [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextFirstTokenContainsPrecedingComments [
+OCScannerTest >> testNextFirstTokenContainsPrecedingComments [
 	| scanner token |
 	scanner := self buildScannerForText: '"start comment"firstToken'.
 	token := scanner next.
@@ -438,7 +438,7 @@ ASTScannerTest >> testNextFirstTokenContainsPrecedingComments [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextFloatNumbersCanBeNegative [
+OCScannerTest >> testNextFloatNumbersCanBeNegative [
 
 	| scanner token |
 	scanner := self buildScannerForText: '-3.2'.
@@ -447,7 +447,7 @@ ASTScannerTest >> testNextFloatNumbersCanBeNegative [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextFloatNumbersCanNotHaveSpaces [
+OCScannerTest >> testNextFloatNumbersCanNotHaveSpaces [
 
 	| scanner token |
 	scanner := self buildScannerForText: '3 .2'.
@@ -460,7 +460,7 @@ ASTScannerTest >> testNextFloatNumbersCanNotHaveSpaces [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextFloatNumbersHasFloatValue [
+OCScannerTest >> testNextFloatNumbersHasFloatValue [
 
 	| scanner token |
 	scanner := self buildScannerForText: '3.2'.
@@ -469,7 +469,7 @@ ASTScannerTest >> testNextFloatNumbersHasFloatValue [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextHashtagCanNotStandAlone [
+OCScannerTest >> testNextHashtagCanNotStandAlone [
 	| scanner token |
 	scanner := self buildScannerForText: '#'.
 	token := scanner next.
@@ -477,7 +477,7 @@ ASTScannerTest >> testNextHashtagCanNotStandAlone [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextHashtagStringIsLiteral [
+OCScannerTest >> testNextHashtagStringIsLiteral [
 	| scanner token |
 	scanner := self buildScannerForText: '#''the world has changed'''.
 	token := scanner next.
@@ -486,7 +486,7 @@ ASTScannerTest >> testNextHashtagStringIsLiteral [
 ]
 
 { #category : 'tests - Identifiers' }
-ASTScannerTest >> testNextIdentifierCanContainUnderscore [
+OCScannerTest >> testNextIdentifierCanContainUnderscore [
 	| scanner token |
 	scanner := self buildScannerForText: 'first_Token'.
 	token := scanner next.
@@ -505,7 +505,7 @@ ASTScannerTest >> testNextIdentifierCanContainUnderscore [
 ]
 
 { #category : 'tests - Identifiers' }
-ASTScannerTest >> testNextIdentifierCanNotBeginWithBinary [
+OCScannerTest >> testNextIdentifierCanNotBeginWithBinary [
 	| scanner token |
 
 	"Scanner doesn't recognise + as the beginning of an Identifier."
@@ -521,7 +521,7 @@ ASTScannerTest >> testNextIdentifierCanNotBeginWithBinary [
 ]
 
 { #category : 'tests - Identifiers' }
-ASTScannerTest >> testNextIdentifierCanNotBeginWithDigit [
+OCScannerTest >> testNextIdentifierCanNotBeginWithDigit [
 	| scanner token |
 	scanner := self buildScannerForText: '123firstToken'.
 
@@ -537,7 +537,7 @@ ASTScannerTest >> testNextIdentifierCanNotBeginWithDigit [
 ]
 
 { #category : 'tests - Identifiers' }
-ASTScannerTest >> testNextIdentifierCanNotEndWithBinary [
+OCScannerTest >> testNextIdentifierCanNotEndWithBinary [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken+'.
 
@@ -552,7 +552,7 @@ ASTScannerTest >> testNextIdentifierCanNotEndWithBinary [
 ]
 
 { #category : 'tests - Identifiers' }
-ASTScannerTest >> testNextIdentifierCanNotHaveBinary [
+OCScannerTest >> testNextIdentifierCanNotHaveBinary [
 	| scanner token |
 	scanner := self buildScannerForText: 'first+Token'.
 
@@ -570,7 +570,7 @@ ASTScannerTest >> testNextIdentifierCanNotHaveBinary [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextIdentifierStartAtFirstLetter [
+OCScannerTest >> testNextIdentifierStartAtFirstLetter [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken'.
 	token := scanner next.
@@ -578,7 +578,7 @@ ASTScannerTest >> testNextIdentifierStartAtFirstLetter [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextIdentifierStopAtLastLetter [
+OCScannerTest >> testNextIdentifierStopAtLastLetter [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken'.
 	token := scanner next.
@@ -586,7 +586,7 @@ ASTScannerTest >> testNextIdentifierStopAtLastLetter [
 ]
 
 { #category : 'tests - Identifiers' }
-ASTScannerTest >> testNextIdentifierValueIsName [
+OCScannerTest >> testNextIdentifierValueIsName [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken'.
 	token := scanner next.
@@ -594,7 +594,7 @@ ASTScannerTest >> testNextIdentifierValueIsName [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextKeyWordStartAtFirstLetter [
+OCScannerTest >> testNextKeyWordStartAtFirstLetter [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken:'.
 	token := scanner next.
@@ -602,7 +602,7 @@ ASTScannerTest >> testNextKeyWordStartAtFirstLetter [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextKeywordBeginningWithSpecialCharacterIsNotKeyword [
+OCScannerTest >> testNextKeywordBeginningWithSpecialCharacterIsNotKeyword [
 	| scanner token |
 	scanner := self buildScannerForText: '^firstToken:'.
 	token := scanner next.
@@ -626,7 +626,7 @@ ASTScannerTest >> testNextKeywordBeginningWithSpecialCharacterIsNotKeyword [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextKeywordCanContainUnderscore [
+OCScannerTest >> testNextKeywordCanContainUnderscore [
 	| scanner token |
 	scanner := self buildScannerForText: 'first_Token:'.
 	token := scanner next.
@@ -645,7 +645,7 @@ ASTScannerTest >> testNextKeywordCanContainUnderscore [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextKeywordCanNotBeFullBinary [
+OCScannerTest >> testNextKeywordCanNotBeFullBinary [
 	| scanner token |
 	scanner := self buildScannerForText: '+-=:'.
 
@@ -661,7 +661,7 @@ ASTScannerTest >> testNextKeywordCanNotBeFullBinary [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextKeywordCanNotBeFullDigit [
+OCScannerTest >> testNextKeywordCanNotBeFullDigit [
 	| scanner token |
 	scanner := self buildScannerForText: '123:'.
 
@@ -677,7 +677,7 @@ ASTScannerTest >> testNextKeywordCanNotBeFullDigit [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextKeywordCanNotBeginWithBinary [
+OCScannerTest >> testNextKeywordCanNotBeginWithBinary [
 	| scanner token |
 	scanner := self buildScannerForText: '+alpha:'.
 
@@ -691,7 +691,7 @@ ASTScannerTest >> testNextKeywordCanNotBeginWithBinary [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextKeywordCanNotBeginWithDigit [
+OCScannerTest >> testNextKeywordCanNotBeginWithDigit [
 	| scanner token |
 	scanner := self buildScannerForText: '123alpha:'.
 
@@ -705,7 +705,7 @@ ASTScannerTest >> testNextKeywordCanNotBeginWithDigit [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextKeywordStopAtColon [
+OCScannerTest >> testNextKeywordStopAtColon [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken:'.
 	token := scanner next.
@@ -719,7 +719,7 @@ ASTScannerTest >> testNextKeywordStopAtColon [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextKeywordValueIsStartToStop [
+OCScannerTest >> testNextKeywordValueIsStartToStop [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken:'.
 	token := scanner next.
@@ -731,7 +731,7 @@ ASTScannerTest >> testNextKeywordValueIsStartToStop [
 ]
 
 { #category : 'tests - SpecialCharacters' }
-ASTScannerTest >> testNextLiteralArrayHasRightValue [
+OCScannerTest >> testNextLiteralArrayHasRightValue [
 	"Note: RBScanner only spots the beginning of the array."
 	| scanner token |
 
@@ -741,7 +741,7 @@ ASTScannerTest >> testNextLiteralArrayHasRightValue [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextLiteralArrayWithBracketStartAtHashtag [
+OCScannerTest >> testNextLiteralArrayWithBracketStartAtHashtag [
 	"Note: RBScanner only spots the beginning of the array."
 	| scanner token |
 
@@ -751,7 +751,7 @@ ASTScannerTest >> testNextLiteralArrayWithBracketStartAtHashtag [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextLiteralArrayWithBracketStopAtBracket [
+OCScannerTest >> testNextLiteralArrayWithBracketStopAtBracket [
 	"Note: RBScanner only spots the beginning of the array."
 	| scanner token |
 
@@ -761,7 +761,7 @@ ASTScannerTest >> testNextLiteralArrayWithBracketStopAtBracket [
 ]
 
 { #category : 'tests - SpecialCharacters' }
-ASTScannerTest >> testNextLiteralArrayWithParenthesisHasRigthValue [
+OCScannerTest >> testNextLiteralArrayWithParenthesisHasRigthValue [
 	"Note: RBScanner only spots the beginning of the array."
 	| scanner token |
 	scanner := self buildScannerForText: '#('.
@@ -770,7 +770,7 @@ ASTScannerTest >> testNextLiteralArrayWithParenthesisHasRigthValue [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextLiteralArrayWithParenthesisStartAtHashTag [
+OCScannerTest >> testNextLiteralArrayWithParenthesisStartAtHashTag [
 	"Note: RBScanner only spots the beginning of the array."
 	| scanner token |
 	scanner := self buildScannerForText: '#('.
@@ -779,7 +779,7 @@ ASTScannerTest >> testNextLiteralArrayWithParenthesisStartAtHashTag [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextLiteralArrayWithParenthesisStopAtParenthesis [
+OCScannerTest >> testNextLiteralArrayWithParenthesisStopAtParenthesis [
 	"Note: RBScanner only spots the beginning of the array."
 	| scanner token |
 	scanner := self buildScannerForText: '#('.
@@ -788,7 +788,7 @@ ASTScannerTest >> testNextLiteralArrayWithParenthesisStopAtParenthesis [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextLiteralBeginningWithApostropheThrowsError [
+OCScannerTest >> testNextLiteralBeginningWithApostropheThrowsError [
 	| scanner token |
 	scanner := self buildScannerForText: '#'''.
 	token := scanner next.
@@ -798,7 +798,7 @@ ASTScannerTest >> testNextLiteralBeginningWithApostropheThrowsError [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextLiteralBeginningWithDigitThrowsError [
+OCScannerTest >> testNextLiteralBeginningWithDigitThrowsError [
 	| scanner token |
 	scanner := self buildScannerForText: '#123alpha'.
 	token := scanner next.
@@ -808,7 +808,7 @@ ASTScannerTest >> testNextLiteralBeginningWithDigitThrowsError [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextLiteralBeginningWithSpecialThrowsError [
+OCScannerTest >> testNextLiteralBeginningWithSpecialThrowsError [
 	| scanner token |
 	scanner := self buildScannerForText: '#^'.
 	token := scanner next.
@@ -818,7 +818,7 @@ ASTScannerTest >> testNextLiteralBeginningWithSpecialThrowsError [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextLiteralBeginningWithUnknownThrowsError [
+OCScannerTest >> testNextLiteralBeginningWithUnknownThrowsError [
 	| scanner token |
 	scanner := self buildScannerForText: '#`'.
 	token := scanner next.
@@ -828,7 +828,7 @@ ASTScannerTest >> testNextLiteralBeginningWithUnknownThrowsError [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextLiteralCanBeBinary [
+OCScannerTest >> testNextLiteralCanBeBinary [
 	| scanner token |
 	scanner := self buildScannerForText: '#+=-/'.
 	token := scanner next.
@@ -837,7 +837,7 @@ ASTScannerTest >> testNextLiteralCanBeBinary [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextLiteralCanContainColon [
+OCScannerTest >> testNextLiteralCanContainColon [
 	| scanner token |
 
 	scanner := self buildScannerForText: '#al:pha'.
@@ -847,7 +847,7 @@ ASTScannerTest >> testNextLiteralCanContainColon [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextLiteralCanContainDigits [
+OCScannerTest >> testNextLiteralCanContainDigits [
 	| scanner token |
 	scanner := self buildScannerForText: '#alpha123beta456'.
 	token := scanner next.
@@ -856,7 +856,7 @@ ASTScannerTest >> testNextLiteralCanContainDigits [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextLiteralCanHaveMultipleHashtag [
+OCScannerTest >> testNextLiteralCanHaveMultipleHashtag [
 	| scanner token |
 	scanner := self buildScannerForText: '########literal'.
 	token := scanner next.
@@ -864,7 +864,7 @@ ASTScannerTest >> testNextLiteralCanHaveMultipleHashtag [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextLiteralCanNotContainBinaryAndAlphabetic [
+OCScannerTest >> testNextLiteralCanNotContainBinaryAndAlphabetic [
 	| scanner token |
 	scanner := self buildScannerForText: '#+alpha'.
 	token := scanner next.
@@ -880,7 +880,7 @@ ASTScannerTest >> testNextLiteralCanNotContainBinaryAndAlphabetic [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextLiteralCharacterCanBeAnyCharacter [
+OCScannerTest >> testNextLiteralCharacterCanBeAnyCharacter [
 	| scanner token |
 	scanner := self buildScannerForText: '$1'.
 	token := scanner next.
@@ -912,7 +912,7 @@ ASTScannerTest >> testNextLiteralCharacterCanBeAnyCharacter [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextLiteralCharacterHasCharacterAsValue [
+OCScannerTest >> testNextLiteralCharacterHasCharacterAsValue [
 	| scanner token |
 	scanner := self buildScannerForText: '$1'.
 	token := scanner next.
@@ -944,7 +944,7 @@ ASTScannerTest >> testNextLiteralCharacterHasCharacterAsValue [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextLiteralCharacterHasOnlyOneCharacter [
+OCScannerTest >> testNextLiteralCharacterHasOnlyOneCharacter [
 	| scanner token |
 	scanner := self buildScannerForText: '$123'.
 	token := scanner next.
@@ -952,7 +952,7 @@ ASTScannerTest >> testNextLiteralCharacterHasOnlyOneCharacter [
 ]
 
 { #category : 'tests' }
-ASTScannerTest >> testNextLiteralCharacterWithAMissingCharacter [
+OCScannerTest >> testNextLiteralCharacterWithAMissingCharacter [
 	| source scanner scannedToken |
 	source := '$'.
 	scanner := self buildScannerForText: source.
@@ -961,7 +961,7 @@ ASTScannerTest >> testNextLiteralCharacterWithAMissingCharacter [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextLiteralStartAtFirstLetter [
+OCScannerTest >> testNextLiteralStartAtFirstLetter [
 	| scanner token |
 	scanner := self buildScannerForText: '########literal'.
 	token := scanner next.
@@ -970,7 +970,7 @@ ASTScannerTest >> testNextLiteralStartAtFirstLetter [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextLiteralStopAtLastLetter [
+OCScannerTest >> testNextLiteralStopAtLastLetter [
 	| scanner token |
 	scanner := self buildScannerForText: '########literal'.
 	token := scanner next.
@@ -979,7 +979,7 @@ ASTScannerTest >> testNextLiteralStopAtLastLetter [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextLiteralWithMultipleHashtagTrimThem [
+OCScannerTest >> testNextLiteralWithMultipleHashtagTrimThem [
 	| scanner token |
 	scanner := self buildScannerForText: '########literal'.
 	token := scanner next.
@@ -987,7 +987,7 @@ ASTScannerTest >> testNextLiteralWithMultipleHashtagTrimThem [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextMultipleKeywordColonIsSufficientAfterFirstKeyword [
+OCScannerTest >> testNextMultipleKeywordColonIsSufficientAfterFirstKeyword [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken::'.
 	token := scanner next.
@@ -1001,7 +1001,7 @@ ASTScannerTest >> testNextMultipleKeywordColonIsSufficientAfterFirstKeyword [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextMultipleKeywordStartAtFirstLetter [
+OCScannerTest >> testNextMultipleKeywordStartAtFirstLetter [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken:secondToken:'.
 	token := scanner next.
@@ -1010,7 +1010,7 @@ ASTScannerTest >> testNextMultipleKeywordStartAtFirstLetter [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextMultipleKeywordStopAtLastLetter [
+OCScannerTest >> testNextMultipleKeywordStopAtLastLetter [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken:secondToken:'.
 	token := scanner next.
@@ -1019,7 +1019,7 @@ ASTScannerTest >> testNextMultipleKeywordStopAtLastLetter [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextNegativeFloatNumbersIsNumberLiteral [
+OCScannerTest >> testNextNegativeFloatNumbersIsNumberLiteral [
 
 	| scanner token |
 	scanner := self buildScannerForText: '-3.2'.
@@ -1028,7 +1028,7 @@ ASTScannerTest >> testNextNegativeFloatNumbersIsNumberLiteral [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextNegativeNumberCanNotHaveSpaces [
+OCScannerTest >> testNextNegativeNumberCanNotHaveSpaces [
 
 	| scanner token |
 	scanner := self buildScannerForText: '- 12'.
@@ -1043,7 +1043,7 @@ ASTScannerTest >> testNextNegativeNumberCanNotHaveSpaces [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextNegativeNumberIsNumberLiteral [
+OCScannerTest >> testNextNegativeNumberIsNumberLiteral [
 
 	| scanner token |
 	scanner := self buildScannerForText: '-12'.
@@ -1052,7 +1052,7 @@ ASTScannerTest >> testNextNegativeNumberIsNumberLiteral [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextNilIsLiteral [
+OCScannerTest >> testNextNilIsLiteral [
 	| scanner token |
 	scanner := self buildScannerForText: 'nil'.
 	token := scanner next.
@@ -1061,7 +1061,7 @@ ASTScannerTest >> testNextNilIsLiteral [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextNumberLiteralStartAtTheBeginning [
+OCScannerTest >> testNextNumberLiteralStartAtTheBeginning [
 
 	| scanner token |
 	scanner := self buildScannerForText: '-10r10'.
@@ -1082,7 +1082,7 @@ ASTScannerTest >> testNextNumberLiteralStartAtTheBeginning [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextNumberLiteralStopAtTheLastDigit [
+OCScannerTest >> testNextNumberLiteralStopAtTheLastDigit [
 
 	| scanner token expr |
 	expr := '-10r10'.
@@ -1107,7 +1107,7 @@ ASTScannerTest >> testNextNumberLiteralStopAtTheLastDigit [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextRadixNumbersCanBeFloatAsWell [
+OCScannerTest >> testNextRadixNumbersCanBeFloatAsWell [
 
 	| scanner token |
 	scanner := self buildScannerForText: '10r10.2'.
@@ -1128,7 +1128,7 @@ ASTScannerTest >> testNextRadixNumbersCanBeFloatAsWell [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextRadixNumbersCanBeNegative [
+OCScannerTest >> testNextRadixNumbersCanBeNegative [
 
 	| scanner token |
 	scanner := self buildScannerForText: '-10r10'.
@@ -1149,7 +1149,7 @@ ASTScannerTest >> testNextRadixNumbersCanBeNegative [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextSecondTokenDoesNotConsumePrecedingComment [
+OCScannerTest >> testNextSecondTokenDoesNotConsumePrecedingComment [
 	| scanner token |
 	scanner := self buildScannerForText:
 	'firstToken
@@ -1166,7 +1166,7 @@ ASTScannerTest >> testNextSecondTokenDoesNotConsumePrecedingComment [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextSpecialCharacterStartAtTheBeginning [
+OCScannerTest >> testNextSpecialCharacterStartAtTheBeginning [
 	| scanner token |
 	scanner := self buildScannerForText: '(]'.
 	token := scanner next.
@@ -1183,7 +1183,7 @@ ASTScannerTest >> testNextSpecialCharacterStartAtTheBeginning [
 ]
 
 { #category : 'tests - Stop' }
-ASTScannerTest >> testNextSpecialCharacterStopAtThemself [
+OCScannerTest >> testNextSpecialCharacterStopAtThemself [
 	| scanner token |
 	scanner := self buildScannerForText: '(]'.
 	token := scanner next.
@@ -1200,7 +1200,7 @@ ASTScannerTest >> testNextSpecialCharacterStopAtThemself [
 ]
 
 { #category : 'tests - SpecialCharacters' }
-ASTScannerTest >> testNextSpecialCharactereCanBeAssignement [
+OCScannerTest >> testNextSpecialCharactereCanBeAssignement [
 	| scanner token |
 	scanner := self buildScannerForText: ':='.
 	token := scanner next.
@@ -1208,7 +1208,7 @@ ASTScannerTest >> testNextSpecialCharactereCanBeAssignement [
 ]
 
 { #category : 'tests - SpecialCharacters' }
-ASTScannerTest >> testNextSpecialCharactereisSingle [
+OCScannerTest >> testNextSpecialCharactereisSingle [
 	| scanner token |
 	scanner := self buildScannerForText: '(]'.
 	token := scanner next.
@@ -1224,7 +1224,7 @@ ASTScannerTest >> testNextSpecialCharactereisSingle [
 ]
 
 { #category : 'tests - SpecialCharacters' }
-ASTScannerTest >> testNextSpecialCharactereisSpecial [
+OCScannerTest >> testNextSpecialCharactereisSpecial [
 	| scanner token |
 	scanner := self buildScannerForText: '('.
 	token := scanner next.
@@ -1240,7 +1240,7 @@ ASTScannerTest >> testNextSpecialCharactereisSpecial [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextStringCanContainOtherString [
+OCScannerTest >> testNextStringCanContainOtherString [
 	| scanner token |
 	scanner := self buildScannerForText: ''' The world has changed ''''I can feel it in the water'''' '''.
 	token := scanner next.
@@ -1249,7 +1249,7 @@ ASTScannerTest >> testNextStringCanContainOtherString [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextStringContainsAllTheContent [
+OCScannerTest >> testNextStringContainsAllTheContent [
 	| scanner token |
 	scanner := self buildScannerForText: '''The world has changed'''.
 	token := scanner next.
@@ -1257,7 +1257,7 @@ ASTScannerTest >> testNextStringContainsAllTheContent [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextStringErrorDoesNotPropagateInside [
+OCScannerTest >> testNextStringErrorDoesNotPropagateInside [
 	| scanner token |
 	scanner := self buildScannerForText: ''' The world has changed ''''I feel it in the water'''.
 	token := scanner next.
@@ -1265,7 +1265,7 @@ ASTScannerTest >> testNextStringErrorDoesNotPropagateInside [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextStringIsLiteral [
+OCScannerTest >> testNextStringIsLiteral [
 	| scanner token |
 	scanner := self buildScannerForText: '''the world has changed'''.
 	token := scanner next.
@@ -1273,7 +1273,7 @@ ASTScannerTest >> testNextStringIsLiteral [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextTokenStartAfterComment [
+OCScannerTest >> testNextTokenStartAfterComment [
 	"Tests that the next token adapts starting point according to it."
 	| scanner token |
 	scanner := self buildScannerForText: '"start comment"firstToken'.
@@ -1283,7 +1283,7 @@ ASTScannerTest >> testNextTokenStartAfterComment [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextTokenStartAfterLineBreak [
+OCScannerTest >> testNextTokenStartAfterLineBreak [
 	"Tests that the next token adapts starting point according to it."
 	| scanner token |
 	scanner := self buildScannerForText: '
@@ -1294,7 +1294,7 @@ firstToken'.
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextTokenStartAfterSpaces [
+OCScannerTest >> testNextTokenStartAfterSpaces [
 	"Tests that the next token adapts starting point according to it."
 	| scanner token |
 	scanner := self buildScannerForText: String space, String space, 'firstToken'.
@@ -1304,7 +1304,7 @@ ASTScannerTest >> testNextTokenStartAfterSpaces [
 ]
 
 { #category : 'tests - Start' }
-ASTScannerTest >> testNextTokenStartAfterTab [
+OCScannerTest >> testNextTokenStartAfterTab [
 	"Tests that the next token adapts starting point according to it."
 	| scanner token |
 	scanner := self buildScannerForText: String tab, 'firstToken'.
@@ -1314,7 +1314,7 @@ ASTScannerTest >> testNextTokenStartAfterTab [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsBeginningComment [
+OCScannerTest >> testNextTrimsBeginningComment [
 	| scanner token |
 	scanner := self buildScannerForText: '"start comment"firstToken'.
 	token := scanner next.
@@ -1322,7 +1322,7 @@ ASTScannerTest >> testNextTrimsBeginningComment [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsBeginningLineBreak [
+OCScannerTest >> testNextTrimsBeginningLineBreak [
 	| scanner token |
 	scanner := self buildScannerForText: '
 firstToken'.
@@ -1331,7 +1331,7 @@ firstToken'.
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsBeginningSpaces [
+OCScannerTest >> testNextTrimsBeginningSpaces [
 	| scanner token |
 	scanner := self buildScannerForText: String space, String space, 'firstToken'.
 	token := scanner next.
@@ -1339,7 +1339,7 @@ ASTScannerTest >> testNextTrimsBeginningSpaces [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsBeginningTab [
+OCScannerTest >> testNextTrimsBeginningTab [
 	| scanner token |
 	scanner := self buildScannerForText: String tab, 'firstToken'.
 	token := scanner next.
@@ -1347,7 +1347,7 @@ ASTScannerTest >> testNextTrimsBeginningTab [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsEndComment [
+OCScannerTest >> testNextTrimsEndComment [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken"end comment"'.
 	scanner next.
@@ -1357,7 +1357,7 @@ ASTScannerTest >> testNextTrimsEndComment [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsEndLineBreak [
+OCScannerTest >> testNextTrimsEndLineBreak [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken
 '.
@@ -1368,7 +1368,7 @@ ASTScannerTest >> testNextTrimsEndLineBreak [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsEndSpaces [
+OCScannerTest >> testNextTrimsEndSpaces [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken', String space, String space.
 	scanner next.
@@ -1378,7 +1378,7 @@ ASTScannerTest >> testNextTrimsEndSpaces [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsEndTab [
+OCScannerTest >> testNextTrimsEndTab [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken', String tab.
 	scanner next.
@@ -1388,7 +1388,7 @@ ASTScannerTest >> testNextTrimsEndTab [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsMiddleComment [
+OCScannerTest >> testNextTrimsMiddleComment [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken"middle comment"secondToken'.
 	scanner next.
@@ -1398,7 +1398,7 @@ ASTScannerTest >> testNextTrimsMiddleComment [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsMiddleLineBreak [
+OCScannerTest >> testNextTrimsMiddleLineBreak [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken
 secondToken'.
@@ -1409,7 +1409,7 @@ secondToken'.
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsMiddleSpaces [
+OCScannerTest >> testNextTrimsMiddleSpaces [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken',String space, String space,'secondToken'.
 	scanner next.
@@ -1419,7 +1419,7 @@ ASTScannerTest >> testNextTrimsMiddleSpaces [
 ]
 
 { #category : 'tests - Separators' }
-ASTScannerTest >> testNextTrimsMiddleTab [
+OCScannerTest >> testNextTrimsMiddleTab [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken', String tab, 'secondToken'.
 	scanner next.
@@ -1429,7 +1429,7 @@ ASTScannerTest >> testNextTrimsMiddleTab [
 ]
 
 { #category : 'tests - Literal' }
-ASTScannerTest >> testNextTrueIsLiteral [
+OCScannerTest >> testNextTrueIsLiteral [
 	| scanner token |
 	scanner := self buildScannerForText: 'true'.
 	token := scanner next.
@@ -1438,7 +1438,7 @@ ASTScannerTest >> testNextTrueIsLiteral [
 ]
 
 { #category : 'tests - Keyword' }
-ASTScannerTest >> testNextTwoKeywordIsMultipleKeyword [
+OCScannerTest >> testNextTwoKeywordIsMultipleKeyword [
 	| scanner token |
 	scanner := self buildScannerForText: 'firstToken:secondToken:'.
 	token := scanner next.
@@ -1447,7 +1447,7 @@ ASTScannerTest >> testNextTwoKeywordIsMultipleKeyword [
 ]
 
 { #category : 'tests - Identifiers' }
-ASTScannerTest >> testNextUnderscoreWithOnlyDigitsIsIdentifier [
+OCScannerTest >> testNextUnderscoreWithOnlyDigitsIsIdentifier [
 
 	"This test shows that the underscore is an alphabetic character."
 	| scanner token |
@@ -1458,7 +1458,7 @@ ASTScannerTest >> testNextUnderscoreWithOnlyDigitsIsIdentifier [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextUnknownCharacterThrowsError [
+OCScannerTest >> testNextUnknownCharacterThrowsError [
 	| scanner token |
 	scanner := self buildScannerForText: '`'.
 	token := scanner next.
@@ -1468,7 +1468,7 @@ ASTScannerTest >> testNextUnknownCharacterThrowsError [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextValueOfNegativeNumbers [
+OCScannerTest >> testNextValueOfNegativeNumbers [
 
 	| scanner token |
 	scanner := self buildScannerForText: '-12'.
@@ -1481,7 +1481,7 @@ ASTScannerTest >> testNextValueOfNegativeNumbers [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextValueOfRadixNumbersCutsWhenValueIsImpossible [
+OCScannerTest >> testNextValueOfRadixNumbersCutsWhenValueIsImpossible [
 
 	| scanner token |
 	scanner := self buildScannerForText: '10r1a'.
@@ -1502,7 +1502,7 @@ ASTScannerTest >> testNextValueOfRadixNumbersCutsWhenValueIsImpossible [
 ]
 
 { #category : 'tests - NumberLiteral' }
-ASTScannerTest >> testNextValueOfRadixNumbersIsConvertedToDecimal [
+OCScannerTest >> testNextValueOfRadixNumbersIsConvertedToDecimal [
 
 	| scanner token |
 	scanner := self buildScannerForText: '10r10'.
@@ -1523,7 +1523,7 @@ ASTScannerTest >> testNextValueOfRadixNumbersIsConvertedToDecimal [
 ]
 
 { #category : 'tests' }
-ASTScannerTest >> testNextWithAWrongSymbolGetError [
+OCScannerTest >> testNextWithAWrongSymbolGetError [
 	| source scanner scannedToken |
 	source := '#^'.
 	scanner := self buildScannerForText: source.
@@ -1532,7 +1532,7 @@ ASTScannerTest >> testNextWithAWrongSymbolGetError [
 ]
 
 { #category : 'tests' }
-ASTScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
+OCScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
 	| source scanner token |
 	source := 'identifierToken'.
 	scanner := self buildScannerForText: source.
@@ -1542,7 +1542,7 @@ ASTScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
 ]
 
 { #category : 'tests' }
-ASTScannerTest >> testNextWithAnOpeningCommentAtEndGetError [
+OCScannerTest >> testNextWithAnOpeningCommentAtEndGetError [
 	| source token |
 	source := 'self "'.
 	token := (self buildScannerForText: source) next; next.
@@ -1552,7 +1552,7 @@ ASTScannerTest >> testNextWithAnOpeningCommentAtEndGetError [
 ]
 
 { #category : 'tests' }
-ASTScannerTest >> testNextWithAnOpeningCommentGetError [
+OCScannerTest >> testNextWithAnOpeningCommentGetError [
 	| source token |
 	source := '"only the opening'.
 	token := (self buildScannerForText: source) next.
@@ -1562,7 +1562,7 @@ ASTScannerTest >> testNextWithAnOpeningCommentGetError [
 ]
 
 { #category : 'tests' }
-ASTScannerTest >> testNextWithAnOpeningStringsGetError [
+OCScannerTest >> testNextWithAnOpeningStringsGetError [
 	| source scannedToken |
 	source := '''only the opening'.
 	scannedToken := (self buildScannerForText: source) next.
@@ -1570,7 +1570,7 @@ ASTScannerTest >> testNextWithAnOpeningStringsGetError [
 ]
 
 { #category : 'tests' }
-ASTScannerTest >> testNextWithAnUnknownCharacterGetError [
+OCScannerTest >> testNextWithAnUnknownCharacterGetError [
 	| source scanner scannedToken |
 	source := '¿'.
 	scanner := self buildScannerForText: source.
@@ -1579,17 +1579,17 @@ ASTScannerTest >> testNextWithAnUnknownCharacterGetError [
 ]
 
 { #category : 'tests - Comment' }
-ASTScannerTest >> testNextWithTwoDoubleQuotesInComment [
+OCScannerTest >> testNextWithTwoDoubleQuotesInComment [
 	| source token |
 	source := '"only the"" opening"'.
 	self
 		shouldnt: [ token := (self buildScannerForText: source) next ]
-		raise: CodeError.
+		raise: OCCodeError.
 	self assert: token comments first value equals: 'only the" opening'
 ]
 
 { #category : 'tests' }
-ASTScannerTest >> testNextWithTwoDoubleQuotesInCommentGetError [
+OCScannerTest >> testNextWithTwoDoubleQuotesInCommentGetError [
 	| source token |
 	source := '"only the"" opening'.
 	token := (self buildScannerForText: source) next.
@@ -1599,7 +1599,7 @@ ASTScannerTest >> testNextWithTwoDoubleQuotesInCommentGetError [
 ]
 
 { #category : 'tests - Error' }
-ASTScannerTest >> testNextWithUnFinishedCommentGivesAnError [
+OCScannerTest >> testNextWithUnFinishedCommentGivesAnError [
 
 	| source token |
 	source := 'firstToken "unfinished comment secondToken'.
@@ -1610,7 +1610,7 @@ ASTScannerTest >> testNextWithUnFinishedCommentGivesAnError [
 ]
 
 { #category : 'tests - Creation api' }
-ASTScannerTest >> testScanTokenObjects1 [
+OCScannerTest >> testScanTokenObjects1 [
 	| inp exp |
 	inp := 'Object subclass: #NameOfSubclass'.
 	exp := {'Object'.
@@ -1620,7 +1620,7 @@ ASTScannerTest >> testScanTokenObjects1 [
 ]
 
 { #category : 'tests - Creation api' }
-ASTScannerTest >> testScanTokenObjects2 [
+OCScannerTest >> testScanTokenObjects2 [
 	| inp exp |
 	inp := 'classVariableNames: '''' "ha ha"
 package: ''UndefinedClasses-Experiment'.
@@ -1629,7 +1629,7 @@ package: ''UndefinedClasses-Experiment'.
 ]
 
 { #category : 'tests - ScanTokens' }
-ASTScannerTest >> testScanTokensDoesNotBreak [
+OCScannerTest >> testScanTokensDoesNotBreak [
 
 	"Pay attention the scanToken instance side method is brittle and it can break 
 	with simple code such as
@@ -1656,7 +1656,7 @@ tok
 ]
 
 { #category : 'tests - ScanTokens' }
-ASTScannerTest >> testScanTokensHandleParentheses [
+OCScannerTest >> testScanTokensHandleParentheses [
 	
 	| tokens |
 	tokens := OCScanner scanTokens: '( end - level ) '.
@@ -1668,7 +1668,7 @@ ASTScannerTest >> testScanTokensHandleParentheses [
 ]
 
 { #category : 'utilities' }
-ASTScannerTest >> verifyErrorToken: scannedToken message: message valueExpected: valueExpected [
+OCScannerTest >> verifyErrorToken: scannedToken message: message valueExpected: valueExpected [
 	self assert: scannedToken isError.
 	self assert: scannedToken cause equals: message.
 	self assert: scannedToken value equals: valueExpected.

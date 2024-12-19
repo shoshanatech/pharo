@@ -4,7 +4,7 @@ The parser does not now the semantic meaning of Variables. It thus sets them all
 The Semantic Analysis (#doSemanticAnalysis) then gives meaning to Variables and sets them correctly.
 "
 Class {
-	#name : 'UnresolvedVariable',
+	#name : 'OCUnresolvedVariable',
 	#superclass : 'Variable',
 	#classInstVars : [
 		'instance'
@@ -15,38 +15,38 @@ Class {
 }
 
 { #category : 'accessing' }
-UnresolvedVariable class >> instance [
+OCUnresolvedVariable class >> instance [
 	^instance ifNil: [ instance := self new ]
 ]
 
 { #category : 'code generation' }
-UnresolvedVariable >> emitStore: methodBuilder [
+OCUnresolvedVariable >> emitStore: methodBuilder [
 
 	self error: 'Can not generate code, please call #doSemanticAnalysis first'
 ]
 
 { #category : 'code generation' }
-UnresolvedVariable >> emitValue: methodBuilder [
+OCUnresolvedVariable >> emitValue: methodBuilder [
 
 	self error: 'Can not generate code, please call #doSemanticAnalysis first'
 ]
 
 { #category : 'debugging' }
-UnresolvedVariable >> readInContext: aContext [
+OCUnresolvedVariable >> readInContext: aContext [
 	self error: 'Can not read variable, please call #doSemanticAnalysis first'
 ]
 
 { #category : 'accessing' }
-UnresolvedVariable >> scope [
+OCUnresolvedVariable >> scope [
 	^nil
 ]
 
 { #category : 'queries' }
-UnresolvedVariable >> usingMethods [
+OCUnresolvedVariable >> usingMethods [
 	^#()
 ]
 
 { #category : 'debugging' }
-UnresolvedVariable >> write: aValue inContext: aContext [
+OCUnresolvedVariable >> write: aValue inContext: aContext [
 	self error: 'Can not write variable, please call #doSemanticAnalysis first'
 ]

@@ -144,7 +144,7 @@ OCNotice >> signalError [
 
 	If you close the debugger, then we will all forgot this ever happen."
 
-	CodeError new
+	OCCodeError new
 		notice: self;
 		signal
 ]
