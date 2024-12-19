@@ -12,7 +12,7 @@ The compilationContext holds all information that is needed in the whole compile
 
 "
 Class {
-	#name : 'CompilationContext',
+	#name : 'OCCompilationContext',
 	#superclass : 'Object',
 	#instVars : [
 		'options',
@@ -41,18 +41,18 @@ Class {
 }
 
 { #category : 'adding' }
-CompilationContext class >> addDefaultParseTransformationPlugin: aPlugin [
+OCCompilationContext class >> addDefaultParseTransformationPlugin: aPlugin [
 
 	self defaultParseTransformationPlugins add: aPlugin
 ]
 
 { #category : 'adding' }
-CompilationContext class >> addDefaultTransformationPlugin: aPlugin [
+OCCompilationContext class >> addDefaultTransformationPlugin: aPlugin [
 	self defaultTransformationPlugins add: aPlugin
 ]
 
 { #category : 'options' }
-CompilationContext class >> cleanOptionString: string [
+OCCompilationContext class >> cleanOptionString: string [
 	"Would be nice to put it on String but I don't fancy class extensions..."
 	"Takes the option symbol and tries to beautify it  bit for the option menu (Add space, etc.)"
 	| ws |
@@ -67,7 +67,7 @@ CompilationContext class >> cleanOptionString: string [
 ]
 
 { #category : 'options' }
-CompilationContext class >> compilerSettingsOn: aBuilder [
+OCCompilationContext class >> compilerSettingsOn: aBuilder [
 	self optionsDescription withIndexDo: [ :description :index |
 		| optionStringCleaned option |
 		option := description second.
@@ -82,186 +82,186 @@ CompilationContext class >> compilerSettingsOn: aBuilder [
 ]
 
 { #category : 'instance creation' }
-CompilationContext class >> default [
+OCCompilationContext class >> default [
 	^ self new
 		setOptions: self defaultOptions copy;
 		yourself
 ]
 
 { #category : 'options' }
-CompilationContext class >> defaultOptions [
+OCCompilationContext class >> defaultOptions [
 	^ DefaultOptions ifNil: [ DefaultOptions := Set new parseOptions: self initialDefaultOptions ]
 ]
 
 { #category : 'accessing' }
-CompilationContext class >> defaultParseTransformationPlugins [
+OCCompilationContext class >> defaultParseTransformationPlugins [
 
 	^ DefaultParseTransformationPlugins
 		ifNil: [ DefaultParseTransformationPlugins := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
-CompilationContext class >> defaultTransformationPlugins [
+OCCompilationContext class >> defaultTransformationPlugins [
 
 	^ DefaultTransformationPlugins ifNil: [
 		DefaultTransformationPlugins := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
-CompilationContext class >> defaultTransformationPlugins: anObject [
+OCCompilationContext class >> defaultTransformationPlugins: anObject [
 	DefaultTransformationPlugins := anObject
 ]
 
 { #category : 'options' }
-CompilationContext class >> initialDefaultOptions [
+OCCompilationContext class >> initialDefaultOptions [
 	"Skip the comment of each option"
 	^ (self optionsDescription collect: [ :each | each allButLast ]) flattened
 ]
 
 { #category : 'class initialization' }
-CompilationContext class >> initialize [
+OCCompilationContext class >> initialize [
 	"Note: we don't set-up here DefaultOptions since it requires other class-side methods, and that's messed up."
 	DefaultTransformationPlugins := OrderedCollection new
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionBlockClosureOptionalOuter [
+OCCompilationContext class >> optionBlockClosureOptionalOuter [
 	^ self readDefaultOption: #optionBlockClosureOptionalOuter
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionBlockClosureOptionalOuter: aBoolean [
+OCCompilationContext class >> optionBlockClosureOptionalOuter: aBoolean [
 	^ self writeDefaultOption: #optionBlockClosureOptionalOuter value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionCleanBlockClosure [
+OCCompilationContext class >> optionCleanBlockClosure [
 	^ self readDefaultOption: #optionCleanBlockClosure
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionCleanBlockClosure: aBoolean [
+OCCompilationContext class >> optionCleanBlockClosure: aBoolean [
 	^ self writeDefaultOption: #optionCleanBlockClosure value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionConstantBlockClosure [
+OCCompilationContext class >> optionConstantBlockClosure [
 	^ self readDefaultOption: #optionConstantBlockClosure
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionConstantBlockClosure: aBoolean [
+OCCompilationContext class >> optionConstantBlockClosure: aBoolean [
 	^ self writeDefaultOption: #optionConstantBlockClosure value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineAndOr [
+OCCompilationContext class >> optionInlineAndOr [
 	^ self readDefaultOption: #optionInlineAndOr
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineAndOr: aBoolean [
+OCCompilationContext class >> optionInlineAndOr: aBoolean [
 	^ self writeDefaultOption: #optionInlineAndOr value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineCase [
+OCCompilationContext class >> optionInlineCase [
 	^ self readDefaultOption: #optionInlineCase
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineCase: aBoolean [
+OCCompilationContext class >> optionInlineCase: aBoolean [
 	^ self writeDefaultOption: #optionInlineCase value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineIf [
+OCCompilationContext class >> optionInlineIf [
 	^ self readDefaultOption: #optionInlineIf
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineIf: aBoolean [
+OCCompilationContext class >> optionInlineIf: aBoolean [
 	^ self writeDefaultOption: #optionInlineIf value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineIfNil [
+OCCompilationContext class >> optionInlineIfNil [
 	^ self readDefaultOption: #optionInlineIfNil
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineIfNil: aBoolean [
+OCCompilationContext class >> optionInlineIfNil: aBoolean [
 	^ self writeDefaultOption: #optionInlineIfNil value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineNone [
+OCCompilationContext class >> optionInlineNone [
 	^ self readDefaultOption: #optionInlineNone
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineNone: aBoolean [
+OCCompilationContext class >> optionInlineNone: aBoolean [
 	^ self writeDefaultOption: #optionInlineNone value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineRepeat [
+OCCompilationContext class >> optionInlineRepeat [
 	^ self readDefaultOption: #optionInlineRepeat
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineRepeat: aBoolean [
+OCCompilationContext class >> optionInlineRepeat: aBoolean [
 	^ self writeDefaultOption: #optionInlineRepeat value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineTimesRepeat [
+OCCompilationContext class >> optionInlineTimesRepeat [
 	^ self readDefaultOption: #optionInlineTimesRepeat
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineTimesRepeat: aBoolean [
+OCCompilationContext class >> optionInlineTimesRepeat: aBoolean [
 	^ self writeDefaultOption: #optionInlineTimesRepeat value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineToDo [
+OCCompilationContext class >> optionInlineToDo [
 	^ self readDefaultOption: #optionInlineToDo
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineToDo: aBoolean [
+OCCompilationContext class >> optionInlineToDo: aBoolean [
 	^ self writeDefaultOption: #optionInlineToDo value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineWhile [
+OCCompilationContext class >> optionInlineWhile [
 	^ self readDefaultOption: #optionInlineWhile
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionInlineWhile: aBoolean [
+OCCompilationContext class >> optionInlineWhile: aBoolean [
 	^ self writeDefaultOption: #optionInlineWhile value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionLongIvarAccessBytecodes [
+OCCompilationContext class >> optionLongIvarAccessBytecodes [
 	^ self readDefaultOption: #optionLongIvarAccessBytecodes
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionLongIvarAccessBytecodes: aBoolean [
+OCCompilationContext class >> optionLongIvarAccessBytecodes: aBoolean [
 	^ self writeDefaultOption: #optionLongIvarAccessBytecodes value: aBoolean
 ]
 
 { #category : 'options' }
-CompilationContext class >> optionOptimiseSpecialSends [
+OCCompilationContext class >> optionOptimiseSpecialSends [
 
 	^ self readDefaultOption: #optionOptimiseSpecialSends
 ]
 
 { #category : 'options' }
-CompilationContext class >> optionOptimiseSpecialSends: aBoolean [
+OCCompilationContext class >> optionOptimiseSpecialSends: aBoolean [
 
 	^ self
 		  writeDefaultOption: #optionOptimiseSpecialSends
@@ -269,47 +269,47 @@ CompilationContext class >> optionOptimiseSpecialSends: aBoolean [
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionOptimizeIR [
+OCCompilationContext class >> optionOptimizeIR [
 	^ self readDefaultOption: #optionOptimizeIR
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionOptimizeIR: aBoolean [
+OCCompilationContext class >> optionOptimizeIR: aBoolean [
 	^ self writeDefaultOption: #optionOptimizeIR value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionParseErrors [
+OCCompilationContext class >> optionParseErrors [
 	^ self readDefaultOption: #optionParseErrors
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionParseErrors: aBoolean [
+OCCompilationContext class >> optionParseErrors: aBoolean [
 	^ self writeDefaultOption: #optionParseErrors value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionParseErrorsNonInteractiveOnly [
+OCCompilationContext class >> optionParseErrorsNonInteractiveOnly [
 	^ self readDefaultOption: #optionParseErrorsNonInteractiveOnly
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionParseErrorsNonInteractiveOnly: aBoolean [
+OCCompilationContext class >> optionParseErrorsNonInteractiveOnly: aBoolean [
 	^ self writeDefaultOption: #optionParseErrorsNonInteractiveOnly value: aBoolean
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionSkipSemanticWarnings [
+OCCompilationContext class >> optionSkipSemanticWarnings [
 	^ self readDefaultOption: #optionSkipSemanticWarnings
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> optionSkipSemanticWarnings: aBoolean [
+OCCompilationContext class >> optionSkipSemanticWarnings: aBoolean [
 	^ self writeDefaultOption: #optionSkipSemanticWarnings value: aBoolean
 ]
 
 { #category : 'options' }
-CompilationContext class >> optionsDescription [
+OCCompilationContext class >> optionsDescription [
 	"Default options are held by DefaultOptions class variable.
 	 The description of default options here is only used as a
 	 fall-back if DefaultOptions is not initialized (bootstrap, ...)"
@@ -340,63 +340,63 @@ CompilationContext class >> optionsDescription [
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> readDefaultOption: option [
+OCCompilationContext class >> readDefaultOption: option [
 	^ self defaultOptions includes: option
 ]
 
 { #category : 'removing' }
-CompilationContext class >> removeDefaultTransformationPlugin: aPlugin [
+OCCompilationContext class >> removeDefaultTransformationPlugin: aPlugin [
 	self defaultTransformationPlugins remove: aPlugin
 ]
 
 { #category : 'options - settings API' }
-CompilationContext class >> writeDefaultOption: option value: boolean [
+OCCompilationContext class >> writeDefaultOption: option value: boolean [
 	boolean
 		ifTrue: [ self defaultOptions add: option ]
 		ifFalse: [ self defaultOptions remove: option ifAbsent: []]
 ]
 
 { #category : 'plugins' }
-CompilationContext >> addASTTransformationPlugin: aPlugin [
+OCCompilationContext >> addASTTransformationPlugin: aPlugin [
 
 	astTransformPlugins add: aPlugin
 ]
 
 { #category : 'plugins' }
-CompilationContext >> addParseASTTransformationPlugin: aPlugin [
+OCCompilationContext >> addParseASTTransformationPlugin: aPlugin [
 
 	astParseTransformPlugins add: aPlugin
 ]
 
 { #category : 'plugins' }
-CompilationContext >> astParseTransformPlugins [
+OCCompilationContext >> astParseTransformPlugins [
 
 	^ astParseTransformPlugins
 ]
 
 { #category : 'plugins' }
-CompilationContext >> astTransformPlugins [
+OCCompilationContext >> astTransformPlugins [
 
 	^ astTransformPlugins
 ]
 
 { #category : 'accessing' }
-CompilationContext >> astTranslatorClass [
+OCCompilationContext >> astTranslatorClass [
 	^ astTranslatorClass ifNil: [ astTranslatorClass := OCASTTranslator ]
 ]
 
 { #category : 'accessing' }
-CompilationContext >> astTranslatorClass: anObject [
+OCCompilationContext >> astTranslatorClass: anObject [
 	astTranslatorClass := anObject
 ]
 
 { #category : 'accessing' }
-CompilationContext >> bindings [
+OCCompilationContext >> bindings [
 	^ bindings
 ]
 
 { #category : 'accessing' }
-CompilationContext >> bindings: aCollectionOfAssociations [
+OCCompilationContext >> bindings: aCollectionOfAssociations [
 	"bindings are LiteralVariables, not simple Associations.
 	This method receives any collection with Associations or Variables inside and converts those to AdditionalBindings"
 	bindings := (aCollectionOfAssociations asDictionary associations
@@ -404,22 +404,22 @@ CompilationContext >> bindings: aCollectionOfAssociations [
 ]
 
 { #category : 'accessing' }
-CompilationContext >> bytecodeGeneratorClass [
+OCCompilationContext >> bytecodeGeneratorClass [
 	^ bytecodeGeneratorClass ifNil: [ bytecodeGeneratorClass := IRBytecodeGenerator ]
 ]
 
 { #category : 'accessing' }
-CompilationContext >> bytecodeGeneratorClass: anObject [
+OCCompilationContext >> bytecodeGeneratorClass: anObject [
 	bytecodeGeneratorClass := anObject
 ]
 
 { #category : 'accessing' }
-CompilationContext >> class: aClass [
+OCCompilationContext >> class: aClass [
 	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
 ]
 
 { #category : 'accessing' }
-CompilationContext >> compiledMethodClass [
+OCCompilationContext >> compiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
 	^ compiledMethodClass ifNil: [
 		self productionEnvironment
@@ -428,39 +428,39 @@ CompilationContext >> compiledMethodClass [
 ]
 
 { #category : 'accessing' }
-CompilationContext >> compiledMethodClass: aCompiledMethodClass [
+OCCompilationContext >> compiledMethodClass: aCompiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
 
 	compiledMethodClass := aCompiledMethodClass
 ]
 
 { #category : 'options' }
-CompilationContext >> compilerOptions: anArray [
+OCCompilationContext >> compilerOptions: anArray [
 	self parseOptions: anArray
 ]
 
 { #category : 'accessing' }
-CompilationContext >> encoderClass [
+OCCompilationContext >> encoderClass [
 	^ encoderClass ifNil: [ encoderClass := EncoderForSistaV1 ]
 ]
 
 { #category : 'accessing' }
-CompilationContext >> encoderClass: anObject [
+OCCompilationContext >> encoderClass: anObject [
 	encoderClass := anObject
 ]
 
 { #category : 'accessing' }
-CompilationContext >> environment [
+OCCompilationContext >> environment [
 	^ environment ifNil: [ environment := semanticScope environment ]
 ]
 
 { #category : 'accessing' }
-CompilationContext >> environment: anObject [
+OCCompilationContext >> environment: anObject [
 	environment := anObject
 ]
 
 { #category : 'initialization' }
-CompilationContext >> initialize [
+OCCompilationContext >> initialize [
 
 	options := Set new.
 	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins.
@@ -469,182 +469,182 @@ CompilationContext >> initialize [
 ]
 
 { #category : 'accessing' }
-CompilationContext >> isScripting [
+OCCompilationContext >> isScripting [
 	^semanticScope isDoItScope
 ]
 
 { #category : 'accessing' }
-CompilationContext >> isScripting: aBoolean [
+OCCompilationContext >> isScripting: aBoolean [
 
 	(aBoolean and: [ self isScripting not ]) ifTrue: [
 		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
 { #category : 'options' }
-CompilationContext >> optionBlockClosureOptionalOuter [
+OCCompilationContext >> optionBlockClosureOptionalOuter [
 	^ options includes: #optionBlockClosureOptionalOuter
 ]
 
 { #category : 'options' }
-CompilationContext >> optionCleanBlockClosure [
+OCCompilationContext >> optionCleanBlockClosure [
 	^ options includes: #optionCleanBlockClosure
 ]
 
 { #category : 'options' }
-CompilationContext >> optionConstantBlockClosure [
+OCCompilationContext >> optionConstantBlockClosure [
 	^ options includes: #optionConstantBlockClosure
 ]
 
 { #category : 'options' }
-CompilationContext >> optionInlineAndOr [
+OCCompilationContext >> optionInlineAndOr [
 
 	^ self optionInlineNone not and: [
 		  options includes: #optionInlineAndOr ]
 ]
 
 { #category : 'options' }
-CompilationContext >> optionInlineCase [
+OCCompilationContext >> optionInlineCase [
 
 	^ self optionInlineNone not and: [
 		  options includes: #optionInlineCase ]
 ]
 
 { #category : 'options' }
-CompilationContext >> optionInlineIf [
+OCCompilationContext >> optionInlineIf [
 
 	^ self optionInlineNone not and: [ options includes: #optionInlineIf ]
 ]
 
 { #category : 'options' }
-CompilationContext >> optionInlineIfNil [
+OCCompilationContext >> optionInlineIfNil [
 
 	^ self optionInlineNone not and: [
 		  options includes: #optionInlineIfNil ]
 ]
 
 { #category : 'options' }
-CompilationContext >> optionInlineNone [
+OCCompilationContext >> optionInlineNone [
 	^ options includes: #optionInlineNone
 ]
 
 { #category : 'options' }
-CompilationContext >> optionInlineRepeat [
+OCCompilationContext >> optionInlineRepeat [
 
 	^ self optionInlineNone not and: [
 		  options includes: #optionInlineRepeat ]
 ]
 
 { #category : 'options' }
-CompilationContext >> optionInlineTimesRepeat [
+OCCompilationContext >> optionInlineTimesRepeat [
 
 	^ self optionInlineNone not and: [
 		  options includes: #optionInlineTimesRepeat ]
 ]
 
 { #category : 'options' }
-CompilationContext >> optionInlineToDo [
+OCCompilationContext >> optionInlineToDo [
 
 	^ self optionInlineNone not and: [
 		  options includes: #optionInlineToDo ]
 ]
 
 { #category : 'options' }
-CompilationContext >> optionInlineWhile [
+OCCompilationContext >> optionInlineWhile [
 
 	^ self optionInlineNone not and: [
 		  options includes: #optionInlineWhile ]
 ]
 
 { #category : 'options' }
-CompilationContext >> optionLongIvarAccessBytecodes [
+OCCompilationContext >> optionLongIvarAccessBytecodes [
 	^ options includes: #optionLongIvarAccessBytecodes
 ]
 
 { #category : 'options' }
-CompilationContext >> optionOptimiseSpecialSends [
+OCCompilationContext >> optionOptimiseSpecialSends [
 	^ options includes: #optionOptimiseSpecialSends
 ]
 
 { #category : 'options' }
-CompilationContext >> optionOptimizeIR [
+OCCompilationContext >> optionOptimizeIR [
 	^ options includes: #optionOptimizeIR
 ]
 
 { #category : 'options' }
-CompilationContext >> optionParseErrors [
+OCCompilationContext >> optionParseErrors [
 	^ options includes: #optionParseErrors
 ]
 
 { #category : 'options' }
-CompilationContext >> optionParseErrorsNonInteractiveOnly [
+OCCompilationContext >> optionParseErrorsNonInteractiveOnly [
 	^ options includes: #optionParseErrorsNonInteractiveOnly
 ]
 
 { #category : 'options' }
-CompilationContext >> optionSkipSemanticWarnings [
+OCCompilationContext >> optionSkipSemanticWarnings [
 	^ options includes: #optionSkipSemanticWarnings
 ]
 
 { #category : 'options' }
-CompilationContext >> parseOptions: optionsArray [
+OCCompilationContext >> parseOptions: optionsArray [
 
 	options parseOptions: optionsArray
 ]
 
 { #category : 'accessing' }
-CompilationContext >> parserClass [
+OCCompilationContext >> parserClass [
 	^ parserClass ifNil: [ parserClass := OCParser ]
 ]
 
 { #category : 'accessing' }
-CompilationContext >> parserClass: anObject [
+OCCompilationContext >> parserClass: anObject [
 	parserClass := anObject
 ]
 
 { #category : 'accessing' }
-CompilationContext >> productionEnvironment [
+OCCompilationContext >> productionEnvironment [
 	^productionEnvironment ifNil: [ ^self environment ]
 ]
 
 { #category : 'accessing' }
-CompilationContext >> productionEnvironment: aDictionary [
+OCCompilationContext >> productionEnvironment: aDictionary [
 	productionEnvironment := aDictionary
 ]
 
 { #category : 'accessing' }
-CompilationContext >> requestorScopeClass [
+OCCompilationContext >> requestorScopeClass [
 	^ requestorScopeClass ifNil: [ requestorScopeClass := OCRequestorScope ]
 ]
 
 { #category : 'accessing' }
-CompilationContext >> requestorScopeClass: anObject [
+OCCompilationContext >> requestorScopeClass: anObject [
 	"clients can set their own subclass of OCRequestorScope if needed"
 	requestorScopeClass := anObject
 ]
 
 { #category : 'accessing' }
-CompilationContext >> semanticAnalyzerClass [
+OCCompilationContext >> semanticAnalyzerClass [
 	^ semanticAnalyzerClass ifNil: [ semanticAnalyzerClass := OCASTSemanticAnalyzer  ]
 ]
 
 { #category : 'accessing' }
-CompilationContext >> semanticAnalyzerClass: anObject [
+OCCompilationContext >> semanticAnalyzerClass: anObject [
 	semanticAnalyzerClass := anObject
 ]
 
 { #category : 'accessing' }
-CompilationContext >> semanticScope [
+OCCompilationContext >> semanticScope [
 
 	^ semanticScope
 ]
 
 { #category : 'accessing' }
-CompilationContext >> semanticScope: anObject [
+OCCompilationContext >> semanticScope: anObject [
 
 	semanticScope := anObject
 ]
 
 { #category : 'options' }
-CompilationContext >> setOptions: opts [
+OCCompilationContext >> setOptions: opts [
 	options := opts
 ]

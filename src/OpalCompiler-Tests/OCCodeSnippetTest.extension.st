@@ -211,6 +211,6 @@ OCCodeSnippetTest >> testExecuteBlock: aRunBlock [
 		^ self should: runBlock raise: class ].
 
 	snippet hasValue
-		ifFalse: [ self should: runBlock raise: RuntimeSyntaxError ]
+		ifFalse: [ self should: runBlock raise: OCRuntimeSyntaxError ]
 		ifTrue: [ self assert: runBlock value equals: snippet value ]
 ]

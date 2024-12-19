@@ -150,7 +150,7 @@ IRBytecodeGenerator >> bytecodes [
 
 { #category : 'accessing' }
 IRBytecodeGenerator >> compilationContext [
-	^ compilationContext ifNil: [compilationContext := CompilationContext default]
+	^ compilationContext ifNil: [compilationContext := OCCompilationContext default]
 ]
 
 { #category : 'accessing' }

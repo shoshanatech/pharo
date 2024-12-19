@@ -28,7 +28,7 @@ IRTranslatorVisitor class >> context: aCompilationContext [
 
 { #category : 'instance creation' }
 IRTranslatorVisitor class >> new [
-	^self context: CompilationContext default
+	^self context: OCCompilationContext default
 ]
 
 { #category : 'accessing' }

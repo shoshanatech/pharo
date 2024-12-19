@@ -58,7 +58,7 @@ OCAnnotationTest >> testAnnotationBinding [
 							           "Also add a compile-time error for faulty modes"
 							           node receiver emitValueBlock: [ :methodBuilder |
 								           methodBuilder
-									           pushLiteralVariable: RuntimeSyntaxError binding;
+									           pushLiteralVariable: OCRuntimeSyntaxError binding;
 									           pushLiteral: 'Variable expected';
 									           send: #signal: ] ]
 						           ifTrue: [ "It's a real variable, to use the binding.
@@ -97,7 +97,7 @@ OCAnnotationTest >> testAnnotationBinding [
 				addParsePlugin: plugin;
 				permitFaulty: true;
 				evaluate: '@binding: 42' ]
-		raise: RuntimeSyntaxError
+		raise: OCRuntimeSyntaxError
 ]
 
 { #category : 'tests' }

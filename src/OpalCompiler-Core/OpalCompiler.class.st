@@ -72,7 +72,7 @@ OpalCompiler class >> compilerSettingsOn: aBuilder [
 						target: self;
 						default: false;
 						description: 'Create a overlay environment for the OpalCompiler package and sets this copy as the global compiler. After this all classes in the package OpalCompiler are not used anymore outside of tests.  Simplifies changing the compiler'.
-				CompilationContext compilerSettingsOn: aBuilder]
+				OCCompilationContext compilerSettingsOn: aBuilder]
 ]
 
 { #category : 'overlay' }
@@ -355,7 +355,7 @@ OpalCompiler >> compilationContext: anObject [
 
 { #category : 'plugins' }
 OpalCompiler >> compilationContextClass [
-	^compilationContextClass ifNil: [ CompilationContext  ]
+	^compilationContextClass ifNil: [ OCCompilationContext  ]
 ]
 
 { #category : 'plugins' }

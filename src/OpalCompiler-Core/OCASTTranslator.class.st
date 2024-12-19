@@ -280,7 +280,7 @@ OCASTTranslator >> emitRuntimeError: aNode [
 	errors := aNode allErrorNotices.
 
 	methodBuilder
-		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteralVariable: OCRuntimeSyntaxError binding;
 		pushLiteral: (errors isEmpty
 				 ifTrue: [ 'Syntax error' ]
 				 ifFalse: [ errors first messageText ]);

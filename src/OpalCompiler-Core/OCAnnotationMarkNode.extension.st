@@ -5,7 +5,7 @@ OCAnnotationMarkNode >> emitValue: methodBuilder [
 
 	emitValueBlock ifNotNil: [ ^ emitValueBlock value: methodBuilder ].
 	methodBuilder
-		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteralVariable: OCRuntimeSyntaxError binding;
 		pushLiteral: 'Unhandled annotation';
 		send: #signalSyntaxError:
 ]

@@ -1893,7 +1893,7 @@ OCCodeSnippet class >> badSemantic [
 			         nodeAt: '1111111111111111110000000002222222222222';
 			         styled:
 				         'gggggggggggggggggg sssssss ''''''''''''''''''''''''''';
-			         raise: RuntimeSyntaxError) "runtime errors are not special" }.
+			         raise: OCRuntimeSyntaxError) "runtime errors are not special" }.
 	"Setup default values"
 	self new
 		group: #badSemantic;

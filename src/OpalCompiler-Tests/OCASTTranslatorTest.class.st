@@ -36,7 +36,7 @@ OCASTTranslatorTest class >> testParameters [
 OCASTTranslatorTest >> compilationContext [
 
 	| context |
-	context := CompilationContext new
+	context := OCCompilationContext new
 		           encoderClass: self encoder;
 		           bindings: globals;
 		           yourself.
