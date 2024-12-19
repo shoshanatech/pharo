@@ -6,18 +6,18 @@ OCPragmaNode >> asIRPrimitive [
 	| args module name spec |
 	args := (self arguments collect: [ :each | each value ]) asArray.
 	"normal methods have primitive number 0"
-	self isPrimitive ifFalse: [ ^ IRPrimitive null ].
+	self isPrimitive ifFalse: [ ^ OCIRPrimitive null ].
 	^ args first isString
 		ifTrue: [ name := args first.
 			module := self argumentAt: #module: ifAbsent: [ nil ].
 			spec := {(module ifNotNil: [ module value asSymbol ]) . name asSymbol . 0 . 0}.
-			IRPrimitive new
+			OCIRPrimitive new
 				num: 117;
 				spec: spec;
 				yourself ]
 		ifFalse: [
 			"these are standard numbered primitives"
-			IRPrimitive new
+			OCIRPrimitive new
 				num: args first;
 				spec: nil;
 				yourself ]

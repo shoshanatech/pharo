@@ -405,7 +405,7 @@ OCCompilationContext >> bindings: aCollectionOfAssociations [
 
 { #category : 'accessing' }
 OCCompilationContext >> bytecodeGeneratorClass [
-	^ bytecodeGeneratorClass ifNil: [ bytecodeGeneratorClass := IRBytecodeGenerator ]
+	^ bytecodeGeneratorClass ifNil: [ bytecodeGeneratorClass := OCIRBytecodeGenerator ]
 ]
 
 { #category : 'accessing' }

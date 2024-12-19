@@ -176,7 +176,7 @@ OCMethodNode >> primitiveFromPragma [
 	^ pragmas
 		detect: [ :each | each isPrimitive ]
 		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asIRPrimitive ]
-		ifNone: [ IRPrimitive null ]
+		ifNone: [ OCIRPrimitive null ]
 ]
 
 { #category : '*OpalCompiler-Core' }

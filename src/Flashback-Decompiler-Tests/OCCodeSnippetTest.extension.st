@@ -20,6 +20,6 @@ OCCodeSnippetTest >> testDecompileIR [
 	method := snippet compile.
 	method ifNil: [ ^ self skip ]. "Another test responsibility"
 	ir := method decompileIR.
-	self assert: ir class equals: IRMethod.
+	self assert: ir class equals: OCIRMethod.
 	"Decompilation lose information. Not sure how to test more"
 ]
