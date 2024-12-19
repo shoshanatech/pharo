@@ -42,14 +42,14 @@ ReDuplicateClassDriver >> className [
 { #category : 'accessing' }
 ReDuplicateClassDriver >> className: aClassName [
 
-	className := aClassName.
+	className := aClassName
 
 ]
 
 { #category : 'accessing' }
 ReDuplicateClassDriver >> configureRefactoring [
 
-	refactoring := ReCopyClassRefactoring new.
+	refactoring := ReCopyClassRefactoring new
 ]
 
 { #category : 'accessing' }
