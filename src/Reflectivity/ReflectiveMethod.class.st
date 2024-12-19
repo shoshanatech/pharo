@@ -141,7 +141,7 @@ ReflectiveMethod >> increaseLinkCount [
 { #category : 'invalidate' }
 ReflectiveMethod >> installCompiledMethod [
 	self installMethod: compiledMethod.
-	OCCache default at: compiledMethod put: ast
+	OCASTCache default at: compiledMethod put: ast
 ]
 
 { #category : 'invalidate' }

@@ -25,7 +25,7 @@ OCCacheResetTest >> increment [
 { #category : 'running' }
 OCCacheResetTest >> setUp [
 	super setUp.
-	cache := OCCache default copy.
+	cache := OCASTCache default copy.
 	counter := 0.
 	link := MetaLink new
 		metaObject: self;
@@ -36,7 +36,7 @@ OCCacheResetTest >> setUp [
 
 { #category : 'running' }
 OCCacheResetTest >> tearDown [
-	OCCache default: cache.
+	OCASTCache default: cache.
 	node removeLink: link.
 	super tearDown
 ]
@@ -45,7 +45,7 @@ OCCacheResetTest >> tearDown [
 OCCacheResetTest >> testCacheResetPreserveLinks [
 	self annotatedMethod.
 	self assert: counter equals: 1.
-	OCCache reset.
+	OCASTCache reset.
 	self assert: (self class >> #annotatedMethod) ast statements last value links anyOne identicalTo: link.
 	self annotatedMethod.
 	self assert: counter equals: 2

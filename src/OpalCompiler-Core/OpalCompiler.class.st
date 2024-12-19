@@ -144,7 +144,7 @@ OpalCompiler class >> overlayStep3FixSuperclassPointers [
 OpalCompiler class >> overlayStep4SetImageCompiler [
 	"make the copy the default compiler for the image"
 	SmalltalkImage compilerClass: (self overlayEnvironment at: #OpalCompiler).
-	OCCache reset
+	OCASTCache reset
 ]
 
 { #category : 'overlay' }
@@ -190,7 +190,7 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 	<script>
 	SmalltalkImage compilerClass: nil.
 	overlayEnvironment := nil.
-	OCCache reset
+	OCASTCache reset
 ]
 
 { #category : 'plugins' }

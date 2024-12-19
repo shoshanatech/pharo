@@ -16,7 +16,7 @@ Code that wants to modify the AST without making sure the compiledMethod is in s
 
 "
 Class {
-	#name : 'OCCache',
+	#name : 'OCASTCache',
 	#superclass : 'Object',
 	#instVars : [
 		'weakDictionary',
@@ -34,65 +34,65 @@ Class {
 }
 
 { #category : 'private - announcements' }
-OCCache class >> announceCacheReset [
+OCASTCache class >> announceCacheReset [
 
-	self codeSupportAnnouncer announce: OCCacheReset new
+	self codeSupportAnnouncer announce: OCASTCacheReset new
 ]
 
 { #category : 'accessing' }
-OCCache class >> at: aCompiledMethod [
+OCASTCache class >> at: aCompiledMethod [
 	^ self default at: aCompiledMethod
 ]
 
 { #category : 'accessing' }
-OCCache class >> cacheMissStrategy [
+OCASTCache class >> cacheMissStrategy [
 	^ CacheMissStrategy
-		ifNil: [ CacheMissStrategy := OCCacheMissStrategy new ]
+		ifNil: [ CacheMissStrategy := OCASTCacheMissStrategy new ]
 ]
 
 { #category : 'accessing' }
-OCCache class >> cacheMissStrategy: aCacheMissStrategy [
+OCASTCache class >> cacheMissStrategy: aCacheMissStrategy [
 	^ CacheMissStrategy := aCacheMissStrategy
 ]
 
 { #category : 'accessing' }
-OCCache class >> default [
+OCASTCache class >> default [
 	^ default ifNil: [
 		SessionManager default registerSystemClassNamed: self name.
 		default := self new ]
 ]
 
 { #category : 'accessing' }
-OCCache class >> default: anASTCache [
+OCASTCache class >> default: anASTCache [
 	default := anASTCache
 ]
 
 { #category : 'class initialization' }
-OCCache class >> reset [
+OCASTCache class >> reset [
 	<script>
 	self default reset.
 	self announceCacheReset
 ]
 
 { #category : 'system startup' }
-OCCache class >> shutDown [
+OCASTCache class >> shutDown [
 	self reset
 ]
 
 { #category : 'adding' }
-OCCache >> addHit [
+OCASTCache >> addHit [
 
 	self statistics ifNotNil: [ statistics addHit ]
 ]
 
 { #category : 'adding' }
-OCCache >> addMiss [
+OCASTCache >> addMiss [
 
 	self statistics ifNotNil: [ statistics addMiss ]
 ]
 
 { #category : 'accessing' }
-OCCache >> at: aCompiledMethod [
+OCASTCache >> at: aCompiledMethod [
 
 	^ self
 		  at: aCompiledMethod
@@ -100,7 +100,7 @@ OCCache >> at: aCompiledMethod [
 ]
 
 { #category : 'accessing' }
-OCCache >> at: aCompiledMethod ifAbsentPut: aBlock [
+OCASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 	"Get an AST using strongly held information, or failback to aBlock (that might compute a new AST)"
 
 	"For doit methods, the AST is stored in the method property"
@@ -126,7 +126,7 @@ OCCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 ]
 
 { #category : 'accessing' }
-OCCache >> at: aCompiledMethod put: aMethodNode [
+OCASTCache >> at: aCompiledMethod put: aMethodNode [
 
 	"Cleanup weak AST. Note `associations` return a copy, so the iteration is safe"
 	| weakRef |
@@ -143,27 +143,27 @@ OCCache >> at: aCompiledMethod put: aMethodNode [
 ]
 
 { #category : 'accessing' }
-OCCache >> getASTFor: aCompiledMethod [
+OCASTCache >> getASTFor: aCompiledMethod [
 
 	^ self class cacheMissStrategy getASTFor: aCompiledMethod
 ]
 
 { #category : 'accessing - statistics' }
-OCCache >> hitRatio [
+OCASTCache >> hitRatio [
 
 	self statistics ifNil: [ ^ 0 ].
 	^ self statistics hitRatio
 ]
 
 { #category : 'copying' }
-OCCache >> postCopy [
+OCASTCache >> postCopy [
 
 	weakDictionary := weakDictionary copy.
 	statistics := statistics copy
 ]
 
 { #category : 'printing' }
-OCCache >> printOn: aStream [
+OCASTCache >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream
@@ -175,21 +175,21 @@ OCCache >> printOn: aStream [
 ]
 
 { #category : 'initialization' }
-OCCache >> reset [
+OCASTCache >> reset [
 	self weakDictionary removeAll.
 	weakDictionary := nil.
 	statistics := nil.
 ]
 
 { #category : 'accessing' }
-OCCache >> statistics [
+OCASTCache >> statistics [
 
 	^ statistics ifNil: [ "CacheStatistics comes from another package. It does not worth the dependency"
 		  self class environment at: #CacheStatistics ifPresent: [ :class | statistics := class new ] ]
 ]
 
 { #category : 'accessing' }
-OCCache >> weakDictionary [
+OCASTCache >> weakDictionary [
 
 	^ weakDictionary ifNil: [
 		  weakDictionary := WeakIdentityKeyDictionary new ]
