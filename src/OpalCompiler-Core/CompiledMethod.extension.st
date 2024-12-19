@@ -5,7 +5,7 @@ CompiledMethod >> decompile [
 	^Smalltalk globals
 		at: #FBDDecompiler
 		ifPresent: [ :decompiler | decompiler new  decompile: self]
-		ifAbsent: [ Parser parseMethod: self selector asMethodPreamble, '
+		ifAbsent: [ Parser parseMethod: self selector asMethodSignature, '
 	self noSourceAvailable' ]
 ]
 

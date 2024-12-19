@@ -503,7 +503,7 @@ RGMethod >> sourceCodeForNoSelector [
 { #category : 'accessing' }
 RGMethod >> sourceCodeForNoSource [
 
-	^ self selector asMethodPreamble, String cr, String tab, '"source code for the method model not set"'
+	^ self selector asMethodSignature, String cr, String tab, '"source code for the method model not set"'
 ]
 
 { #category : 'accessing - backend' }
