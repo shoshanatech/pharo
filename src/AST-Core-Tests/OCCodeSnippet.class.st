@@ -2821,7 +2821,7 @@ OCCodeSnippet >> definitionRefactoring [
 	"Check if the new code is different from the old one"
 	old := node sourceCode.
 	new := self dumpDefinition.
-	newast := Parser parseFaultyExpression: new.
+	newast := OCParser parseFaultyExpression: new.
 	newast parent: node parent. "Force same context, so formattedCode is reliable"
 	node formattedCode = newast formattedCode ifTrue: [ ^ nil ].
 
@@ -3099,8 +3099,8 @@ OCCodeSnippet >> numberOfCritiques: anObject [
 { #category : 'parsing' }
 OCCodeSnippet >> parse [
 	^ isScripting
-		ifTrue: [ Parser parseFaultyExpression: self source ]
-		ifFalse: [ Parser parseFaultyMethod: self source ]
+		ifTrue: [ OCParser parseFaultyExpression: self source ]
+		ifFalse: [ OCParser parseFaultyMethod: self source ]
 
 ]
 
@@ -3108,8 +3108,8 @@ OCCodeSnippet >> parse [
 OCCodeSnippet >> parseOnError: aBlock [
 
 	^ [ isScripting
-			  ifTrue: [ Parser parseExpression: self source ]
-			  ifFalse: [ Parser parseMethod: self source ] ]
+			  ifTrue: [ OCParser parseExpression: self source ]
+			  ifFalse: [ OCParser parseMethod: self source ] ]
 		  on: CodeError
 		  do: [ :e | aBlock value: e ]
 ]

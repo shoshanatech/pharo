@@ -66,7 +66,7 @@ OCParseTreeRule >> owner: aParseTreeSearcher [
 
 { #category : 'initialization' }
 OCParseTreeRule >> parserClass [
-	^ Parser
+	^ OCParser
 ]
 
 { #category : 'matching' }

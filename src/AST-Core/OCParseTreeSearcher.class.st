@@ -96,7 +96,7 @@ OCParseTreeSearcher class >> buildSelectorString: aSelector [
 { #category : 'private' }
 OCParseTreeSearcher class >> buildSelectorTree: aSelector [
 	aSelector isEmpty ifTrue: [^nil].
-	^Parser parseRewriteExpression: '``@receiver '
+	^OCParser parseRewriteExpression: '``@receiver '
 				, (self buildSelectorString: aSelector)
 		onError: [:err :pos | ^nil]
 ]
@@ -104,8 +104,8 @@ OCParseTreeSearcher class >> buildSelectorTree: aSelector [
 { #category : 'private' }
 OCParseTreeSearcher class >> buildTree: aString method: aBoolean [
 	^aBoolean
-		ifTrue: [Parser parseRewriteMethod: aString]
-		ifFalse: [Parser parseRewriteExpression: aString]
+		ifTrue: [OCParser parseRewriteMethod: aString]
+		ifFalse: [OCParser parseRewriteExpression: aString]
 ]
 
 { #category : 'instance creation' }
@@ -155,7 +155,7 @@ OCParseTreeSearcher class >> treeMatching: aString in: aParseTree [
 OCParseTreeSearcher class >> treeMatchingStatements: subtreeSourceString in: aParseTree [
 	| notifier subtree |
 	notifier := self new.
-	subtree := Parser parseExpression: subtreeSourceString.
+	subtree := OCParser parseExpression: subtreeSourceString.
 	subtree isSequence
 		ifFalse: [subtree := OCSequenceNode statements: (Array with: subtree)].
 	subtree temporaries: (Array with: (OCPatternVariableNode named: '`@temps')).
@@ -165,7 +165,7 @@ OCParseTreeSearcher class >> treeMatchingStatements: subtreeSourceString in: aPa
 	notifier matchesTree: subtree
 		do: [:aNode :answer |
 				| sub | 
-				sub := Parser parseExpression: subtreeSourceString.
+				sub := OCParser parseExpression: subtreeSourceString.
 				sub parent: aNode parent. 
 				^ sub].
 	notifier executeTree: aParseTree.

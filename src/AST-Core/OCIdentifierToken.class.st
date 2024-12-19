@@ -17,11 +17,11 @@ OCIdentifierToken >> isIdentifier [
 
 { #category : 'testing' }
 OCIdentifierToken >> isKeywordPattern [
-	^ self isPatternVariable	and: [ value second = RBScanner keywordPatternCharacter
-				and: [ value third ~= RBScanner cascadePatternCharacter ] ]
+	^ self isPatternVariable	and: [ value second = OCScanner keywordPatternCharacter
+				and: [ value third ~= OCScanner cascadePatternCharacter ] ]
 ]
 
 { #category : 'testing' }
 OCIdentifierToken >> isPatternVariable [
-	^value first = RBScanner patternVariableCharacter
+	^value first = OCScanner patternVariableCharacter
 ]

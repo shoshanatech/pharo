@@ -67,9 +67,9 @@ OCMessageNodeTest >> testIntersectsInterval [
 { #category : 'tests' }
 OCMessageNodeTest >> testIsInlineToDo [
 	| messageNode |
-	messageNode := (Parser parseExpression: '1 to: 2 by: 2 do: [:each |]').
+	messageNode := (OCParser parseExpression: '1 to: 2 by: 2 do: [:each |]').
 	self assert: messageNode isInlineToDo.
-	messageNode := (Parser parseExpression: '1 to: 2 by: nil do: [:each |]').
+	messageNode := (OCParser parseExpression: '1 to: 2 by: nil do: [:each |]').
 	self deny: messageNode isInlineToDo
 ]
 

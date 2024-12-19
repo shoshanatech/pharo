@@ -16,7 +16,7 @@ ASTScannerTest >> buildScannerForText: source [
 
 { #category : 'initialize' }
 ASTScannerTest >> scannerClass [
-	^ RBScanner
+	^ OCScanner
 ]
 
 { #category : 'tests - Comment' }
@@ -1647,7 +1647,7 @@ tok
 	"Now this test is validating the class side method scanTokens"
 	
 	| tokens |
-	tokens := RBScanner scanTokens: 'end - level'.
+	tokens := OCScanner scanTokens: 'end - level'.
 	self assert: tokens size equals: 3.
 	self assert: tokens first value equals: 'end'.
 	self assert: tokens second value equals: #-.
@@ -1659,7 +1659,7 @@ tok
 ASTScannerTest >> testScanTokensHandleParentheses [
 	
 	| tokens |
-	tokens := RBScanner scanTokens: '( end - level ) '.
+	tokens := OCScanner scanTokens: '( end - level ) '.
 	self assert: tokens size equals: 5.
 	self assert: tokens first value equals: $(.
 	self assert: tokens second value equals: 'end'.

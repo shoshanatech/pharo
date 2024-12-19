@@ -31,7 +31,7 @@ OCProgramNodeTest >> getAllNodesFromAST [
 		"Sixth comment" cascade node; nodeux "Seventh comment"; notrois.
 		^ "return" nil
 		'.
-	^ Parser parseMethod: methodText
+	^ OCParser parseMethod: methodText
 ]
 
 { #category : 'accessing' }
@@ -352,7 +352,7 @@ OCProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size + 6).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size + 6).
 	self assert: ast isVariable
 ]
 
@@ -369,7 +369,7 @@ a := 1.
 | a |
 ' size.
 		
-	ast := (Parser parseMethod: body) bestNodeFor: (start to: start + 6).
+	ast := (OCParser parseMethod: body) bestNodeFor: (start to: start + 6).
 	self assert: ast isAssignment .
 	self assert: ast sourceCode equals: 'a := 1'
 ]
@@ -379,7 +379,7 @@ OCProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
 	| ast string start |
 	string := '"Fourth comment"'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Fourth comment'
 ]
@@ -389,7 +389,7 @@ OCProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
 	| ast string start |
 	string := '"Seventh comment"'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Seventh comment'
 ]
@@ -399,7 +399,7 @@ OCProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
 	| ast string start |
 	string := '"Sixth comment"'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Sixth comment'
 ]
@@ -409,7 +409,7 @@ OCProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
 	| ast string start |
 	string := '" Third comment "'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: ' Third comment '
 ]
@@ -419,7 +419,7 @@ OCProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
 	| ast string start |
 	string := '"Fifth comment"'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Fifth comment'
 ]
@@ -429,7 +429,7 @@ OCProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'First comment'
 ]
@@ -439,7 +439,7 @@ OCProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
 	| ast string start |
 	string := '"return"'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'return'
 ]
@@ -449,7 +449,7 @@ OCProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
 	| ast string start |
 	string := '"Second comment"'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Second comment'
 ]
@@ -467,7 +467,7 @@ a := 1111111111111111.
 | a |
 ' size.
 		
-	ast := (Parser parseMethod: body) bestNodeFor: (start to: start + 6).
+	ast := (OCParser parseMethod: body) bestNodeFor: (start to: start + 6).
 	self assert: ast isAssignment.
 	self assert: ast sourceCode equals: 'a := 1111111111111111'
 ]
@@ -488,7 +488,7 @@ a := 1111111111111111.
 | a |
 ' size.
 		
-	ast := (Parser parseMethod: body) bestNodeFor: (start + 2 to: start + 6).
+	ast := (OCParser parseMethod: body) bestNodeFor: (start + 2 to: start + 6).
 	self assert: ast isAssignment.
 	self assert: ast sourceCode equals: 'a := 1111111111111111'.
 	
@@ -500,7 +500,7 @@ OCProgramNodeTest >> testBestNodeForStatementInsideMethodNodeReturnsStatement [
 	| bestNode string |
 
 	string := self getMethodString findString: '.'.
-	bestNode := (Parser parseMethod: self getMethodString)
+	bestNode := (OCParser parseMethod: self getMethodString)
 		        bestNodeForPosition: string + 1.
 	self
 		assert: bestNode isAssignment;
@@ -525,7 +525,7 @@ a := 3.
 	selection := 'a := 1.
 a := 2.' size.
 		
-	ast := (Parser parseMethod: body) bestNodeFor: (start to: start + selection).
+	ast := (OCParser parseMethod: body) bestNodeFor: (start to: start + selection).
 	self assert: ast isSequence.
 	self assert: ast sourceCode equals: '| a |
 a := 1.
@@ -538,7 +538,7 @@ OCProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedValue [
 	| ast string start |
 	string := '#node'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isLiteralNode.
 	self assert: ast value equals: #node
 ]
@@ -548,7 +548,7 @@ OCProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedVariable [
 	| ast string start |
 	string := 'assignement'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isVariable.
 	self assert: ast name equals: 'assignement'
 ]
@@ -558,7 +558,7 @@ OCProgramNodeTest >> testBestNodeWithMethodSelectorGivesCommentNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
-	ast := (Parser parseMethod: self getMethodString) bestNodeFor: (1 to: start + string size - 1).
+	ast := (OCParser parseMethod: self getMethodString) bestNodeFor: (1 to: start + string size - 1).
 	self assert: ast isCommentNode
 ]
 
@@ -569,7 +569,7 @@ OCProgramNodeTest >> testCursorAfterArgumentReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 9.
 
 	self assert: bestNode isVariable
@@ -585,7 +585,7 @@ OCProgramNodeTest >> testCursorAfterColonReturnsPreviousStatement [
 	var m1.
 	var m2'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 13.
 
 	self assert: bestNode isMessage.
@@ -602,7 +602,7 @@ OCProgramNodeTest >> testCursorAfterMessageAndBeforeNewlineReturnsMessageNode [
 	               arg m1
 	 m2'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 33.
 
 	self assert: bestNode isMessage.
@@ -617,7 +617,7 @@ OCProgramNodeTest >> testCursorAfterMessageAndSpaceReturnsMessageNode [
 	sourceCode := 'toto: arg
 	               arg m1  m2'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 33.
 
 	self assert: bestNode isMessage.
@@ -632,7 +632,7 @@ OCProgramNodeTest >> testCursorAfterMessageReturnsMessageNode [
 	sourceCode := 'toto: arg
 	               arg m1 m2'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 32.
 
 	self assert: bestNode isMessage.
@@ -647,7 +647,7 @@ OCProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 28.
 
 	self assert: bestNode isVariable
@@ -660,7 +660,7 @@ OCProgramNodeTest >> testCursorBeforeArgumentNextToSelectorReturnsMethodNode [
 	sourceCode := 'toto:m1
 	               m1 aMessage'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 6.
 
 	self assert: bestNode isMethod
@@ -673,7 +673,7 @@ OCProgramNodeTest >> testCursorBeforeArgumentReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 7.
 
 	self assert: bestNode isVariable
@@ -689,7 +689,7 @@ OCProgramNodeTest >> testCursorBeforeMessageAndAfterNewlineReturnsMessageNode [
 	               arg m1
 	 m2'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 34.
 
 	self assert: bestNode isMessage.
@@ -703,7 +703,7 @@ OCProgramNodeTest >> testCursorBeforeVariableReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 26.
 
 	self assert: bestNode isVariable
@@ -716,7 +716,7 @@ OCProgramNodeTest >> testCursorInMiddleOfVariableReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := Parser parseMethod: sourceCode.
+	ast := OCParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 27.
 
 	self assert: bestNode isVariable
@@ -733,7 +733,7 @@ OCProgramNodeTest >> testHasProperty [
 OCProgramNodeTest >> testHasSameExitPointWhenBlockWithoutReturnExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							[ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -743,7 +743,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenBlockWithoutReturnExpectTrue [
 OCProgramNodeTest >> testHasSameExitPointWhenMessageWithReturnBlockExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							instVar at: #foo ifAbsentPut: [ ^ 2 ]'.
 	statement := ast body statements last.
 	self deny: statement hasSameExitPoint 
@@ -753,7 +753,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenMessageWithReturnBlockExpectFalse [
 OCProgramNodeTest >> testHasSameExitPointWhenMessageWithoutReturnBlockExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							instVar at: #foo ifAbsentPut: [ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -763,7 +763,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenMessageWithoutReturnBlockExpectTrue
 OCProgramNodeTest >> testHasSameExitPointWhenReturnNodeExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							^ 2'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -773,7 +773,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenReturnNodeExpectTrue [
 OCProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithAssignmentExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							^ a := 3'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -783,7 +783,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithAssignmentExpectTrue 
 OCProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithMessageSendExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							^ self foo: 2'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -793,7 +793,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithMessageSendExpectTrue
 OCProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockAndSequenceWithNestedBlockWithoutReturnExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							^ [ self foo: [ :a | a + 1 ]. ^ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -803,7 +803,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockAndSequenceWithNeste
 OCProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockWithoutReturnExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							^ [ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -813,7 +813,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockWithoutReturnExpectT
 OCProgramNodeTest >> testHasSameExitPointWhenReturnWithEmptyBlockExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							^ [ ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -823,7 +823,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenReturnWithEmptyBlockExpectTrue [
 OCProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithReturnBlockExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							^ instVar at: #foo ifAbsentPut: [ ^ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -833,7 +833,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithReturnBlockExp
 OCProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithoutReturnBlockExpecTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							^ instVar at: #foo ifAbsentPut: [ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement hasSameExitPoint 
@@ -843,7 +843,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithoutReturnBlock
 OCProgramNodeTest >> testHasSameExitPointWhenReturnWithWhileFalseBlockWithReturnExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							[ ^ false ] whileFalse: [ true ]'.
 	statement := ast body statements last.
 	self deny: statement hasSameExitPoint 
@@ -853,7 +853,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenReturnWithWhileFalseBlockWithReturn
 OCProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnAndNonLocalReturnExpectTrue [
 
 	| ast sequence |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							self foo.
 							instVar := true ifFalse: [ ^ 1 ].
 							instVar isOdd ifTrue: [ instVar := instVar + 1 ].
@@ -867,7 +867,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnAndNonLocalRe
 OCProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnExpectTrue [
 
 	| ast sequence |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							self foo.
 							instVar := true ifFalse: [ 1 ].
 							^ 2'.
@@ -880,7 +880,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnExpectTrue [
 OCProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutAnyReturnsExpectTrue [
 
 	| ast sequence |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							self foo.
 							instVar := true ifFalse: [ 1 ]
 							self end'.
@@ -893,7 +893,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutAnyReturnsExpectTrue
 OCProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndMultipleNonLocalReturnExpectFalse [
 
 	| ast sequence |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							self foo.
 							[  instVar isOdd ifTrue: [ ^ 2 ]. 
 								instVar := instVar + 1] 
@@ -909,7 +909,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndMultipl
 OCProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndNonLocalReturnExpectFalse [
 
 	| ast sequence |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							self foo.
 							instVar := true ifFalse: [ ^ 1 ]
 							self end'.
@@ -922,7 +922,7 @@ OCProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndNonLoca
 OCProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo; bar; end'.
 	statement := ast body statements last messages first.
 	self deny: statement isEssential 
@@ -932,7 +932,7 @@ OCProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectFalse [
 OCProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo bar'.
 	statement := ast body statements last receiver.
 	self assert: statement isEssential 
@@ -942,7 +942,7 @@ OCProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
 OCProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsEssentialExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               a := self foo; bar; end'.
 	statement := ast body statements last value messages last.
 	self deny: statement isEssential 
@@ -952,7 +952,7 @@ OCProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsEssenti
 OCProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsNotEssentialExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo; bar; end'.
 	statement := ast body statements last value messages last.
 	self deny: statement isEssential 
@@ -962,7 +962,7 @@ OCProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsNotEsse
 OCProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo; bar; end'.
 	statement := ast body statements last messages second.
 	self deny: statement isEssential 
@@ -972,7 +972,7 @@ OCProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectFalse [
 OCProgramNodeTest >> testIsEssentialWhenNodeIsArgumentExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self ars: self foo'.
 	statement := ast body statements first arguments first.
 	self assert: statement isEssential 
@@ -982,7 +982,7 @@ OCProgramNodeTest >> testIsEssentialWhenNodeIsArgumentExpectTrue [
 OCProgramNodeTest >> testIsEssentialWhenOnlyNodeInABlockNodeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               [self foo]'.
 	statement := ast body statements last body statements first.
 	self deny: statement isEssential 
@@ -992,7 +992,7 @@ OCProgramNodeTest >> testIsEssentialWhenOnlyNodeInABlockNodeExpectFalse [
 OCProgramNodeTest >> testIsEssentialWhenPartOfABlockNodeExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               [self foo]'.
 	statement := ast body statements last.
 	self deny: statement isEssential 
@@ -1002,7 +1002,7 @@ OCProgramNodeTest >> testIsEssentialWhenPartOfABlockNodeExpectTrue [
 OCProgramNodeTest >> testIsEssentialWhenPartOfAReturnStatementExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               ^ self foo'.
 	statement := ast body statements last value.
 	self assert: statement isEssential 
@@ -1012,7 +1012,7 @@ OCProgramNodeTest >> testIsEssentialWhenPartOfAReturnStatementExpectTrue [
 OCProgramNodeTest >> testIsEssentialWhenPartOfASequenceExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. self bar. ^ 1'.
 	statement := ast body statements first.
 	self deny: statement isEssential 
@@ -1022,7 +1022,7 @@ OCProgramNodeTest >> testIsEssentialWhenPartOfASequenceExpectFalse [
 OCProgramNodeTest >> testIsEssentialWhenPartOfASequenceLastNodeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. self bar'.
 	statement := ast body statements last.
 	self deny: statement isEssential 
@@ -1032,7 +1032,7 @@ OCProgramNodeTest >> testIsEssentialWhenPartOfASequenceLastNodeExpectFalse [
 OCProgramNodeTest >> testIsEssentialWhenPartOfASequenceOneStatementOnlyExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo'.
 	statement := ast body statements last.
 	self deny: statement isEssential 
@@ -1042,7 +1042,7 @@ OCProgramNodeTest >> testIsEssentialWhenPartOfASequenceOneStatementOnlyExpectFal
 OCProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               [ a := self foo]'.
 	statement := ast body statements last body statements first value.
 	self assert: statement isEssential 
@@ -1052,7 +1052,7 @@ OCProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue
 OCProgramNodeTest >> testIsEssentialWhenTwoMessagesInACascadeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               a := self foo; bar'.
 	statement := ast body statements last value messages last.
 	self deny: statement isEssential 
@@ -1062,7 +1062,7 @@ OCProgramNodeTest >> testIsEssentialWhenTwoMessagesInACascadeExpectFalse [
 OCProgramNodeTest >> testIsEssentialWhenValueOfAnAssignmentExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               |m1| m1 := self foo'.
 	statement := ast body statements last value.
 	self assert: statement isEssential 
@@ -1072,7 +1072,7 @@ OCProgramNodeTest >> testIsEssentialWhenValueOfAnAssignmentExpectTrue [
 OCProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               |m1| m1 := self foo'.
 	statement := ast body statements last variable.
 	self assert: statement isEssential 
@@ -1082,7 +1082,7 @@ OCProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenBlockNodeInSequenceNodeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. [self bar]. ^ self end'.
 	statement := ast body statements second.
 	self deny: statement isUsedAsReturnValue 
@@ -1092,7 +1092,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenBlockNodeInSequenceNodeExpectFal
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenFirstNodeInSequenceNodeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. self bar. ^ self end'.
 	statement := ast body statements first.
 	self deny: statement isUsedAsReturnValue 
@@ -1102,7 +1102,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenFirstNodeInSequenceNodeExpectFal
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenInSequenceNodeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. self bar. ^ self end'.
 	statement := ast body statements second.
 	self deny: statement isUsedAsReturnValue 
@@ -1112,7 +1112,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenInSequenceNodeExpectFalse [
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeInSequenceExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. self end'.
 	statement := ast body statements last.
 	self deny: statement isUsedAsReturnValue 
@@ -1122,7 +1122,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeInSequenceExpectFalse [
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSequenceExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. ^ self end'.
 	statement := ast body statements last.
 	self assert: statement isUsedAsReturnValue 
@@ -1132,7 +1132,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSeque
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsArrayExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               { self foo . a := self end }'.
 	statement := ast body statements last.
 	self deny: statement isUsedAsReturnValue 
@@ -1142,7 +1142,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsArrayExpectFalse [
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. a := self end'.
 	statement := ast body statements last.
 	self deny: statement isUsedAsReturnValue 
@@ -1152,7 +1152,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentInSequenceExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. a := self end. ^ 1'.
 	statement := ast body statements second.
 	self deny: statement isUsedAsReturnValue 
@@ -1162,7 +1162,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentInSequenceExpect
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. a := self end'.
 	statement := ast body statements last value.
 	self assert: statement isUsedAsReturnValue 
@@ -1172,7 +1172,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue 
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self foo. a := self end'.
 	statement := ast body statements last variable.
 	self deny: statement isUsedAsReturnValue 
@@ -1182,7 +1182,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectFa
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               [ self foo. self bar ]'.
 	statement := ast body statements first body statements second.
 	self deny: statement isUsedAsReturnValue 
@@ -1192,7 +1192,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectFalse [
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsNotLastInBlockExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               [ self foo. self bar ]'.
 	statement := ast body statements first body statements first.
 	self deny: statement isUsedAsReturnValue 
@@ -1202,7 +1202,7 @@ OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsNotLastInBlockExpectFalse 
 OCProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsPartOfArrayExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               { self foo . a := self end }'.
 	statement := ast body statements last statements first.
 	self assert: statement isUsedAsReturnValue 
@@ -1495,7 +1495,7 @@ OCProgramNodeTest >> testWithAllParents [
 OCProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							{ ^ 1 . #a }'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1505,7 +1505,7 @@ OCProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
 OCProgramNodeTest >> testlastIsReturnWhenArrayNodeWithLastReturnExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							{ ^ 1 }'.
 	statement := ast body statements last.
 	self assert: statement lastIsReturn 
@@ -1515,7 +1515,7 @@ OCProgramNodeTest >> testlastIsReturnWhenArrayNodeWithLastReturnExpectTrue [
 OCProgramNodeTest >> testlastIsReturnWhenBlockNodeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							[ 2 ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1525,7 +1525,7 @@ OCProgramNodeTest >> testlastIsReturnWhenBlockNodeExpectFalse [
 OCProgramNodeTest >> testlastIsReturnWhenEmptyArrayNodeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							{ }'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1535,7 +1535,7 @@ OCProgramNodeTest >> testlastIsReturnWhenEmptyArrayNodeExpectFalse [
 OCProgramNodeTest >> testlastIsReturnWhenEmptySequenceExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1'.
+	ast := OCParser parseMethod: 'a1'.
 	statement := ast body.
 	self deny: statement lastIsReturn 
 ]
@@ -1544,7 +1544,7 @@ OCProgramNodeTest >> testlastIsReturnWhenEmptySequenceExpectFalse [
 OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasOneArgumentExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							true ifTrue: [ ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1554,7 +1554,7 @@ OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasOneArgument
 OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							true ifTrue: [ ] ifFalse: [ ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1564,7 +1564,7 @@ OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgument
 OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndBothArgsHaveReturnExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							true ifTrue: [ ^ 1 ] ifFalse: [ ^ 1 ]'.
 	statement := ast body statements last.
 	self assert: statement lastIsReturn 
@@ -1574,7 +1574,7 @@ OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgument
 OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndFirstArgHasReturnExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							true ifTrue: [ ^ 1 ] ifFalse: [ ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1584,7 +1584,7 @@ OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgument
 OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndSecondArgHasReturnExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							true ifTrue: [ ] ifFalse: [ ^ 1 ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1594,7 +1594,7 @@ OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgument
 OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsNotInlinedIfExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							self foo'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1604,7 +1604,7 @@ OCProgramNodeTest >> testlastIsReturnWhenMessageNodeIsNotInlinedIfExpectFalse [
 OCProgramNodeTest >> testlastIsReturnWhenMethodNodeWithLastReturnExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							^ 1'.
 	statement := ast.
 	self assert: statement lastIsReturn 
@@ -1614,7 +1614,7 @@ OCProgramNodeTest >> testlastIsReturnWhenMethodNodeWithLastReturnExpectTrue [
 OCProgramNodeTest >> testlastIsReturnWhenNodeIsNotReturnExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self bar'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
@@ -1624,7 +1624,7 @@ OCProgramNodeTest >> testlastIsReturnWhenNodeIsNotReturnExpectFalse [
 OCProgramNodeTest >> testlastIsReturnWhenNodeIsReturnExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               ^ self bar'.
 	statement := ast body statements last.
 	self assert: statement lastIsReturn 
@@ -1634,7 +1634,7 @@ OCProgramNodeTest >> testlastIsReturnWhenNodeIsReturnExpectTrue [
 OCProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithLastReturnNodeExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               ^ self bar'.
 	statement := ast body.
 	self assert: statement lastIsReturn 
@@ -1644,7 +1644,7 @@ OCProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithLastReturnNodeExpectT
 OCProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithoutLastReturnNodeExpectFalse [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 	               self bar'.
 	statement := ast body.
 	self deny: statement lastIsReturn 
@@ -1654,7 +1654,7 @@ OCProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithoutLastReturnNodeExpe
 OCProgramNodeTest >> testlastIsReturnWhenReturnNodeWithBlockNodeExpectTrue [
 
 	| ast statement |
-	ast := Parser parseMethod: 'a1
+	ast := OCParser parseMethod: 'a1
 							^ [ 2 ]'.
 	statement := ast body statements last.
 	self assert: statement lastIsReturn 

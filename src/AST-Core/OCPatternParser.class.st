@@ -3,31 +3,31 @@ RBPatternParser is a subclass of RBParser that allows the extended syntax that c
 
 "
 Class {
-	#name : 'PatternParser',
-	#superclass : 'Parser',
+	#name : 'OCPatternParser',
+	#superclass : 'OCParser',
 	#category : 'AST-Core-Parser',
 	#package : 'AST-Core',
 	#tag : 'Parser'
 }
 
 { #category : 'private - classes' }
-PatternParser >> messageNodeClass [
+OCPatternParser >> messageNodeClass [
 	^OCPatternMessageNode
 ]
 
 { #category : 'private - classes' }
-PatternParser >> methodNodeClass [
+OCPatternParser >> methodNodeClass [
 	^OCPatternMethodNode
 ]
 
 { #category : 'private - parsing' }
-PatternParser >> parseError: aString [
+OCPatternParser >> parseError: aString [
 
 	self error: aString
 ]
 
 { #category : 'private - parsing' }
-PatternParser >> parseLiteralByteArrayObject [
+OCPatternParser >> parseLiteralByteArrayObject [
 	| node |
 	(currentToken isIdentifier and: [currentToken isPatternVariable])
 		ifTrue:
@@ -40,7 +40,7 @@ PatternParser >> parseLiteralByteArrayObject [
 ]
 
 { #category : 'private - parsing' }
-PatternParser >> parsePatternBlock: aClass [
+OCPatternParser >> parsePatternBlock: aClass [
 	| position node |
 	position := currentToken start.
 	self step.
@@ -63,7 +63,7 @@ PatternParser >> parsePatternBlock: aClass [
 ]
 
 { #category : 'private - parsing' }
-PatternParser >> parsePragmaLiteral [
+OCPatternParser >> parsePragmaLiteral [
 	| node |
 	currentToken isPatternBlock
 		ifTrue: [ ^ self parsePatternBlock: OCPatternBlockNode ].
@@ -81,7 +81,7 @@ PatternParser >> parsePragmaLiteral [
 ]
 
 { #category : 'private - parsing' }
-PatternParser >> parsePrimitiveLiteral [
+OCPatternParser >> parsePrimitiveLiteral [
 	| node |
 	(currentToken isIdentifier and: [currentToken isPatternVariable])
 		ifTrue:
@@ -98,14 +98,14 @@ PatternParser >> parsePrimitiveLiteral [
 ]
 
 { #category : 'private - parsing' }
-PatternParser >> parsePrimitiveObject [
+OCPatternParser >> parsePrimitiveObject [
 	currentToken isPatternBlock
 		ifTrue: [^self parsePatternBlock: OCPatternBlockNode].
 	^super parsePrimitiveObject
 ]
 
 { #category : 'private - parsing' }
-PatternParser >> parseUnaryMessage [
+OCPatternParser >> parseUnaryMessage [
 	| node |
 	node := self parsePrimitiveObject.
 	self addCommentsTo: node.
@@ -124,7 +124,7 @@ PatternParser >> parseUnaryMessage [
 ]
 
 { #category : 'private - parsing' }
-PatternParser >> parseWrapperPatternBlockWith: wrappedNode [
+OCPatternParser >> parseWrapperPatternBlockWith: wrappedNode [
 	| node |
 
 	node := self parsePatternBlock: OCPatternWrapperBlockNode.
@@ -136,16 +136,16 @@ PatternParser >> parseWrapperPatternBlockWith: wrappedNode [
 ]
 
 { #category : 'private - classes' }
-PatternParser >> pragmaNodeClass [
+OCPatternParser >> pragmaNodeClass [
 	^OCPatternPragmaNode
 ]
 
 { #category : 'accessing' }
-PatternParser >> scannerClass [
-	^RBPatternScanner
+OCPatternParser >> scannerClass [
+	^OCPatternScanner
 ]
 
 { #category : 'private - classes' }
-PatternParser >> variableNodeClass [
+OCPatternParser >> variableNodeClass [
 	^OCPatternVariableNode
 ]

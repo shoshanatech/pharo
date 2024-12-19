@@ -39,5 +39,5 @@ OCParseTreeTest >> parseRewriteMethod: aString [
 
 { #category : 'helpers' }
 OCParseTreeTest >> parserClass [
-	^ Parser
+	^ OCParser
 ]

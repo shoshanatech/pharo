@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 OCParserTest class >> parserClass [
-	^ Parser
+	^ OCParser
 ]
 
 { #category : 'accessing' }
@@ -25,7 +25,7 @@ OCParserTest >> exampleClasses [
 	<sampleInstance>
 	^ Array
 		with: self parserClass
-		with: RBScanner
+		with: OCScanner
 		with: OCProgramNode
 		with: OCCommentNode
 ]
@@ -1330,38 +1330,38 @@ OCParserTest >> testParseGivesMethod [
 { #category : 'tests' }
 OCParserTest >> testParseLiterals [
 
-	self assert: (Parser parseLiterals: '') equals: #(  ).
+	self assert: (OCParser parseLiterals: '') equals: #(  ).
 	self
-		assert: (Parser parseLiterals: '10 1.1 true nil false')
+		assert: (OCParser parseLiterals: '10 1.1 true nil false')
 		equals: #( 10 1.1 true nil false ).
 	self
-		assert: (Parser parseLiterals: '#foo #foo: #foo:bar:baz')
+		assert: (OCParser parseLiterals: '#foo #foo: #foo:bar:baz')
 		equals: #( #foo #foo: #'foo:bar:baz' ).
 	self
-		assert: (Parser parseLiterals: 'foo foo: foo:bar:baz')
+		assert: (OCParser parseLiterals: 'foo foo: foo:bar:baz')
 		equals: #( #foo #foo: #'foo:bar:baz' ).
 	self
-		assert: (Parser parseLiterals:
+		assert: (OCParser parseLiterals:
 				 '''foo'' ''foo:'' ''foo:bar:baz'' ''1'' ''true''')
 		equals: #( 'foo' 'foo:' 'foo:bar:baz' '1' 'true' ).
 	self
-		assert: (Parser parseLiterals: '(1 2) #(1 2) #[1 2]')
+		assert: (OCParser parseLiterals: '(1 2) #(1 2) #[1 2]')
 		equals: #( #( 1 2 ) #( 1 2 ) #[ 1 2 ] ).
 	self
-		assert: (Parser parseLiterals: '.[];::=^')
+		assert: (OCParser parseLiterals: '.[];::=^')
 		equals: #( #'.' #'[' #']' #';' #':' #':=' #'^' ).
 
 	self
-		should: [ Parser parseLiterals: '#( unclosed' ]
+		should: [ OCParser parseLiterals: '#( unclosed' ]
 		raise: CodeError.
 	self
-		should: [ Parser parseLiterals: ') unopened' ]
+		should: [ OCParser parseLiterals: ') unopened' ]
 		raise: CodeError.
 	self
-		should: [ Parser parseLiterals: '#[ 1 1000 2 ] bad subliteral' ]
+		should: [ OCParser parseLiterals: '#[ 1 1000 2 ] bad subliteral' ]
 		raise: CodeError.
 	self
-		should: [ Parser parseLiterals: 'syntax¿error' ]
+		should: [ OCParser parseLiterals: 'syntax¿error' ]
 		raise: CodeError
 ]
 

@@ -14,7 +14,7 @@ Shared Variables:
 	ParserType	<Symbol>	the type code we are parsing
 "
 Class {
-	#name : 'Parser',
+	#name : 'OCParser',
 	#superclass : 'Object',
 	#instVars : [
 		'scanner',
@@ -30,17 +30,17 @@ Class {
 }
 
 { #category : 'parsing' }
-Parser class >> parseExpression: aString [
+OCParser class >> parseExpression: aString [
 	^self parseExpression: aString onError: nil
 ]
 
 { #category : 'parsing' }
-Parser class >> parseExpression: aString onError: aBlock [
+OCParser class >> parseExpression: aString onError: aBlock [
 	^ (self parseFaultyExpression: aString) checkFaulty: aBlock
 ]
 
 { #category : 'parsing' }
-Parser class >> parseFaultyExpression: aString [
+OCParser class >> parseFaultyExpression: aString [
 	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with ASTParseErrorNode"
 	^ self new
 		initializeParserWith: aString;
@@ -48,7 +48,7 @@ Parser class >> parseFaultyExpression: aString [
 ]
 
 { #category : 'parsing' }
-Parser class >> parseFaultyMethod: aString [
+OCParser class >> parseFaultyMethod: aString [
 	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with ASTarseErrorNode"
 	^ self new
 		initializeParserWith: aString;
@@ -56,7 +56,7 @@ Parser class >> parseFaultyMethod: aString [
 ]
 
 { #category : 'parsing' }
-Parser class >> parseLiterals: aString [
+OCParser class >> parseLiterals: aString [
 
 	| scanner parser |
 	parser := self new.
@@ -69,58 +69,58 @@ Parser class >> parseLiterals: aString [
 ]
 
 { #category : 'parsing' }
-Parser class >> parseMethod: aString [
+OCParser class >> parseMethod: aString [
 	^self parseMethod: aString onError: nil
 ]
 
 { #category : 'parsing' }
-Parser class >> parseMethod: aString onError: aBlock [
+OCParser class >> parseMethod: aString onError: aBlock [
 	^ (self parseFaultyMethod: aString) checkFaulty: aBlock
 ]
 
 { #category : 'parsing' }
-Parser class >> parseMethodPattern: aString [
+OCParser class >> parseMethodPattern: aString [
 	^ (self new
 		   initializeParserWith: aString;
 		   parseMessagePattern) selector
 ]
 
 { #category : 'parsing' }
-Parser class >> parsePragma: aString [
+OCParser class >> parsePragma: aString [
 	^ self new
 		  initializeParserWith: aString;
 		  parsePragmaAndReturn
 ]
 
 { #category : 'parsing' }
-Parser class >> parseRewriteExpression: aString [
+OCParser class >> parseRewriteExpression: aString [
 	^self parseRewriteExpression: aString onError: nil
 ]
 
 { #category : 'parsing' }
-Parser class >> parseRewriteExpression: aString onError: aBlock [
+OCParser class >> parseRewriteExpression: aString onError: aBlock [
 	^RBPatternParser parseExpression: aString onError: aBlock
 ]
 
 { #category : 'parsing' }
-Parser class >> parseRewriteMethod: aString [
+OCParser class >> parseRewriteMethod: aString [
 	^self parseRewriteMethod: aString onError: nil
 ]
 
 { #category : 'parsing' }
-Parser class >> parseRewriteMethod: aString onError: aBlock [
+OCParser class >> parseRewriteMethod: aString onError: aBlock [
 	^RBPatternParser parseMethod: aString onError: aBlock
 ]
 
 { #category : 'private' }
-Parser >> addCommentsTo: aNode [
+OCParser >> addCommentsTo: aNode [
 	aNode comments: aNode comments , comments.
 	comments do: [ :each | each parent: aNode ].
 	comments := OrderedCollection new
 ]
 
 { #category : 'private - parsing' }
-Parser >> addParserError: errorMessage to: aNode [
+OCParser >> addParserError: errorMessage to: aNode [
 	| errorNode |
 	errorNode := self parseErrorNode: errorMessage.
 	aNode addFaultyNode: errorNode.
@@ -128,28 +128,28 @@ Parser >> addParserError: errorMessage to: aNode [
 ]
 
 { #category : 'private' }
-Parser >> addPragma: aPragma [
+OCParser >> addPragma: aPragma [
 	pragmas ifNil: [ pragmas := OrderedCollection new ].
 	pragmas addLast: aPragma
 ]
 
 { #category : 'private - classes' }
-Parser >> arrayNodeClass [
+OCParser >> arrayNodeClass [
 	^ OCArrayNode
 ]
 
 { #category : 'private - classes' }
-Parser >> assignmentNodeClass [
+OCParser >> assignmentNodeClass [
 	^ OCAssignmentNode
 ]
 
 { #category : 'testing' }
-Parser >> atEnd [
+OCParser >> atEnd [
 	^currentToken isEOF
 ]
 
 { #category : 'private - parsing' }
-Parser >> basicParsePragma [
+OCParser >> basicParsePragma [
 	"Current token must be Identifier, Keyword or Binary. Else it throws an error."
 	^ currentToken isIdentifier
 		ifTrue: [ self parseUnaryPragma ]
@@ -163,49 +163,49 @@ Parser >> basicParsePragma [
 ]
 
 { #category : 'private - classes' }
-Parser >> blockNodeClass [
+OCParser >> blockNodeClass [
 	^ OCBlockNode
 ]
 
 { #category : 'private - classes' }
-Parser >> cascadeNodeClass [
+OCParser >> cascadeNodeClass [
 	^ OCCascadeNode
 ]
 
 { #category : 'accessing' }
-Parser >> currentToken [
+OCParser >> currentToken [
 	^currentToken
 ]
 
 { #category : 'private - classes' }
-Parser >> doItMethodNodeClass [
+OCParser >> doItMethodNodeClass [
 	^ OCDoItMethodNode
 ]
 
 { #category : 'private - classes' }
-Parser >> englobingErrorNodeClass [
+OCParser >> englobingErrorNodeClass [
 	^OCEnglobingErrorNode
 ]
 
 { #category : 'error handling' }
-Parser >> errorBlock [
+OCParser >> errorBlock [
 
 	self deprecated: 'see errorBlock:'
 ]
 
 { #category : 'accessing' }
-Parser >> errorBlock: aBlock [
+OCParser >> errorBlock: aBlock [
 
 	self deprecated: 'RBParser instances offer no more errorBlock facility. Use helpers methods on the class side, or `checkFaulty: aBlock` on a parsed AST'
 ]
 
 { #category : 'error handling' }
-Parser >> errorPosition [
+OCParser >> errorPosition [
 	^currentToken ifNotNil: [ :token | token start] ifNil:[1]
 ]
 
 { #category : 'private' }
-Parser >> extractCommentsFrom: aToken [
+OCParser >> extractCommentsFrom: aToken [
 
 	aToken comments
 		collect: [:commentToken | OCCommentNode with: commentToken ]
@@ -213,7 +213,7 @@ Parser >> extractCommentsFrom: aToken [
 ]
 
 { #category : 'error handling' }
-Parser >> getErrorFromClosuresWithMissingOpenings: aCollection [
+OCParser >> getErrorFromClosuresWithMissingOpenings: aCollection [
 	^((currentToken isSpecial and: ['])}' includes: currentToken value])
 				" We make a distinction between the bracket and the other closures because blocks are the only ones that can contain multiple statements. "
 				ifTrue: [ currentToken value = $)
@@ -227,50 +227,50 @@ Parser >> getErrorFromClosuresWithMissingOpenings: aCollection [
 ]
 
 { #category : 'initialization' }
-Parser >> initialize [
+OCParser >> initialize [
 
 	super initialize.
 	comments := OrderedCollection new
 ]
 
 { #category : 'accessing' }
-Parser >> initializeParserWith: aString [
+OCParser >> initializeParserWith: aString [
 	source := aString.
 	self scanner: (self scannerClass on: (ReadStream on: aString))
 ]
 
 { #category : 'private - classes' }
-Parser >> literalArrayNodeClass [
+OCParser >> literalArrayNodeClass [
 	^ OCLiteralArrayNode
 ]
 
 { #category : 'private - classes' }
-Parser >> literalNodeClass [
+OCParser >> literalNodeClass [
 	^ OCLiteralNode
 ]
 
 { #category : 'private - classes' }
-Parser >> literalValueNodeClass [
+OCParser >> literalValueNodeClass [
 	^ OCLiteralValueNode
 ]
 
 { #category : 'private - classes' }
-Parser >> messageNodeClass [
+OCParser >> messageNodeClass [
 	^ OCMessageNode
 ]
 
 { #category : 'private - classes' }
-Parser >> methodNodeClass [
+OCParser >> methodNodeClass [
 	^ OCMethodNode
 ]
 
 { #category : 'private' }
-Parser >> nextToken [
+OCParser >> nextToken [
 	^nextToken ifNil: [nextToken := self scannerNext]
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseArray [
+OCParser >> parseArray [
 	"Although an array node represents an array, it is not an Array-like object."
 	| startToken node |
 	startToken := currentToken.
@@ -286,7 +286,7 @@ Parser >> parseArray [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseAssignment [
+OCParser >> parseAssignment [
 	"Need one token lookahead to see if we have a ':='. This method could
 	make it possible to assign the literals true, false and nil."
 
@@ -313,7 +313,7 @@ Parser >> parseAssignment [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseBinaryMessage [
+OCParser >> parseBinaryMessage [
 	| node |
 	node := self parseUnaryMessage.
 
@@ -324,7 +324,7 @@ Parser >> parseBinaryMessage [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseBinaryMessageWith: aNode [
+OCParser >> parseBinaryMessageWith: aNode [
 	| binaryNode |
 	binaryNode := self selectorNodeClass
 		value: currentToken value
@@ -338,7 +338,7 @@ Parser >> parseBinaryMessageWith: aNode [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseBinaryPattern [
+OCParser >> parseBinaryPattern [
 	| binaryToken node args |
 	currentToken isBinary
 		ifFalse: [
@@ -360,7 +360,7 @@ Parser >> parseBinaryPattern [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseBinaryPragma [
+OCParser >> parseBinaryPragma [
 	| binaryToken |
 	currentToken isBinary
 		ifFalse: [ ^ self parseErrorNode: 'Message pattern expected' ].
@@ -373,7 +373,7 @@ Parser >> parseBinaryPragma [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseBlock [
+OCParser >> parseBlock [
 	| startToken node |
 	startToken := currentToken.
 	self step.
@@ -401,7 +401,7 @@ Parser >> parseBlock [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseBlockArgsInto: node [
+OCParser >> parseBlockArgsInto: node [
 	| verticalBar args arg colons |
 	args := OrderedCollection new: 2.
 	colons := OrderedCollection new: 2.
@@ -429,7 +429,7 @@ Parser >> parseBlockArgsInto: node [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseCascadeMessage [
+OCParser >> parseCascadeMessage [
 	| node receiver messages semicolons err |
 	"Parse of the first message. It can be either unary, binary or keyword."
 	node := self parseKeywordMessage.
@@ -476,7 +476,7 @@ Parser >> parseCascadeMessage [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseCascadeMessageWithReceiver: receiver [
+OCParser >> parseCascadeMessageWithReceiver: receiver [
 
 	| errorNode |
 	currentToken isIdentifier
@@ -501,7 +501,7 @@ Parser >> parseCascadeMessageWithReceiver: receiver [
 ]
 
 { #category : 'parsing' }
-Parser >> parseDoIt [
+OCParser >> parseDoIt [
 	"Parse and return an DoIt corresponding to the expression passed as a #source"
 	| methodNode |
 	methodNode := self doItMethodNodeClass new.
@@ -510,7 +510,7 @@ Parser >> parseDoIt [
 ]
 
 { #category : 'private - classes' }
-Parser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorMessage [
+OCParser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorMessage [
 	| firstParse |
 	firstParse := self parseErrorNode: anErrorMessage.
 	^firstParse isParseError
@@ -522,7 +522,7 @@ Parser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorMes
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseErrorNode: aMessageString [
+OCParser >> parseErrorNode: aMessageString [
 	| errorNode |
 	currentToken isError
 		ifTrue: [
@@ -546,7 +546,7 @@ Parser >> parseErrorNode: aMessageString [
 ]
 
 { #category : 'parsing' }
-Parser >> parseExpression [
+OCParser >> parseExpression [
 	"Parse and return an AST node corresponding to the expression passed as a #source"
 	| methodNode |
 	methodNode := self parseDoIt.
@@ -556,7 +556,7 @@ Parser >> parseExpression [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseIncompleteExpression: priorStatementsNode [
+OCParser >> parseIncompleteExpression: priorStatementsNode [
 	" This method is used when parsing an expression or a method, if the parsing of the list of statements finishes but there are some tokens left to parse."
 	 | statements error |
 	statements := priorStatementsNode statements copy.
@@ -573,12 +573,12 @@ Parser >> parseIncompleteExpression: priorStatementsNode [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseKeywordMessage [
+OCParser >> parseKeywordMessage [
 	^self parseKeywordMessageWith: self parseBinaryMessage
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseKeywordMessageWith: node [
+OCParser >> parseKeywordMessageWith: node [
 	| args isKeyword keywordsStartPositions selector|
 	args := OrderedCollection new: 3.
 	keywordsStartPositions := OrderedCollection new: 3.
@@ -604,7 +604,7 @@ Parser >> parseKeywordMessageWith: node [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseKeywordPattern [
+OCParser >> parseKeywordPattern [
 	| selector positions args node |
 	selector := ''.
 	positions := OrderedCollection new: 2.
@@ -625,7 +625,7 @@ Parser >> parseKeywordPattern [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseKeywordPragma [
+OCParser >> parseKeywordPragma [
 	| selector positions arguments |
 	selector := ''.
 	positions := OrderedCollection new: 2.
@@ -642,7 +642,7 @@ Parser >> parseKeywordPragma [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseLiteralArray [
+OCParser >> parseLiteralArray [
 	| literals startToken stop faulty value prevState |
 	prevState := scanner state.
 	scanner state: #literalArray.
@@ -676,7 +676,7 @@ Parser >> parseLiteralArray [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseLiteralArrayObject [
+OCParser >> parseLiteralArrayObject [
 	currentToken isSpecial
 		ifTrue:
 			[currentToken value = $( ifTrue: [^self parseLiteralArray].
@@ -706,7 +706,7 @@ Parser >> parseLiteralArrayObject [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseLiteralByteArray [
+OCParser >> parseLiteralByteArray [
 	"Current token is litteral array token #[ which means following tokens are part of the array
 	 until the encounter of the special character ] ."
 	| stream startToken value stop faulty |
@@ -741,7 +741,7 @@ Parser >> parseLiteralByteArray [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseLiteralByteArrayObject [
+OCParser >> parseLiteralByteArrayObject [
 	"Ensure that the object contained in the array is the value of a byte."
 	"Return a literal value node of said byte or a parse error node."
 	(currentToken isLiteralToken and:
@@ -758,7 +758,7 @@ Parser >> parseLiteralByteArrayObject [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseLiterals [
+OCParser >> parseLiterals [
 
 	| stream |
 	stream := (Array new: 5) writeStream.
@@ -774,7 +774,7 @@ Parser >> parseLiterals [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseMessagePattern [
+OCParser >> parseMessagePattern [
 	currentToken isLiteralToken ifTrue: [self patchLiteralMessage].
 	^currentToken isIdentifier
 		ifTrue: [self parseUnaryPattern]
@@ -785,7 +785,7 @@ Parser >> parseMessagePattern [
 ]
 
 { #category : 'parsing' }
-Parser >> parseMethod [
+OCParser >> parseMethod [
 	| methodNode |
 	methodNode := self parseMessagePattern.
 	self parsePragmas.
@@ -795,7 +795,7 @@ Parser >> parseMethod [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseMethodBodyInto: aMethodNode [
+OCParser >> parseMethodBodyInto: aMethodNode [
 	aMethodNode source: source.
 	aMethodNode body ifNil: [ aMethodNode body: self sequenceNodeClass new ].
 
@@ -809,7 +809,7 @@ Parser >> parseMethodBodyInto: aMethodNode [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseParenthesizedExpression [
+OCParser >> parseParenthesizedExpression [
 	| node startToken |
 	startToken := currentToken.
 	self step.
@@ -823,7 +823,7 @@ Parser >> parseParenthesizedExpression [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parsePragma [
+OCParser >> parsePragma [
 	"Method called by parsePragmas which already verified that current token is the special character <"
 
 	| startToken pragma |
@@ -850,14 +850,14 @@ Parser >> parsePragma [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parsePragmaAndReturn [
+OCParser >> parsePragmaAndReturn [
 
 	self parsePragma.
 	^ pragmas first
 ]
 
 { #category : 'private - parsing' }
-Parser >> parsePragmaLiteral [
+OCParser >> parsePragmaLiteral [
 	"A literal array token is #( or #[."
 	currentToken isLiteralArrayToken
 		ifTrue:
@@ -870,14 +870,14 @@ Parser >> parsePragmaLiteral [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parsePragmas [
+OCParser >> parsePragmas [
 
 	[ currentToken isBinary: #< ]
 		whileTrue: [ self parsePragma ]
 ]
 
 { #category : 'private - parsing' }
-Parser >> parsePrimitiveIdentifier [
+OCParser >> parsePrimitiveIdentifier [
 	"Creates a Variable Node and copies the value, start position and comments in said node."
 	"This method is called by parseVariableNode which makes sure current token is Identifier."
 	| token node |
@@ -889,7 +889,7 @@ Parser >> parsePrimitiveIdentifier [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parsePrimitiveKeywordPragma [
+OCParser >> parsePrimitiveKeywordPragma [
 	| selector positions arguments |
 	selector := ''.
 	positions := OrderedCollection new: 2.
@@ -906,7 +906,7 @@ Parser >> parsePrimitiveKeywordPragma [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parsePrimitiveLiteral [
+OCParser >> parsePrimitiveLiteral [
 	"Creates a literal value node from a literal token."
 	| token |
 
@@ -921,7 +921,7 @@ Parser >> parsePrimitiveLiteral [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parsePrimitiveObject [
+OCParser >> parsePrimitiveObject [
 	| errorNode |
 	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier].
 	currentToken isLiteralToken ifTrue: [^self parsePrimitiveLiteral].
@@ -963,7 +963,7 @@ Parser >> parsePrimitiveObject [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseStatementInto: statementList periodList: periods withAcceptedStatementClosers: aCollectionOfClosers [
+OCParser >> parseStatementInto: statementList periodList: periods withAcceptedStatementClosers: aCollectionOfClosers [
 
 	"Parse a statement and store it into the statement list.
 	Parse statements as valid only if they end in one of the accepted statement closers provided by the enclosing scope.
@@ -1053,7 +1053,7 @@ Parser >> parseStatementInto: statementList periodList: periods withAcceptedStat
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserOf: aCollectionOfClosers [
+OCParser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserOf: aCollectionOfClosers [
 
 	"Parse a list of statements and set those statetements to a sequence node.
 	Stop parsing when we finish the current scope, delimited by a colleciton of closers.
@@ -1091,7 +1091,7 @@ Parser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserOf:
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseStatements: pragmaBoolean into: aSequenceNode untilAnyCloserOf: aCollectionOfClosers [
+OCParser >> parseStatements: pragmaBoolean into: aSequenceNode untilAnyCloserOf: aCollectionOfClosers [
 
 	self parseTemporariesInto: aSequenceNode.
 
@@ -1102,7 +1102,7 @@ Parser >> parseStatements: pragmaBoolean into: aSequenceNode untilAnyCloserOf: a
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseTemporariesInto: aSequenceNode [
+OCParser >> parseTemporariesInto: aSequenceNode [
 	| temps leftBar rightBar errorNode startToken |
 	temps := OrderedCollection new.
 	leftBar := rightBar := nil.
@@ -1128,7 +1128,7 @@ Parser >> parseTemporariesInto: aSequenceNode [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseTemps [
+OCParser >> parseTemps [
 	| temps |
 	temps := OrderedCollection new.
 	[currentToken isIdentifier] whileTrue: [temps add: self parsePrimitiveIdentifier].
@@ -1136,7 +1136,7 @@ Parser >> parseTemps [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseUnaryMessage [
+OCParser >> parseUnaryMessage [
 	| node |
 	node := self parsePrimitiveObject.
 	self addCommentsTo: node.
@@ -1148,7 +1148,7 @@ Parser >> parseUnaryMessage [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseUnaryMessageWith: aNode [
+OCParser >> parseUnaryMessageWith: aNode [
 	| selector |
 	selector := self selectorNodeClass value: currentToken value keywordPositions: {currentToken start}.
 	self step.
@@ -1160,7 +1160,7 @@ Parser >> parseUnaryMessageWith: aNode [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseUnaryPattern [
+OCParser >> parseUnaryPattern [
 	| selector |
 	selector := currentToken.
 	self step.
@@ -1171,7 +1171,7 @@ Parser >> parseUnaryPattern [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseUnaryPragma [
+OCParser >> parseUnaryPragma [
 	"Current Token must be an Identifier."
 	"Return an ASTPragmaNode."
 	| selector |
@@ -1181,7 +1181,7 @@ Parser >> parseUnaryPragma [
 ]
 
 { #category : 'private - parsing' }
-Parser >> parseVariableNode [
+OCParser >> parseVariableNode [
 	"If called without having an Identifier Token : sends an error.
 	 Return a variable node with current token value, start position and comments."
 
@@ -1205,7 +1205,7 @@ Parser >> parseVariableNode [
 ]
 
 { #category : 'private' }
-Parser >> patchLiteralMessage [
+OCParser >> patchLiteralMessage [
 
 	currentToken value == true
 		ifTrue: [ ^ currentToken := OCIdentifierToken value: 'true' start: currentToken start ].
@@ -1216,7 +1216,7 @@ Parser >> patchLiteralMessage [
 ]
 
 { #category : 'private' }
-Parser >> patchNegativeLiteral [
+OCParser >> patchNegativeLiteral [
 	"Handle the special negative number case for binary message sends."
 
 	currentToken value isNumber
@@ -1238,17 +1238,17 @@ Parser >> patchNegativeLiteral [
 ]
 
 { #category : 'private - classes' }
-Parser >> pragmaNodeClass [
+OCParser >> pragmaNodeClass [
 	^ OCPragmaNode
 ]
 
 { #category : 'private - classes' }
-Parser >> returnNodeClass [
+OCParser >> returnNodeClass [
 	^ OCReturnNode
 ]
 
 { #category : 'private - parsing' }
-Parser >> saveCommentsDuring: aBlock [
+OCParser >> saveCommentsDuring: aBlock [
 	| currentComments |
 	currentComments := comments copy.
 	comments removeAll.
@@ -1257,7 +1257,7 @@ Parser >> saveCommentsDuring: aBlock [
 ]
 
 { #category : 'initialization' }
-Parser >> scanner: aScanner [
+OCParser >> scanner: aScanner [
 	scanner := aScanner.
 	pragmas := nil.
 	comments := OrderedCollection new.
@@ -1265,34 +1265,34 @@ Parser >> scanner: aScanner [
 ]
 
 { #category : 'accessing' }
-Parser >> scannerClass [
-	^RBScanner
+OCParser >> scannerClass [
+	^OCScanner
 ]
 
 { #category : 'private' }
-Parser >> scannerNext [
+OCParser >> scannerNext [
 
 	^ scanner next
 ]
 
 { #category : 'private - classes' }
-Parser >> selectorNodeClass [
+OCParser >> selectorNodeClass [
 	^ OCSelectorNode
 ]
 
 { #category : 'private - classes' }
-Parser >> sequenceNodeClass [
+OCParser >> sequenceNodeClass [
 	^ OCSequenceNode
 ]
 
 { #category : 'accessing' }
-Parser >> source: aString [
+OCParser >> source: aString [
 
 	self initializeParserWith: aString
 ]
 
 { #category : 'private' }
-Parser >> step [
+OCParser >> step [
 	(currentToken isNotNil and: [currentToken comments isNotNil])
 		ifTrue: [self extractCommentsFrom: currentToken].
 	nextToken ifNotNil:
@@ -1302,7 +1302,7 @@ Parser >> step [
 ]
 
 { #category : 'private' }
-Parser >> stepBar [
+OCParser >> stepBar [
 	"When possible, only consume the first bar (`|`) of the current binary token"
 
 	"All of this because | can be a separator (block args), a type of brackets (temps) and a valid first character of binary operators."
@@ -1319,6 +1319,6 @@ Parser >> stepBar [
 ]
 
 { #category : 'private - classes' }
-Parser >> variableNodeClass [
+OCParser >> variableNodeClass [
 	^ OCVariableNode
 ]

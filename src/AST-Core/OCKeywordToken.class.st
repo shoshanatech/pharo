@@ -16,7 +16,7 @@ OCKeywordToken >> isKeyword [
 
 { #category : 'testing' }
 OCKeywordToken >> isPatternVariable [
-	^value first = RBScanner patternVariableCharacter
+	^value first = OCScanner patternVariableCharacter
 ]
 
 { #category : 'testing' }

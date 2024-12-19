@@ -1082,7 +1082,7 @@ OCProgramNode >> parent: aProgramNode [
 
 { #category : 'hook' }
 OCProgramNode >> parserClass [
-	^ Parser
+	^ OCParser
 ]
 
 { #category : 'copying' }

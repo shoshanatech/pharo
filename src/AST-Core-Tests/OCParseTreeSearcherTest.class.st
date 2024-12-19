@@ -31,13 +31,13 @@ OCParseTreeSearcherTest >> assertCodeForVariableNodeNamed: name in: myContextDic
 { #category : 'helpers' }
 OCParseTreeSearcherTest >> parseExpression: aString [
 
-	^ Parser parseExpression: aString
+	^ OCParser parseExpression: aString
 ]
 
 { #category : 'helpers' }
 OCParseTreeSearcherTest >> parseMethod: aString [
 
-	^ Parser parseMethod: aString
+	^ OCParser parseMethod: aString
 ]
 
 { #category : 'helpers' }
@@ -136,7 +136,7 @@ OCParseTreeSearcherTest >> testMatchesArgumentToTestImplicitAddArgument [
 
 	matchContextList := OrderedCollection new.
 	matchContextArgList := OrderedCollection new.
-	aParser := Parser new.
+	aParser := OCParser new.
 
 	search := self parseTreeSearcher.
 	tree := self parseMethod: '+ a
@@ -798,7 +798,7 @@ OCParseTreeSearcherTest >> testSimpleAddSearch [
 
 	| res |
 	searcher addSearch: '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ].
-	searcher executeTree: (Parser parseExpression: ' Object << #Point').
+	searcher executeTree: (OCParser parseExpression: ' Object << #Point').
 	self assert: res equals: #class
 ]
 
@@ -807,7 +807,7 @@ OCParseTreeSearcherTest >> testSimpleAddSearches [
 
 	| res |
 	searcher addSearches: { '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ]}.
-	searcher executeTree: (Parser parseExpression: ' Object << #Point').
+	searcher executeTree: (OCParser parseExpression: ' Object << #Point').
 	self assert: res equals: #class
 ]
 

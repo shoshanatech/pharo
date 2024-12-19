@@ -10,11 +10,11 @@ Class {
 OCReturnNodeAdderVisitorTest >> testAddReturnWhenArrayExpectReturnAdded [
 
 	| expression visitor result expect |
-	expression := Parser parseExpression: '{ x . ''a'' . #a }'.
+	expression := OCParser parseExpression: '{ x . ''a'' . #a }'.
 	visitor := OCReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
-	expect := Parser parseExpression: '^ { x . ''a'' . #a }'.
+	expect := OCParser parseExpression: '^ { x . ''a'' . #a }'.
 	self assert: result equals: expect
 ]
 
@@ -22,11 +22,11 @@ OCReturnNodeAdderVisitorTest >> testAddReturnWhenArrayExpectReturnAdded [
 OCReturnNodeAdderVisitorTest >> testAddReturnWhenAssignmentExpectReturnAdded [
 
 	| expression visitor result expect |
-	expression := Parser parseExpression: 'a := self foo'.
+	expression := OCParser parseExpression: 'a := self foo'.
 	visitor := OCReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
-	expect := Parser parseExpression: '^ a := self foo'.
+	expect := OCParser parseExpression: '^ a := self foo'.
 	self assert: result equals: expect
 ]
 
@@ -34,11 +34,11 @@ OCReturnNodeAdderVisitorTest >> testAddReturnWhenAssignmentExpectReturnAdded [
 OCReturnNodeAdderVisitorTest >> testAddReturnWhenBlockExpectReturnAdded [
 
 	| expression visitor result expect |
-	expression := Parser parseExpression: '[ a := self foo ]'.
+	expression := OCParser parseExpression: '[ a := self foo ]'.
 	visitor := OCReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
-	expect := Parser parseExpression: '^ [ a := self foo ]'.
+	expect := OCParser parseExpression: '^ [ a := self foo ]'.
 	self assert: result equals: expect
 ]
 
@@ -46,11 +46,11 @@ OCReturnNodeAdderVisitorTest >> testAddReturnWhenBlockExpectReturnAdded [
 OCReturnNodeAdderVisitorTest >> testAddReturnWhenCascadeMessageExpectReturnAdded [
 
 	| expression visitor result expect |
-	expression := Parser parseExpression: 'self foo; bar; end'.
+	expression := OCParser parseExpression: 'self foo; bar; end'.
 	visitor := OCReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
-	expect := Parser parseExpression: '^ self foo; bar; end'.
+	expect := OCParser parseExpression: '^ self foo; bar; end'.
 	self assert: result equals: expect
 ]
 
@@ -58,11 +58,11 @@ OCReturnNodeAdderVisitorTest >> testAddReturnWhenCascadeMessageExpectReturnAdded
 OCReturnNodeAdderVisitorTest >> testAddReturnWhenLiteralExpectReturnAdded [
 
 	| expression visitor result expect |
-	expression := Parser parseExpression: '1'.
+	expression := OCParser parseExpression: '1'.
 	visitor := OCReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
-	expect := Parser parseExpression: '^ 1'.
+	expect := OCParser parseExpression: '^ 1'.
 	self assert: result equals: expect
 ]
 
@@ -70,11 +70,11 @@ OCReturnNodeAdderVisitorTest >> testAddReturnWhenLiteralExpectReturnAdded [
 OCReturnNodeAdderVisitorTest >> testAddReturnWhenMessageSendExpectReturnAdded [
 
 	| expression visitor result expect |
-	expression := Parser parseExpression: 'self foo'.
+	expression := OCParser parseExpression: 'self foo'.
 	visitor := OCReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
-	expect := Parser parseExpression: '^ self foo'.
+	expect := OCParser parseExpression: '^ self foo'.
 	self assert: result equals: expect
 ]
 
@@ -82,7 +82,7 @@ OCReturnNodeAdderVisitorTest >> testAddReturnWhenMessageSendExpectReturnAdded [
 OCReturnNodeAdderVisitorTest >> testAddReturnWhenReturnNodeExpectNoChanges [
 
 	| expression visitor result |
-	expression := Parser parseExpression: '^ 2'.
+	expression := OCParser parseExpression: '^ 2'.
 	visitor := OCReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
@@ -93,11 +93,11 @@ OCReturnNodeAdderVisitorTest >> testAddReturnWhenReturnNodeExpectNoChanges [
 OCReturnNodeAdderVisitorTest >> testAddReturnWhenSequenceExpectReturnAdded [
 
 	| expression visitor result expect |
-	expression := Parser parseExpression: 'self foo. self bar'.
+	expression := OCParser parseExpression: 'self foo. self bar'.
 	visitor := OCReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
-	expect := Parser parseExpression: 'self foo. ^ self bar'.
+	expect := OCParser parseExpression: 'self foo. ^ self bar'.
 	self assert: result equals: expect
 ]
 
@@ -105,10 +105,10 @@ OCReturnNodeAdderVisitorTest >> testAddReturnWhenSequenceExpectReturnAdded [
 OCReturnNodeAdderVisitorTest >> testAddReturnWhenVariableExpectReturnAdded [
 
 	| expression visitor result expect |
-	expression := Parser parseExpression: 'x'.
+	expression := OCParser parseExpression: 'x'.
 	visitor := OCReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
-	expect := Parser parseExpression: '^ x'.
+	expect := OCParser parseExpression: '^ x'.
 	self assert: result equals: expect
 ]

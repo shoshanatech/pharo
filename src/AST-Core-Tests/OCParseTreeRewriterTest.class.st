@@ -40,7 +40,7 @@ OCParseTreeRewriterTest >> parseRewriteMethod: aString [
 
 { #category : 'helpers' }
 OCParseTreeRewriterTest >> parserClass [
-	^ Parser
+	^ OCParser
 ]
 
 { #category : 'running' }
