@@ -17,7 +17,7 @@ OCMethodNodeTest >> methodWithArg: someArgName and: someAnotherArgName [
 OCMethodNodeTest >> sampleBytecodeMethod [
 
 	<opalBytecodeMethod>
-	^ IRBuilder buildIR: [ :builder |
+	^ OCIRBuilder buildIR: [ :builder |
 		builder
 				pushLiteral: 5;
 				returnTop
