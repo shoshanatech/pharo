@@ -175,7 +175,7 @@ HookGenerator >> preamble [
 { #category : 'ast manipulation' }
 HookGenerator >> selectorForNode [
 	"The selector to be called on the Reification plugin"
-	^('genFor' , entity class name) asSymbol
+	^('genFor' , (entity class name copyReplaceAll: 'AST' with: 'OC')) asSymbol
 ]
 
 { #category : 'ast manipulation' }
