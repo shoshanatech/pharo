@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'interval',
 		'selector',
-		'class',
-		'uiManager'
+		'class'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
