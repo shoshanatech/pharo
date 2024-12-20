@@ -1876,7 +1876,7 @@ OCCodeSnippet class >> badSemantic [
 			         notices: #( #( 1 130 1 'Too many arguments' ) )). "Too many arguments"
 		        (self new
 			         source: 'OCCodeError signal: ''false error''';
-			         nodeAt: '1111111110000000002222222222222';
+			         nodeAt: '111111111110000000002222222222222';
 			         styled: 'ggggggggg sssssss ''''''''''''''''''''''''''';
 			         raise: OCCodeError;
 			         skip: #testEvaluateOnErrorResume). "evaluate cannot distinguishes runtime errors and compiletime errors"
@@ -1890,9 +1890,9 @@ OCCodeSnippet class >> badSemantic [
 			         raise: Warning). "same, but warning are silently ignored"
 		        (self new
 			         source: 'OCRuntimeSyntaxError signal: ''false error''';
-			         nodeAt: '1111111111111111110000000002222222222222';
+			         nodeAt: '111111111111111111110000000002222222222222';
 			         styled:
-				         'gggggggggggggggggg sssssss ''''''''''''''''''''''''''';
+				         'gggggggggggggggggggg sssssss ''''''''''''''''''''''''''';
 			         raise: OCRuntimeSyntaxError) "runtime errors are not special" }.
 	"Setup default values"
 	self new
