@@ -31,7 +31,7 @@ CoCompletionEngineTest >> newCompletionEngine [
 	^ CoCompletionEngine new
 ]
 
-{ #category : 'accessing' }
+{ #category : 'running' }
 CoCompletionEngineTest >> setUp [
 	super setUp.
 	oldSort := CompletionContext sorterClass.
