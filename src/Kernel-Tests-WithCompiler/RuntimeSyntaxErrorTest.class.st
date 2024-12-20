@@ -21,7 +21,7 @@ RuntimeSyntaxErrorTest >> testFaultyInstalledMethod [
 			self assert: error messageText equals: 'Unknown character'.
 			self
 				assert: error description
-				equals: 'RuntimeSyntaxError: Unknown character'.
+				equals: 'OCRuntimeSyntaxError: Unknown character'.
 			ctx := error signalContext filterDebuggerStack.
 			self assert: ctx sourceNodeExecuted sourceCode equals: '¿' ].
 
@@ -42,7 +42,7 @@ RuntimeSyntaxErrorTest >> testFaultyScript [
 			self assert: error messageText equals: 'Unknown character'.
 			self
 				assert: error description
-				equals: 'RuntimeSyntaxError: Unknown character'.
+				equals: 'OCRuntimeSyntaxError: Unknown character'.
 			ctx := error signalContext filterDebuggerStack.
 			self assert: ctx sourceNodeExecuted sourceCode equals: '¿' ]
 ]
@@ -63,7 +63,7 @@ RuntimeSyntaxErrorTest >> testFaultyUninstalledMethod [
 			self assert: error messageText equals: 'Unknown character'.
 			self
 				assert: error description
-				equals: 'RuntimeSyntaxError: Unknown character'.
+				equals: 'OCRuntimeSyntaxError: Unknown character'.
 			ctx := error signalContext filterDebuggerStack.
 			self assert: ctx sourceNodeExecuted sourceCode equals: '¿' ]
 ]

@@ -22,7 +22,7 @@ OCDumpVisitorTest >> testAPI [
 	node := self parseExpression: 'self foo'.
 	self
 		assert: (OCDumpVisitor new visit: node) contents
-		equals: 'ASTMessageNode receiver: (ASTVariableNode named: #self) selector: #foo'
+		equals: 'OCMessageNode receiver: (OCVariableNode named: #self) selector: #foo'
 ]
 
 { #category : 'tests' }

@@ -1611,21 +1611,30 @@ OCScannerTest >> testNextWithUnFinishedCommentGivesAnError [
 
 { #category : 'tests - Creation api' }
 OCScannerTest >> testScanTokenObjects1 [
-	| inp exp |
-	inp := 'Object subclass: #NameOfSubclass'.
-	exp := {'Object'.
-	'subclass:'.
-	#NameOfSubclass asString}.
-	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
+
+	 | inp exp |
+	 inp := 'Object subclass: #NameOfSubclass'.
+	 exp := {
+		        'Object'.
+		        'subclass:'.
+		        #NameOfSubclass asString }.
+	 self
+		 assert:
+		 ((self scannerClass scanTokens: inp) collect: [ :each | each value ])
+		 equals: exp
 ]
 
 { #category : 'tests - Creation api' }
 OCScannerTest >> testScanTokenObjects2 [
-	| inp exp |
-	inp := 'classVariableNames: '''' "ha ha"
+
+	 | inp exp |
+	 inp := 'classVariableNames: '''' "ha ha"
 package: ''UndefinedClasses-Experiment'.
-	exp := {'classVariableNames:' . '' . 'package:' . '''UndefinedClasses-Experiment'}.
-	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
+	 exp := { 'classVariableNames:'. ''. 'package:'. '''UndefinedClasses-Experiment' }.
+	 self
+		 assert:
+		 ((self scannerClass scanTokens: inp) collect: [ :each | each value ])
+		 equals: exp
 ]
 
 { #category : 'tests - ScanTokens' }

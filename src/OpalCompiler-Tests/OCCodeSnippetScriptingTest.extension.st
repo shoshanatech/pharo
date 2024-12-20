@@ -4,7 +4,7 @@ Extension { #name : 'OCCodeSnippetScriptingTest' }
 OCCodeSnippetScriptingTest >> testEvaluateFailBlock [
 
 	| runBlock error |
-	self skipIf: #exec.
+	"self skipIf: #exec."
 
 	error := nil.
 	runBlock := [

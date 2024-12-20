@@ -1875,7 +1875,7 @@ OCCodeSnippet class >> badSemantic [
 			         isFaulty: true;
 			         notices: #( #( 1 130 1 'Too many arguments' ) )). "Too many arguments"
 		        (self new
-			         source: 'CodeError signal: ''false error''';
+			         source: 'OCCodeError signal: ''false error''';
 			         nodeAt: '1111111110000000002222222222222';
 			         styled: 'ggggggggg sssssss ''''''''''''''''''''''''''';
 			         raise: OCCodeError;
@@ -1889,7 +1889,7 @@ OCCodeSnippet class >> badSemantic [
 				         'ggggggg sssssss ''''''''''''''''''''''''''';
 			         raise: Warning). "same, but warning are silently ignored"
 		        (self new
-			         source: 'RuntimeSyntaxError signal: ''false error''';
+			         source: 'OCRuntimeSyntaxError signal: ''false error''';
 			         nodeAt: '1111111111111111110000000002222222222222';
 			         styled:
 				         'gggggggggggggggggg sssssss ''''''''''''''''''''''''''';

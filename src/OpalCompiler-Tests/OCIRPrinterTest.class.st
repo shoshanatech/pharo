@@ -255,7 +255,7 @@ OCIRPrinterTest >> testSendSuper [
 			'
 label: 1
 pushReceiver
-send: #isThisEverCalled toSuperOf: IRBuilderTest
+send: #isThisEverCalled toSuperOf: OCIRBuilderTest
 returnTop
 '
 ]

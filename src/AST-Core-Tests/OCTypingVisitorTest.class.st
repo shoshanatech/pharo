@@ -80,7 +80,7 @@ OCTypingVisitorTest >> exampleMethod [
 	| collection tmp |
 	
 	'hello' "<ByteString>".
-	self "<ASTTypingVisitorTest>".
+	self "<OCTypingVisitorTest>".
 	nil "<UndefinedObject>".
 	true "<True>".
 	
@@ -92,7 +92,7 @@ OCTypingVisitorTest >> exampleMethod [
 	collection := OrderedCollection "<OrderedCollection class>" new "<OrderedCollection>".
 	collection "<OrderedCollection>" add: 1 "<SmallInteger>".
 	(collection at: 1) "<>" "no infered type here".
-	^ ((self "<ASTTypingVisitorTest>") class "<ASTTypingVisitorTest class>") isNil "<Boolean>"
+	^ ((self "<OCTypingVisitorTest>") class "<OCTypingVisitorTest class>") isNil "<Boolean>"
 ]
 
 { #category : 'examples' }
