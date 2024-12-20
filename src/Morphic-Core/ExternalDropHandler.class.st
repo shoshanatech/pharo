@@ -73,7 +73,7 @@ ExternalDropHandler class >> lookupServiceBasedHandler: aFileReference [
 	"the file was just droped, let's do our job"
 	| services theOne |
 
-	services := (Smalltalk tools fileList itemsForFile: aFileReference)
+	services := (FileServices itemsForFile: aFileReference fullName)
 		reject: [:svc | self unwantedSelectors includes: svc selector].
 
 	"no service, default behavior"
@@ -82,7 +82,7 @@ ExternalDropHandler class >> lookupServiceBasedHandler: aFileReference [
 
 	theOne := self chooseServiceFrom: services.
 	^theOne
-		ifNotNil: [ExternalDropHandler type: nil extension: nil action: [:stream | theOne performServiceFor: aFileReference]]
+		ifNotNil: [self type: nil extension: nil action: [:stream | theOne performServiceFor: aFileReference]]
 ]
 
 { #category : 'accessing' }
