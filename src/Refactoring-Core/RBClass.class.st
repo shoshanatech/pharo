@@ -15,7 +15,8 @@ Class {
 		'comment',
 		'classPool',
 		'packageName',
-		'tagName'
+		'tagName',
+		'traitComposition'
 	],
 	#classVars : [
 		'LookupComment'
@@ -301,4 +302,16 @@ RBClass >> tagName [
 RBClass >> tagName: anObject [
 
 	tagName := anObject
+]
+
+{ #category : 'accessing' }
+RBClass >> traitComposition [
+	
+	^ traitComposition
+]
+
+{ #category : 'accessing' }
+RBClass >> traitComposition: aComposition [
+	
+	traitComposition := aComposition
 ]

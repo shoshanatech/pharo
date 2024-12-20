@@ -20,7 +20,7 @@ Example
 
 "
 Class {
-	#name : 'ReCopyClassRefactoring',
+	#name : 'ReDuplicateClassRefactoring',
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'aClass',
@@ -35,14 +35,22 @@ Class {
 	#tag : 'Refactorings'
 }
 
+{ #category : 'partial instantiation' }
+ReDuplicateClassRefactoring class >> copyClass: aClass [
+
+	^ self new
+		  initializeWithClass: aClass;
+		  yourself
+]
+
 { #category : 'copying' }
-ReCopyClassRefactoring class >> copyClass: aClass withName: aSymbol [
+ReDuplicateClassRefactoring class >> copyClass: aClass withName: aSymbol [
 
 	^ self new copyClass: aClass withName: aSymbol
 ]
 
 { #category : 'copying' }
-ReCopyClassRefactoring class >> copyClass: aClass withName: copyName in: aSymbol [
+ReDuplicateClassRefactoring class >> copyClass: aClass withName: copyName in: aSymbol [
 
 	^ (self copyClass: aClass withName: copyName)
 		  packageName: aSymbol;
@@ -50,7 +58,7 @@ ReCopyClassRefactoring class >> copyClass: aClass withName: copyName in: aSymbol
 ]
 
 { #category : 'copying' }
-ReCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName [
+ReDuplicateClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName [
 
 	^ (self copyClass: aClass withName: copyName)
 		  model: aRBNamespace;
@@ -58,7 +66,7 @@ ReCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: 
 ]
 
 { #category : 'copying' }
-ReCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName in: aSymbol [
+ReDuplicateClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName in: aSymbol [
 
 	^ (self copyClass: aClass withName: copyName in: aSymbol)
 		  model: aRBNamespace;
@@ -66,7 +74,7 @@ ReCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: 
 ]
 
 { #category : 'preconditions' }
-ReCopyClassRefactoring >> applicabilityPreconditions [
+ReDuplicateClassRefactoring >> applicabilityPreconditions [
 
 	^ {
 		  (RBCondition isValidClassName: className).
@@ -74,46 +82,40 @@ ReCopyClassRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'transforming' }
-ReCopyClassRefactoring >> classMethods [
+ReDuplicateClassRefactoring >> classMethods [
 
 	^ classMethods
-		ifNil: [ classMethods := aClass classSide allMethods ].
+		ifNil: [ classMethods := aClass classSide localMethods ].
 ]
 
 { #category : 'accessing' }
-ReCopyClassRefactoring >> classMethods: anObject [
+ReDuplicateClassRefactoring >> classMethods: anObject [
 
 	classMethods := anObject
 ]
 
 { #category : 'transforming' }
-ReCopyClassRefactoring >> copyClass [
+ReDuplicateClassRefactoring >> copyClass [
 
-	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: className)
+	self generateChangesFor:
+		((RBInsertNewClassRefactoring model: self model className: className)
 			 superclass: aClass superclass;
+			 traitComposition: aClass traitComposition;
 			 packageName: self packageName;
 			 comment: aClass comment;
 			 tagName: self packageTagName;
 			 yourself)
 ]
 
-{ #category : 'copying' }
-ReCopyClassRefactoring >> copyClass: cls withName: aName [
+{ #category : 'initialize' }
+ReDuplicateClassRefactoring >> copyClass: cls withName: aName [
 
 	self className: aName.
 	aClass := self classObjectFor: cls
 ]
 
-{ #category : 'copying' }
-ReCopyClassRefactoring >> copyMethods [
-	| newClass |
-	newClass := (self model classNamed: className).
-	self copyMethodsOf: aClass in: newClass.
-	self copyMethodsOf: aClass classSide in: newClass classSide
-]
-
 { #category : 'transforming' }
-ReCopyClassRefactoring >> copyMethods: aCollectionOfMethods of: sourceClass in: newClass [
+ReDuplicateClassRefactoring >> copyMethods: aCollectionOfMethods of: sourceClass in: newClass [
 	"Copy aCollectionOfMethods from sourceClass to newClass "
 
 	aCollectionOfMethods do: [ :rbMethod | 
@@ -126,20 +128,7 @@ ReCopyClassRefactoring >> copyMethods: aCollectionOfMethods of: sourceClass in: 
 ]
 
 { #category : 'copying' }
-ReCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
-	rbClass1 selectors do: [ :symbol | | rbMethod |
-		rbMethod := rbClass1 methodFor: symbol.
-		self generateChangesFor:
-			(RBAddMethodTransformation
-				model: self model
-				sourceCode: rbMethod source
-				in: rbClass2
-				withProtocol: rbMethod protocols)
-	]
-]
-
-{ #category : 'copying' }
-ReCopyClassRefactoring >> copySelectedMethods [
+ReDuplicateClassRefactoring >> copySelectedMethods [
 	| newClass |
 	
 	newClass := self model classNamed: className.
@@ -148,7 +137,7 @@ ReCopyClassRefactoring >> copySelectedMethods [
 ]
 
 { #category : 'transforming' }
-ReCopyClassRefactoring >> copyVariables [
+ReDuplicateClassRefactoring >> copyVariables [
 	aClass instanceVariableNames do: [ :varName |
 		self generateChangesFor: (RBAddInstanceVariableRefactoring
 		model: self model
@@ -162,45 +151,51 @@ ReCopyClassRefactoring >> copyVariables [
 		class: className) ]
 ]
 
+{ #category : 'initialize' }
+ReDuplicateClassRefactoring >> initializeWithClass: cls [
+
+	aClass := self classObjectFor: cls
+]
+
 { #category : 'transforming' }
-ReCopyClassRefactoring >> instanceMethods [
+ReDuplicateClassRefactoring >> instanceMethods [
 
 	^ instanceMethods
-		ifNil: [ instanceMethods := aClass methods ]
+		ifNil: [ instanceMethods := aClass localMethods ]
 ]
 
 { #category : 'accessing' }
-ReCopyClassRefactoring >> instanceMethods: anObject [
+ReDuplicateClassRefactoring >> instanceMethods: anObject [
 
 	instanceMethods := anObject
 ]
 
 { #category : 'accessing' }
-ReCopyClassRefactoring >> packageName [
+ReDuplicateClassRefactoring >> packageName [
 
 	^ packageName ifNil: [ aClass packageName ]
 ]
 
 { #category : 'accessing' }
-ReCopyClassRefactoring >> packageName: anObject [
+ReDuplicateClassRefactoring >> packageName: anObject [
 
 	packageName := anObject
 ]
 
 { #category : 'accessing' }
-ReCopyClassRefactoring >> packageTagName [
+ReDuplicateClassRefactoring >> packageTagName [
 
 	^ packageTagName
 ]
 
 { #category : 'accessing' }
-ReCopyClassRefactoring >> packageTagName: aString [
+ReDuplicateClassRefactoring >> packageTagName: aString [
 
 	packageTagName := aString
 ]
 
 { #category : 'transforming' }
-ReCopyClassRefactoring >> privateTransform [
+ReDuplicateClassRefactoring >> privateTransform [
 
 	self copyClass.
 	self copyVariables.
@@ -209,13 +204,13 @@ ReCopyClassRefactoring >> privateTransform [
 ]
 
 { #category : 'initialize' }
-ReCopyClassRefactoring >> sourceClass: classToCopy [
+ReDuplicateClassRefactoring >> sourceClass: classToCopy [
 
 	aClass := self classObjectFor: classToCopy
 ]
 
 { #category : 'accessing' }
-ReCopyClassRefactoring >> superclassName: aClassName [ 
+ReDuplicateClassRefactoring >> superclassName: aClassName [ 
 
 	superclassName := aClassName
 ]
