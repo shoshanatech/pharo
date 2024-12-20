@@ -76,13 +76,12 @@ ExternalDropHandler class >> lookupServiceBasedHandler: aFileReference [
 
 	| services theOne |
 	services := (FileServices itemsForFile: aFileReference fullName)
-		            reject: [ :svc |
-		            self unwantedSelectors includes: svc selector ].
+		reject: [:svc | self unwantedSelectors includes: svc selector].
 	services := services copyWith: self defaultHandler.
 
 	theOne := self chooseServiceFrom: services.
 	^ theOne ifNotNil: [
-		  ExternalDropHandler
+		  self
 			  type: nil
 			  extension: nil
 			  action: [ :stream | theOne performServiceFor: aFileReference ] ]

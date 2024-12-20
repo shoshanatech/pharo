@@ -526,6 +526,14 @@ RBAbstractClass >> isMeta [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+RBAbstractClass >> localMethods [
+
+	^ self localSelectors
+		  collect: [ :selector | self methodFor: selector ]
+		  thenSelect: [ :each | each isNotNil ]
+]
+
 { #category : 'method accessing' }
 RBAbstractClass >> localSelectors [
 	| selectors |
