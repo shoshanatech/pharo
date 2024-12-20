@@ -104,25 +104,25 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 
 	"This should be removed in Pharo 14."
-	OCNode deprecatedAliases: { #RBNode }.
+	OCNode deprecatedAliases:"" { #RBNode }.
 	OCProgramNode deprecatedAliases: { #RBProgramNode }.
 	OCValueNode deprecatedAliases: { #RBValueNode }.
 	OCLiteralNode deprecatedAliases: { #RBLiteralNode }.
 	OCLiteralArrayNode deprecatedAliases: { #RBLiteralArrayNode }.
 	OCLiteralValueNode deprecatedAliases: { #RBLiteralValueNode }.
 	OCArrayNode deprecatedAliases: { #RBArrayNode }.
-	OCAssignmentNode deprecatedAliases: { #RBAssignmentNode }.
+	"OCAssignmentNode deprecatedAliases: { #RBAssignmentNode }."
 	OCCascadeNode deprecatedAliases: { #RBCascadeNode }.
-	OCReturnNode deprecatedAliases: { #RBReturnNode }.
+	"OCReturnNode deprecatedAliases: { #RBReturnNode }."
 	OCVariableNode deprecatedAliases: { #RBVariableNode }.
 	OCCommentNode deprecatedAliases: { #RBComment }.
-	OCBlockNode deprecatedAliases: { #RBBlockNode }.
-	OCMessageNode deprecatedAliases: { #RBMessageNode }.
+	"OCBlockNode deprecatedAliases: { #RBBlockNode }.
+	OCMessageNode deprecatedAliases: { #RBMessageNode }."
 	OCSelectorNode deprecatedAliases: { #RBSelectorNode }.
 	OCPragmaNode deprecatedAliases: { #RBPragmaNode }.
 	OCSequenceNode deprecatedAliases: { #RBSequenceNode }.
 	OCAnnotationMarkNode deprecatedAliases: { #RBAnnotationMarkNode }.
-	OCMethodNode deprecatedAliases: { #RBMethodNode }.
+	"OCMethodNode deprecatedAliases: { #RBMethodNode }."
 	OCDoItMethodNode deprecatedAliases: { #RBDoItMethodNode }.
 	OCEnglobingErrorNode deprecatedAliases: { #RBEnglobingErrorNode }.
 	OCArrayErrorNode deprecatedAliases: { #RBArrayErrorNode }.
