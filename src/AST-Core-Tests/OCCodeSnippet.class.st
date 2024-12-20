@@ -1877,7 +1877,7 @@ OCCodeSnippet class >> badSemantic [
 		        (self new
 			         source: 'OCCodeError signal: ''false error''';
 			         nodeAt: '111111111110000000002222222222222';
-			         styled: 'ggggggggg sssssss ''''''''''''''''''''''''''';
+			         styled: 'ggggggggggg sssssss ''''''''''''''''''''''''''' ;
 			         raise: OCCodeError;
 			         skip: #testEvaluateOnErrorResume). "evaluate cannot distinguishes runtime errors and compiletime errors"
 		        (self new
