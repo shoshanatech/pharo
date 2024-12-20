@@ -4,8 +4,8 @@ Reverse alphabetic sorting
 Class {
 	#name : 'ReverseAlphabeticSorter',
 	#superclass : 'CompletionSorter',
-	#category : 'NECompletion-Sorting',
-	#package : 'NECompletion',
+	#category : 'HeuristicCompletion-Model-Sorting',
+	#package : 'HeuristicCompletion-Model',
 	#tag : 'Sorting'
 }
 

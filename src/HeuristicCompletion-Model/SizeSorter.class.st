@@ -8,8 +8,8 @@ I return a list sorted by size.
 Class {
 	#name : 'SizeSorter',
 	#superclass : 'CompletionSorter',
-	#category : 'NECompletion-Sorting',
-	#package : 'NECompletion',
+	#category : 'HeuristicCompletion-Model-Sorting',
+	#package : 'HeuristicCompletion-Model',
 	#tag : 'Sorting'
 }
 

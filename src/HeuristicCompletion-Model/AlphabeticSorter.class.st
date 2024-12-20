@@ -4,8 +4,8 @@ Aplhabetical sorting
 Class {
 	#name : 'AlphabeticSorter',
 	#superclass : 'CompletionSorter',
-	#category : 'NECompletion-Sorting',
-	#package : 'NECompletion',
+	#category : 'HeuristicCompletion-Model-Sorting',
+	#package : 'HeuristicCompletion-Model',
 	#tag : 'Sorting'
 }
 
