@@ -1,7 +1,7 @@
 Class {
 	#name : 'ASTMessageNode',
 	#superclass : 'OCMessageNode',
-	#category : 'AST-Core-Deprecated',
+	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
-	#tag : 'Deprecated'
+	#tag : 'Nodes'
 }
