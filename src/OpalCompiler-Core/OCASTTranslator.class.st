@@ -3,7 +3,7 @@ I visit an abstract syntax tree and generate IR (intermediate representation) in
 "
 Class {
 	#name : 'OCASTTranslator',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'methodBuilder',
 		'nextUniqueInlineID'
@@ -280,7 +280,7 @@ OCASTTranslator >> emitRuntimeError: aNode [
 	errors := aNode allErrorNotices.
 
 	methodBuilder
-		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteralVariable: OCRuntimeSyntaxError binding;
 		pushLiteral: (errors isEmpty
 				 ifTrue: [ 'Syntax error' ]
 				 ifFalse: [ errors first messageText ]);
@@ -416,7 +416,7 @@ OCASTTranslator >> initialize [
 
 	super initialize.
 	
-	methodBuilder := IRBuilder new.
+	methodBuilder := OCIRBuilder new.
 	nextUniqueInlineID := 0
 ]
 
@@ -449,7 +449,7 @@ OCASTTranslator >> subTranslator [
 OCASTTranslator >> translateConstantBlock: aBlockNode [
 	| ir |
 	"even though we never execute the compiledBlock, we create it so that the BlockClosure can use e.g. to query on the bytecode level"
-	ir := IRBuilder new
+	ir := OCIRBuilder new
 				mapToNode: aBlockNode;
 				numArgs: aBlockNode arguments size;
 				pushLiteral: aBlockNode constantValue;

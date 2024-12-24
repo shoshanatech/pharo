@@ -72,7 +72,7 @@ OpalCompiler class >> compilerSettingsOn: aBuilder [
 						target: self;
 						default: false;
 						description: 'Create a overlay environment for the OpalCompiler package and sets this copy as the global compiler. After this all classes in the package OpalCompiler are not used anymore outside of tests.  Simplifies changing the compiler'.
-				CompilationContext compilerSettingsOn: aBuilder]
+				OCCompilationContext compilerSettingsOn: aBuilder]
 ]
 
 { #category : 'overlay' }
@@ -144,7 +144,7 @@ OpalCompiler class >> overlayStep3FixSuperclassPointers [
 OpalCompiler class >> overlayStep4SetImageCompiler [
 	"make the copy the default compiler for the image"
 	SmalltalkImage compilerClass: (self overlayEnvironment at: #OpalCompiler).
-	ASTCache reset
+	OCASTCache reset
 ]
 
 { #category : 'overlay' }
@@ -190,7 +190,7 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 	<script>
 	SmalltalkImage compilerClass: nil.
 	overlayEnvironment := nil.
-	ASTCache reset
+	OCASTCache reset
 ]
 
 { #category : 'plugins' }
@@ -355,7 +355,7 @@ OpalCompiler >> compilationContext: anObject [
 
 { #category : 'plugins' }
 OpalCompiler >> compilationContextClass [
-	^compilationContextClass ifNil: [ CompilationContext  ]
+	^compilationContextClass ifNil: [ OCCompilationContext  ]
 ]
 
 { #category : 'plugins' }
@@ -420,8 +420,8 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 		at: #FBDDecompiler
 		ifPresent: [ :decompilerClass | [ decompilerClass new decompile: aCompiledMethod ]
 			on: Error
-			do: [ ASTMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
-		ifAbsent: [ ASTMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
+			do: [ OCMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
+		ifAbsent: [ OCMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
 ]
 
 { #category : 'private' }

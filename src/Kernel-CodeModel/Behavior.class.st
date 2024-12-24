@@ -1439,7 +1439,7 @@ Behavior >> propertyAt: propName ifAbsent: aBlock [
 Behavior >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
-		ifAbsentPut: propValue
+		put: propValue
 ]
 
 { #category : 'accessing' }

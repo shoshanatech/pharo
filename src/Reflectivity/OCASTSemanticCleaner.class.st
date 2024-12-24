@@ -6,7 +6,7 @@ I'm only used by reflectivity and should be packaged there.
 "
 Class {
 	#name : 'OCASTSemanticCleaner',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#category : 'Reflectivity',
 	#package : 'Reflectivity'
 }
@@ -31,5 +31,5 @@ OCASTSemanticCleaner >> visitMethodNode: aMethodNode [
 
 { #category : 'visiting' }
 OCASTSemanticCleaner >> visitVariableNode: aVariableNode [
-	aVariableNode variable: UnresolvedVariable instance
+	aVariableNode variable: OCUnresolvedVariable instance
 ]

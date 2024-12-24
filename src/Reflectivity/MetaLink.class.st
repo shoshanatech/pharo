@@ -348,7 +348,7 @@ MetaLink >> metaObject: anObject [
 { #category : 'accessing' }
 MetaLink >> methods [
 	^nodes flatCollect: [ :entity |
-		(entity isKindOf: ASTProgramNode)
+		(entity isKindOf: OCProgramNode)
 			ifTrue: [ {entity methodNode compiledMethod}  ]
 			ifFalse: [ entity usingMethods ] ]
 ]

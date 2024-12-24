@@ -325,7 +325,7 @@ ReAbstractTransformation >> parseTreeRewriter [
 
 { #category : 'parsing' }
 ReAbstractTransformation >> parseTreeRewriterClass [
-	^ ASTParseTreeRewriter
+	^ OCParseTreeRewriter
 ]
 
 { #category : 'parsing' }
@@ -335,12 +335,12 @@ ReAbstractTransformation >> parseTreeSearcher [
 
 { #category : 'parsing' }
 ReAbstractTransformation >> parseTreeSearcherClass [
-	^ ASTParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
 { #category : 'parsing' }
 ReAbstractTransformation >> parserClass [
-	^ Parser
+	^ OCParser
 ]
 
 { #category : 'transforming' }

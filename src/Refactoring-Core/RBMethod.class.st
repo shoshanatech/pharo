@@ -164,7 +164,7 @@ RBMethod >> parseTree [
 
 { #category : 'private' }
 RBMethod >> parseTreeSearcherClass [
-	^ ASTParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
 { #category : 'private' }

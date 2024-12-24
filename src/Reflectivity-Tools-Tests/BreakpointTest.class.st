@@ -24,7 +24,7 @@ BreakpointTest >> newDummyClass [
 
 { #category : 'tests' }
 BreakpointTest >> parserClass [
-	^ Parser
+	^ OCParser
 ]
 
 { #category : 'running' }
@@ -350,7 +350,7 @@ BreakpointTest >> testSelf_conditionBlockProducerMethodAST [
 { #category : 'tests' }
 BreakpointTest >> testSetAsBreakpointProperty [
 	| node breakpoint breakpoint2 |
-	node := ASTProgramNode new.
+	node := OCProgramNode new.
 	breakpoint := Breakpoint new.
 	breakpoint2 := Breakpoint new.
 	breakpoint node: node.

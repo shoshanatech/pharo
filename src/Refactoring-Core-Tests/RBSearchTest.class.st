@@ -64,7 +64,7 @@ RBSearchTest >> buildSimpleLiteralSearch [
 		matchesAnyTreeOf:
 			(Array
 				with:
-					(Parser
+					(OCParser
 						parseExpression:
 							'#(''bugs'' ''possible bugs'' ''unnecessary code'' ''intention revealing'' ''miscellaneous'')'))
 		do: [ :aNode :answer |
@@ -161,7 +161,7 @@ RBSearchTest >> currentSelector [
 
 { #category : 'accessing' }
 RBSearchTest >> parseTreeSearcher [
-	^ ASTParseTreeSearcher new
+	^ OCParseTreeSearcher new
 ]
 
 { #category : 'running' }
