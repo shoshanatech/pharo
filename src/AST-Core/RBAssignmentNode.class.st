@@ -1,7 +1,7 @@
 Class {
 	#name : 'RBAssignmentNode',
 	#superclass : 'OCAssignmentNode',
-	#category : 'AST-Core-Nodes',
+	#category : 'AST-Core-Deprecated',
 	#package : 'AST-Core',
-	#tag : 'Nodes'
+	#tag : 'Deprecated'
 }
