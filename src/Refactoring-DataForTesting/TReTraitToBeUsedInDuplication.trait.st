@@ -5,6 +5,6 @@ Trait {
 	#tag : 'ForDuplication'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'trait' }
 TReTraitToBeUsedInDuplication >> methodInTrait [
 ]
