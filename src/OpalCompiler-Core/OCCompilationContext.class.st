@@ -585,10 +585,40 @@ OCCompilationContext >> optionSkipSemanticWarnings [
 	^ options includes: #optionSkipSemanticWarnings
 ]
 
+{ #category : 'accessing' }
+OCCompilationContext >> options [
+	^ options
+]
+
+{ #category : 'options' }
+OCCompilationContext >> parseAndStoreOptions: anArray [
+	"Used by the compiler (see pragma #compilerOptions:).
+	Parse an array, which is a sequence of options in a form of:
+	#( + option1 option2 - option3 ... )
+
+	Each time the #+ is seen, the options which follow it will be subject for inclusion
+	and, correspondingly, if #- seen, then they will be excluded.
+
+	By default, (if none of #+ or #- specified initially), all options are subject for inclusion."
+	
+	| include |
+	include := true.
+	anArray do: [ :option |
+		option == #+
+			ifTrue: [ include := true ]
+			ifFalse: [
+				option == #-
+					ifTrue: [ include := false ]
+					ifFalse: [
+						include ifTrue: [ options add: option ]
+						ifFalse: [ options remove: option ifAbsent:[] ]]]
+		]
+]
+
 { #category : 'options' }
 OCCompilationContext >> parseOptions: optionsArray [
 
-	options parseOptions: optionsArray
+	self parseAndStoreOptions: optionsArray
 ]
 
 { #category : 'accessing' }
