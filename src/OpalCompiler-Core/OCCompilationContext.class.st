@@ -362,6 +362,11 @@ OCCompilationContext >> addASTTransformationPlugin: aPlugin [
 	astTransformPlugins add: aPlugin
 ]
 
+{ #category : 'adding' }
+OCCompilationContext >> addAll: anOCCompilationContext [ 
+	options addAll: anOCCompilationContext
+]
+
 { #category : 'plugins' }
 OCCompilationContext >> addParseASTTransformationPlugin: aPlugin [
 
@@ -457,6 +462,11 @@ OCCompilationContext >> environment [
 { #category : 'accessing' }
 OCCompilationContext >> environment: anObject [
 	environment := anObject
+]
+
+{ #category : 'testing' }
+OCCompilationContext >> includes: aString [ 
+	^ options includes: aString
 ]
 
 { #category : 'initialization' }
