@@ -62,6 +62,6 @@ OCMethodNode >> metaLinkOptionsFromClassAndMethod [
 OCMethodNode >> optionsFor: aLink [
 	| options |
 	options := aLink options copy.
-	options addAll: self metaLinkOptionsFromClassAndMethod.
+	options addAll: self metaLinkOptionsFromClassAndMethod options.
 	^options
 ]

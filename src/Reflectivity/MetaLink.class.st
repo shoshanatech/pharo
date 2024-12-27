@@ -203,7 +203,7 @@ MetaLink >> definitionString [
 			str nextPutAll: 'condition: '; nextPutAll: condition printString; nextPut: $;.
 			].
 		str cr;tab.
-		str nextPutAll: 'options: '; nextPutAll: options asArray printString; nextPut: $..
+		str nextPutAll: 'options: '; nextPutAll: options options asArray printString; nextPut: $..
 	]
 ]
 
