@@ -41,7 +41,7 @@ OCMethodNode >> metaLinkOptions [
 { #category : '*Reflectivity' }
 OCMethodNode >> metaLinkOptionsFromClassAndMethod [
 	| options |
-	options := Set new.
+	options := OCCompilationContext new.
 	self methodClass
 		compiledMethodAt: #metaLinkOptions
 		ifPresent: [ :method |

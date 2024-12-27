@@ -266,7 +266,7 @@ MetaLink >> initialize [
 	control := #before.
 	selector := #value.
 	arguments := #().
-	options := Set new.
+	options := OCCompilationContext new.
 	self parseOptions: self class defaultOptions
 ]
 
