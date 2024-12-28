@@ -363,8 +363,9 @@ OCCompilationContext >> addASTTransformationPlugin: aPlugin [
 ]
 
 { #category : 'adding' }
-OCCompilationContext >> addAll: anOCCompilationContext [ 
-	options addAll: anOCCompilationContext
+OCCompilationContext >> addAllFrom: anOCCompilationContext [
+
+	options addAll: anOCCompilationContext options
 ]
 
 { #category : 'plugins' }
@@ -465,7 +466,8 @@ OCCompilationContext >> environment: anObject [
 ]
 
 { #category : 'testing' }
-OCCompilationContext >> includes: aString [ 
+OCCompilationContext >> includesOption: aString [
+	
 	^ options includes: aString
 ]
 

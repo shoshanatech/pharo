@@ -110,7 +110,7 @@ BreakpointTest >> testBreakLink [
 	link := breakpoint link.
 	self assert: link metaObject identicalTo: breakpoint.
 	self assert: link selector equals: #breakInContext:node:.
-	self assertCollection: link options equals: (MetaLink new parseOptions: breakpoint options) options.
+	self assertCollection: link options options equals: (MetaLink new parseOptions: breakpoint options) options options.
 	self assertCollection: link arguments equals: #(#context #node)
 ]
 
