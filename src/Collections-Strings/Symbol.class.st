@@ -169,8 +169,9 @@ Symbol class >> rawIntern: aStringOrSymbol [
 Symbol class >> readFrom: strm [
 	"Symbol readFromString: '#abc'"
 
-	strm peek = $# ifFalse: [self error: 'Symbols must be introduced by #'].
-    	^ strm contents parseLiterals first
+	strm peek = $# ifFalse: [
+		self error: 'Symbols must be introduced by #' ].
+	^ (OCParser parseLiterals: strm contents) first
 ]
 
 { #category : 'selector table' }
