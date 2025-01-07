@@ -9,8 +9,8 @@ Class {
 	#instVars : [
 		'context'
 	],
-	#category : 'HeuristicCompletion-Model-Sorting',
-	#package : 'HeuristicCompletion-Model',
+	#category : 'NECompletion-Sorting',
+	#package : 'NECompletion',
 	#tag : 'Sorting'
 }
 

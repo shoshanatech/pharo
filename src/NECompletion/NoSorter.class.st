@@ -8,8 +8,8 @@ This class is created to pass the test.
 Class {
 	#name : 'NoSorter',
 	#superclass : 'CompletionSorter',
-	#category : 'HeuristicCompletion-Model-Sorting',
-	#package : 'HeuristicCompletion-Model',
+	#category : 'NECompletion-Sorting',
+	#package : 'NECompletion',
 	#tag : 'Sorting'
 }
 
