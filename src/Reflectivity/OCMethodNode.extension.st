@@ -9,7 +9,8 @@ OCMethodNode >> decreaseLinkCount [
 { #category : '*Reflectivity' }
 OCMethodNode >> hasOption: aSymbol for: aLink [
 	"take the class and method overrides to options into account"
-	^(self optionsFor: aLink) includes: aSymbol
+
+	^ (self optionsFor: aLink) includesOption: aSymbol
 ]
 
 { #category : '*Reflectivity' }
@@ -41,7 +42,7 @@ OCMethodNode >> metaLinkOptions [
 { #category : '*Reflectivity' }
 OCMethodNode >> metaLinkOptionsFromClassAndMethod [
 	| options |
-	options := Set new.
+	options := OCCompilationContext new.
 	self methodClass
 		compiledMethodAt: #metaLinkOptions
 		ifPresent: [ :method |
@@ -60,8 +61,9 @@ OCMethodNode >> metaLinkOptionsFromClassAndMethod [
 
 { #category : '*Reflectivity' }
 OCMethodNode >> optionsFor: aLink [
+
 	| options |
 	options := aLink options copy.
-	options addAll: self metaLinkOptionsFromClassAndMethod.
-	^options
+	options addAllFrom: self metaLinkOptionsFromClassAndMethod.
+	^ options
 ]

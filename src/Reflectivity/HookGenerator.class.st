@@ -85,7 +85,8 @@ HookGenerator >> generateArguments: aMetalink [
 { #category : 'options' }
 HookGenerator >> hasOption: aSymbol for: aLink [
 	"take the class and method overrides to options into account"
-	^(node methodNode optionsFor: aLink) includes: aSymbol
+
+	^ (node methodNode optionsFor: aLink) includesOption: aSymbol
 ]
 
 { #category : 'results' }
