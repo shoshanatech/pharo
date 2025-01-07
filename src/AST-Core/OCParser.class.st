@@ -58,14 +58,8 @@ OCParser class >> parseFaultyMethod: aString [
 { #category : 'parsing' }
 OCParser class >> parseLiterals: aString [
 
-	| scanner parser |
-	parser := self new.
-	scanner := parser scannerClass on: (ReadStream on: aString).
-	scanner state: #literalArray.
-	^ parser
-		  source: aString;
-		  scanner: scanner;
-		  parseLiterals
+	^ self new parseLiterals: aString
+
 ]
 
 { #category : 'parsing' }
@@ -771,6 +765,18 @@ OCParser >> parseLiterals [
 		node isError ifTrue: [ node checkFaulty: nil ].
 		stream nextPut: node value ].
 	^ stream contents
+]
+
+{ #category : 'parsing' }
+OCParser >> parseLiterals: aString [
+
+	| localScanner |
+	localScanner := self scannerClass on: (ReadStream on: aString).
+	localScanner state: #literalArray.
+	^ self
+		  source: aString;
+		  scanner: localScanner;
+		  parseLiterals
 ]
 
 { #category : 'private - parsing' }
