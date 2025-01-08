@@ -2753,23 +2753,6 @@ RubTextEditor >> wordAtCaret [
 	^self paragraph text asString wordBefore: self startIndex - 1
 ]
 
-{ #category : 'accessing' }
-RubTextEditor >> wordGroupAt: index in: aString [
-
-	| character |
-	character := aString at: index.
-
-	character isSeparator ifTrue: [ ^ #separator ].
-	character isAlphaNumeric ifTrue: [
-		character isUppercase
-			ifTrue: [ ^ #upper ]
-			ifFalse: [ ^ #lower ] ].
-
-	character isSpecialSyntaxValid ifTrue: [ ^ #syntax ].
-
-	^ #binary
-]
-
 { #category : 'accessing - selection' }
 RubTextEditor >> zapSelectionWith: aText [
 	| start stop |
