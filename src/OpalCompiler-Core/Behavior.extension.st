@@ -86,16 +86,20 @@ Behavior >> recompile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
 	| method newMethod |
-	method := oldClass compiledMethodAt: selector.
-	newMethod := oldClass compiler
-		             source: (oldClass sourceCodeAt: selector);
-		             priorMethod: method;
-		             class: self;
-		             permitFaulty: true;
-						"No need to log recompilation in the sources,
-						 We are going to reuse the original source pointer."
-		             logged: false; 
-		             install.
+
+	"Recompilation should be done silently, to avoid putting noise in the system"
+	self codeChangeAnnouncer suspendAllWhile: [
+		method := oldClass compiledMethodAt: selector.
+		newMethod := oldClass compiler
+			             source: (oldClass sourceCodeAt: selector);
+			             priorMethod: method;
+			             class: self;
+			             permitFaulty: true;
+			             "No need to log recompilation in the sources,
+						 	 We are going to reuse the original source pointer."
+			             logged: false;
+			             install ].
+
 	newMethod sourcePointer: method sourcePointer.
 	selector == newMethod selector ifFalse: [
 		self error: 'selector changed!' ]
