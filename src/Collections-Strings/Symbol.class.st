@@ -165,15 +165,6 @@ Symbol class >> rawIntern: aStringOrSymbol [
 		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
-{ #category : 'instance creation' }
-Symbol class >> readFrom: strm [
-	"Symbol readFromString: '#abc'"
-
-	strm peek = $# ifFalse: [
-		self error: 'Symbols must be introduced by #' ].
-	^ (OCParser parseLiterals: strm contents) first
-]
-
 { #category : 'selector table' }
 Symbol class >> rebuildSelectorTable [
 
