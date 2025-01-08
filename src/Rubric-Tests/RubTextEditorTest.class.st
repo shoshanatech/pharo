@@ -196,7 +196,7 @@ RubTextEditorTest >> testNextWordSkipsCurrentSpacesAndGoesToEndOfCurrentWord [
 	self assert: (editor nextWord: 4) equals: 6
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 RubTextEditorTest >> testNextWordStopOnUpperCase [
 
 	string := 'loRem ipSum'.
@@ -459,7 +459,7 @@ RubTextEditorTest >> testPreviousWordSkipsCurrentSpacesAndGoesToStartOfCurrentWo
 	self assert: (editor previousWord: 5) equals: 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 RubTextEditorTest >> testPreviousWordStopOnUpperCase [
 
 	string := 'loRem ipSum'.
