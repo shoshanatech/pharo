@@ -1690,34 +1690,6 @@ RubTextEditor >> nextCharacterIfAbsent: aBlock [
 ]
 
 { #category : 'private' }
-RubTextEditor >> nextWord2: position stopOnUpperCase: stopOnUpperCase [
-	"Positions go from 1 to size + 1
-	Position N + 1 is after the Nth character"
-
-	| string index size initialGroup finalGroup |
-	index := 1 max: position.
-	string := self string.
-	size := string size + 1.
-	position >= size ifTrue: [ ^ size ].
-
-
-	initialGroup := self wordGroupAt: index in: string.
-	index := index + 1.
-	initialGroup = #upper ifTrue: [
-		(self wordGroupAt: index in: string) = #lower ifTrue: [ initialGroup := #lower ] ].
-
-	[
-	index < size and: [ (finalGroup := self wordGroupAt: index in: string) = initialGroup ] ]
-		whileTrue: [ index := index + 1 ].
-
-	(initialGroup = #upper and: [ finalGroup = #lower ]) ifTrue: [ 
-		"Moving to the right from upper to lower, we want to stop in the last upper"
-		index := index - 1 ].
-
-	^ index
-]
-
-{ #category : 'private' }
 RubTextEditor >> nextWord: position [
 
 	^ self nextWord: position stopOnUpperCase: false
@@ -1900,33 +1872,6 @@ RubTextEditor >> pointIndex [
 RubTextEditor >> previousCharacterIfAbsent: aBlock [
 
 	^ self text at: self startIndex - 1 ifAbsent: aBlock
-]
-
-{ #category : 'private' }
-RubTextEditor >> previousWord2: position stopOnUpperCase: stopOnUpperCase [
-	"Positions go from 1 to size + 1
-	Position N + 1 is after the Nth character"
-
-	| string index size initialGroup finalGroup |
-	position <= 2 ifTrue: [ ^ 1 ].
-	string := self string.
-	size := string size.
-
-	index := position - 1.
-
-	initialGroup := self wordGroupAt: index in: string.
-	initialGroup = #upper ifTrue: [
-		(self wordGroupAt: index in: string) = #lower ifTrue: [ initialGroup := #lower ] ].
-
-	[
-	index <= 1 and: [ (finalGroup := self wordGroupAt: index in: string) = initialGroup ] ]
-		whileTrue: [ index := index - 1 ].
-
-	(initialGroup = #upper and: [ finalGroup = #lower ]) ifTrue: [ 
-		"Moving to the right from upper to lower, we want to stop in the last upper"
-		index := index - 1 ].
-
-	^ index
 ]
 
 { #category : 'private' }
