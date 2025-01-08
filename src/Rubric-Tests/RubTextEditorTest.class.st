@@ -45,7 +45,7 @@ RubTextEditorTest >> assertPreviousJumpPointFrom: actualFrom to: actualTo equals
 
 	actualIndexFrom to: actualIndexTo do: [ :i |
 		self
-			assert: (editor previousWord2: i stopOnUpperCase: true)
+			assert: (editor previousWord: i stopOnUpperCase: true)
 			equals: expectedIndex ]
 ]
 
@@ -196,14 +196,15 @@ RubTextEditorTest >> testNextWordSkipsCurrentSpacesAndGoesToEndOfCurrentWord [
 	self assert: (editor nextWord: 4) equals: 6
 ]
 
+{ #category : 'as yet unclassified' }
 RubTextEditorTest >> testNextWordStopOnUpperCase [
 
 	string := 'loRem ipSum'.
 	editor addString: string.
 
-	self assert: (editor nextWord2: -999 stopOnUpperCase: true) equals: 3. "Out of range means end of text"
-	self assert: (editor nextWord2: 0 stopOnUpperCase: true) equals: 3. "Out of range means end of text"
-	self assert: (editor nextWord2: 999 stopOnUpperCase: true) equals: string size + 1. "Out of range"
+	self assert: (editor nextWord: -999 stopOnUpperCase: true) equals: 3. "Out of range means end of text"
+	self assert: (editor nextWord: 0 stopOnUpperCase: true) equals: 3. "Out of range means end of text"
+	self assert: (editor nextWord: 999 stopOnUpperCase: true) equals: string size + 1. "Out of range"
 
 	self assertNextJumpPointFrom: '¶loRem ipSum' to: 'l¶oRem ipSum' equals: 'lo¶Rem ipSum'.
 	self assertNextJumpPointFrom: 'lo¶Rem ipSum' to: 'loRe¶m ipSum' equals: 'loRem¶ ipSum'.
@@ -221,84 +222,84 @@ RubTextEditorTest >> testNextWordStopOnUpperCaseComplex [
 	editor addString: string.
 
 	self "all character in the assignation syntax should be in the same group"
-		assertNextCharGroupFrom:	'x ¶:= self loRem: [[ (1 + 2) // 100 ]]'
+		assertNextJumpPointFrom:	'x ¶:= self loRem: [[ (1 + 2) // 100 ]]'
 		to: 							'x :¶= self loRem: [[ (1 + 2) // 100 ]]'
 		equals: 						'x :=¶ self loRem: [[ (1 + 2) // 100 ]]'.
 
 	self
-		assertNextCharGroupFrom:	'x := self lo¶Rem: [[ (1 + 2) // 100 ]]'
+		assertNextJumpPointFrom:	'x := self lo¶Rem: [[ (1 + 2) // 100 ]]'
 		to: 							'x := self loRe¶m: [[ (1 + 2) // 100 ]]'
 		equals: 						'x := self loRem¶: [[ (1 + 2) // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem¶: [[ (1 + 2) // 100 ]]'
+		assertNextJumpPointOf:  	'x := self loRem¶: [[ (1 + 2) // 100 ]]'
 		equals: 						'x := self loRem:¶ [[ (1 + 2) // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem:¶ [[ (1 + 2) // 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem:¶ [[ (1 + 2) // 100 ]]'
 		equals: 						'x := self loRem: ¶[[ (1 + 2) // 100 ]]'.
 
 	self
-		assertNextCharGroupFrom:	'x := self loRem: ¶[[ (1 + 2) // 100 ]]'
+		assertNextJumpPointFrom:	'x := self loRem: ¶[[ (1 + 2) // 100 ]]'
 		to: 							'x := self loRem: [¶[ (1 + 2) // 100 ]]'
 		equals: 						'x := self loRem: [[¶ (1 + 2) // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[¶ (1 + 2) // 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[¶ (1 + 2) // 100 ]]'
 		equals: 						'x := self loRem: [[ ¶(1 + 2) // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[ ¶(1 + 2) // 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[ ¶(1 + 2) // 100 ]]'
 		equals: 						'x := self loRem: [[ (¶1 + 2) // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[ (¶1 + 2) // 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[ (¶1 + 2) // 100 ]]'
 		equals: 						'x := self loRem: [[ (1¶ + 2) // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[ (1¶ + 2) // 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[ (1¶ + 2) // 100 ]]'
 		equals: 						'x := self loRem: [[ (1 ¶+ 2) // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[ (1 ¶+ 2) // 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[ (1 ¶+ 2) // 100 ]]'
 		equals: 						'x := self loRem: [[ (1 +¶ 2) // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[ (1 +¶ 2) // 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[ (1 +¶ 2) // 100 ]]'
 		equals: 						'x := self loRem: [[ (1 + ¶2) // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[ (1 + ¶2) // 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[ (1 + ¶2) // 100 ]]'
 		equals: 						'x := self loRem: [[ (1 + 2¶) // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[ (1 + 2¶) // 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[ (1 + 2¶) // 100 ]]'
 		equals: 						'x := self loRem: [[ (1 + 2)¶ // 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[ (1 + 2)¶ // 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[ (1 + 2)¶ // 100 ]]'
 		equals: 						'x := self loRem: [[ (1 + 2) ¶// 100 ]]'.
 
 	self
-		assertNextCharGroupFrom:	'x := self loRem: [[ (1 + 2) ¶// 100 ]]'
+		assertNextJumpPointFrom:	'x := self loRem: [[ (1 + 2) ¶// 100 ]]'
 		to: 							'x := self loRem: [[ (1 + 2) /¶/ 100 ]]'
 		equals: 						'x := self loRem: [[ (1 + 2) //¶ 100 ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[ (1 + 2) //¶ 100 ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[ (1 + 2) //¶ 100 ]]'
 		equals: 						'x := self loRem: [[ (1 + 2) // ¶100 ]]'.
 
 	self
-		assertNextCharGroupFrom:	'x := self loRem: [[ (1 + 2) // ¶100 ]]'
+		assertNextJumpPointFrom:	'x := self loRem: [[ (1 + 2) // ¶100 ]]'
 		to: 							'x := self loRem: [[ (1 + 2) // 10¶0 ]]'
 		equals: 						'x := self loRem: [[ (1 + 2) // 100¶ ]]'.
 
 	self
-		assertNextCharGroupOf:	'x := self loRem: [[ (1 + 2) // 100¶ ]]'
+		assertNextJumpPointOf:	'x := self loRem: [[ (1 + 2) // 100¶ ]]'
 		equals: 						'x := self loRem: [[ (1 + 2) // 100 ¶]]'.
 
 	self
-		assertNextCharGroupFrom:	'x := self loRem: [[ (1 + 2) // 100 ¶]]'
+		assertNextJumpPointFrom:	'x := self loRem: [[ (1 + 2) // 100 ¶]]'
 		to: 							'x := self loRem: [[ (1 + 2) // 100 ]¶]'
 		equals: 						'x := self loRem: [[ (1 + 2) // 100 ]]¶'.
 ]
@@ -404,16 +405,6 @@ RubTextEditorTest >> testPreviousWord [
 ]
 
 { #category : 'tests' }
-RubTextEditorTest >> testPreviousWordAtEmptyLineGoesToEndOfPreviousLine [
-
-	editor addString: 'a
-
-a'.
-
-	self assert: (editor previousWord: 3) equals: 2
-]
-
-{ #category : 'tests' }
 RubTextEditorTest >> testPreviousWordAtEndOfFirstWordOfLineGoesToStartOfLine [
 
 	editor addString: 'a
@@ -468,26 +459,14 @@ RubTextEditorTest >> testPreviousWordSkipsCurrentSpacesAndGoesToStartOfCurrentWo
 	self assert: (editor previousWord: 5) equals: 1
 ]
 
-{ #category : 'test-selection' }
-RubTextEditorTest >> testSelectFromBeginToEnd [
-
-	editor addString: 'a
-
-a'.
-
-	editor selectMark: 1 point: 5.
-	self assert: editor selection equals: 'a
-
-a'.
-]
-
+{ #category : 'as yet unclassified' }
 RubTextEditorTest >> testPreviousWordStopOnUpperCase [
 
 	string := 'loRem ipSum'.
 	editor addString: string.
 
-	self assert: (editor previousWord2: -999 stopOnUpperCase: true) equals: 1. "Out of range means start of text"
-	self assert: (editor previousWord2: 0 stopOnUpperCase: true) equals: 1. "Out of range means start of text"
+	self assert: (editor previousWord: -999 stopOnUpperCase: true) equals: 1. "Out of range means start of text"
+	self assert: (editor previousWord: 0 stopOnUpperCase: true) equals: 1. "Out of range means start of text"
 
 	self assertPreviousJumpPointFrom: 'loRem ipSum¶' to: 'loRem ipS¶um' equals: 'loRem ip¶Sum'.
 
@@ -508,103 +487,103 @@ RubTextEditorTest >> testPreviousWordStopOnUpperCaseComplex [
 	editor addString: string.
 
 	self
-		assertPreviousCharGroupFrom:	'x := self loRem: [[ (1 + 2) // 100 ]]¶'
+		assertPreviousJumpPointFrom:	'x := self loRem: [[ (1 + 2) // 100 ]]¶'
 		to: 									'x := self loRem: [[ (1 + 2) // 100 ]¶]'
 		equals: 								'x := self loRem: [[ (1 + 2) // 100 ¶]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ (1 + 2) // 100 ¶]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ (1 + 2) // 100 ¶]]'
 		equals: 								'x := self loRem: [[ (1 + 2) // 100¶ ]]'.
 
 	self
-		assertPreviousCharGroupFrom:	'x := self loRem: [[ (1 + 2) // 100¶ ]]'
+		assertPreviousJumpPointFrom:	'x := self loRem: [[ (1 + 2) // 100¶ ]]'
 		to: 									'x := self loRem: [[ (1 + 2) // 1¶00 ]]'
 		equals: 								'x := self loRem: [[ (1 + 2) // ¶100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ (1 + 2) // ¶100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ (1 + 2) // ¶100 ]]'
 		equals: 								'x := self loRem: [[ (1 + 2) //¶ 100 ]]'.
 
 	self
-		assertPreviousCharGroupFrom:	'x := self loRem: [[ (1 + 2) //¶ 100 ]]'
+		assertPreviousJumpPointFrom:	'x := self loRem: [[ (1 + 2) //¶ 100 ]]'
 		to: 									'x := self loRem: [[ (1 + 2) /¶/ 100 ]]'
 		equals: 								'x := self loRem: [[ (1 + 2) ¶// 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ (1 + 2) ¶// 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ (1 + 2) ¶// 100 ]]'
 		equals: 								'x := self loRem: [[ (1 + 2)¶ // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ (1 + 2)¶ // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ (1 + 2)¶ // 100 ]]'
 		equals: 								'x := self loRem: [[ (1 + 2¶) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ (1 + 2¶) // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ (1 + 2¶) // 100 ]]'
 		equals: 								'x := self loRem: [[ (1 + ¶2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ (1 + ¶2) // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ (1 + ¶2) // 100 ]]'
 		equals: 								'x := self loRem: [[ (1 +¶ 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ (1 +¶ 2) // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ (1 +¶ 2) // 100 ]]'
 		equals: 								'x := self loRem: [[ (1 ¶+ 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ (1 ¶+ 2) // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ (1 ¶+ 2) // 100 ]]'
 		equals: 								'x := self loRem: [[ (1¶ + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ (1¶ + 2) // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ (1¶ + 2) // 100 ]]'
 		equals: 								'x := self loRem: [[ (¶1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ (¶1 + 2) // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ (¶1 + 2) // 100 ]]'
 		equals: 								'x := self loRem: [[ ¶(1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: [[ ¶(1 + 2) // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: [[ ¶(1 + 2) // 100 ]]'
 		equals: 								'x := self loRem: [[¶ (1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupFrom:	'x := self loRem: [[¶ (1 + 2) // 100 ]]'
+		assertPreviousJumpPointFrom:	'x := self loRem: [[¶ (1 + 2) // 100 ]]'
 		to: 									'x := self loRem: [¶[ (1 + 2) // 100 ]]'
 		equals: 								'x := self loRem: ¶[[ (1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem: ¶[[ (1 + 2) // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem: ¶[[ (1 + 2) // 100 ]]'
 		equals: 								'x := self loRem:¶ [[ (1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self loRem:¶ [[ (1 + 2) // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self loRem:¶ [[ (1 + 2) // 100 ]]'
 		equals: 								'x := self loRem¶: [[ (1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupFrom:	'x := self loRem¶: [[ (1 + 2) // 100 ]]'
+		assertPreviousJumpPointFrom:	'x := self loRem¶: [[ (1 + 2) // 100 ]]'
 		to: 									'x := self loR¶em: [[ (1 + 2) // 100 ]]'
 		equals: 								'x := self lo¶Rem: [[ (1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupFrom:	'x := self lo¶Rem: [[ (1 + 2) // 100 ]]'
+		assertPreviousJumpPointFrom:	'x := self lo¶Rem: [[ (1 + 2) // 100 ]]'
 		to: 									'x := self l¶oRem: [[ (1 + 2) // 100 ]]'
 		equals: 								'x := self ¶loRem: [[ (1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'x := self ¶loRem: [[ (1 + 2) // 100 ]]'
+		assertPreviousJumpPointOf:		'x := self ¶loRem: [[ (1 + 2) // 100 ]]'
 		equals: 								'x := self¶ loRem: [[ (1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupFrom:	'x := self¶ loRem: [[ (1 + 2) // 100 ]]'
+		assertPreviousJumpPointFrom:	'x := self¶ loRem: [[ (1 + 2) // 100 ]]'
 		to: 									'x := s¶elf loRem: [[ (1 + 2) // 100 ]]'
 		equals: 								'x := ¶self loRem: [[ (1 + 2) // 100 ]]'.
 										
 	self "all character in the assignation syntax should be in the same group"
-		assertPreviousCharGroupFrom:	'x :=¶ self loRem: [[ (1 + 2) // 100 ]]'
+		assertPreviousJumpPointFrom:	'x :=¶ self loRem: [[ (1 + 2) // 100 ]]'
 		to: 									'x :¶= self loRem: [[ (1 + 2) // 100 ]]'
 		equals: 								'x ¶:= self loRem: [[ (1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupFrom:	'x¶ := self loRem: [[ (1 + 2) // 100 ]]'
+		assertPreviousJumpPointFrom:	'x¶ := self loRem: [[ (1 + 2) // 100 ]]'
 		to: 									'¶x := self loRem: [[ (1 + 2) // 100 ]]'
 		equals: 								'¶x := self loRem: [[ (1 + 2) // 100 ]]'.
 
@@ -686,6 +665,19 @@ RubTextEditorTest >> testPreviousWordStopOnUpperCaseWithSpecialCharacters [
 		equals: 						  '¶^[:x|(''#eur'',$$asString)]'.
 
 
+]
+
+{ #category : 'test-selection' }
+RubTextEditorTest >> testSelectFromBeginToEnd [
+
+	editor addString: 'a
+
+a'.
+
+	editor selectMark: 1 point: 5.
+	self assert: editor selection equals: 'a
+
+a'.
 ]
 
 { #category : 'tests' }

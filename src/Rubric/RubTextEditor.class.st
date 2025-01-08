@@ -1728,9 +1728,8 @@ RubTextEditor >> nextWord: position stopOnUpperCase: stopOnUpperCase [
 	"Positions go from 1 to size + 1
 	Position N + 1 is after the Nth character"
 
-	| string index initialIsAlphaNumeric size |
-	index := 1 max: position.
-
+	| string index initialIsAlphaNumeric size initialPosition |
+	index := initialPosition := 1 max: position.
 	string := self string.
 	size := string size + 1.
 	position >= size ifTrue: [ ^ size ].
@@ -1939,7 +1938,7 @@ RubTextEditor >> previousWord: position [
 { #category : 'private' }
 RubTextEditor >> previousWord: position stopOnUpperCase: stopOnUpperCase [ 
 
-	| string index initialIsAlphaNumeric size initialPosition |
+	| string index size initialPosition beforeCaretIsAlpha afterCaretIsAlpha nextCharacterInDirection |
 	"Positions go from 1 to size + 1
 	Position N + 1 is after the Nth character"
 	string := self string.
@@ -1950,25 +1949,31 @@ RubTextEditor >> previousWord: position stopOnUpperCase: stopOnUpperCase [
 
 	position <= 2 ifTrue: [ ^ 1 ].
 
-	[ index > 0 and: [ 
-			{ Character space . Character tab }
-				includes: (string at: index - 1)]
-	] whileTrue: [ index := index - 1 ].
+	"Go always at least once backwards to guarantee progress"
+	index := index - 1.
+	afterCaretIsAlpha := index = 1 or: [
+		self isWordCharacterAt: index in: string ].
 
-	initialIsAlphaNumeric := self isWordCharacterAt: index - 1 in: string.
+	index <= 1 ifTrue: [ ^ index ].	
+	nextCharacterInDirection := string at: index - 1.
+	nextCharacterInDirection = Character cr
+		ifTrue: [ ^ index ].
+	
+	afterCaretIsAlpha ifFalse: [ index := index - 1 ].
 
-	index = initialPosition
-		ifTrue: [ index := index - 1 ].
-
-	[ | nextCharacterInDirection |
-	"If we reach the end"
+	[ "If we reach the end"
 	index <= 1 ifTrue: [ ^ index ].
 
 	nextCharacterInDirection := string at: index - 1.
 	nextCharacterInDirection = Character cr
 		ifTrue: [ ^ index ].
 
-	(self isWordCharacterAt: index in: string except: [ :char | stopOnUpperCase and: [ char isUppercase ] ]) = initialIsAlphaNumeric ]
+	afterCaretIsAlpha := index = 1 or: [
+		                      self isWordCharacterAt: index in: string except: [ :char | stopOnUpperCase and: [ char isUppercase ] ] ].
+	beforeCaretIsAlpha := index = 1 or: [
+		                      self isWordCharacterAt: index - 1 in: string ].
+
+	beforeCaretIsAlpha = afterCaretIsAlpha and: [ index > 1 ] ]
 		whileTrue: [ index := index - 1 ].
 
 	^ index

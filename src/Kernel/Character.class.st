@@ -781,7 +781,7 @@ Character >> isSpecial [
 { #category : 'testing' }
 Character >> isSpecialSyntaxValid [
 
-	^ '^"''[](){}#$:;.' includes: self
+	^ '^"''[](){}#$:;.=' includes: self
 ]
 
 { #category : 'testing' }
