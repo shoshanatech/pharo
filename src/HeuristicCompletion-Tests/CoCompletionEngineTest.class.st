@@ -38,10 +38,10 @@ CoCompletionEngineTest >> setUp [
 	CompletionContext sorterClass: NoSorter.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'running' }
 CoCompletionEngineTest >> tearDown [
-	super tearDown.
 	CompletionContext sorterClass: oldSort.
+	super tearDown.	
 ]
 
 { #category : 'tests - interaction' }
