@@ -574,10 +574,10 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 								'LazyListMorph>>#drawOnAthensCanvas:'
 	
 							'MCFileTreeAbstractReader>>#packageProperties' 
-							
-							 'MCOrganizationDefinition>>#addAnalysisToPackageChangeSet:change:'
 	
-	                    'MicrodownSpecComponentForTest class>>#open' 'MockLessonView>>#showTutorialNode:' 'MorphTreeMorph>>#nodeExpandRequest:'
+	                    'MicrodownSpecComponentForTest class>>#open' 
+	
+							'MorphTreeMorph>>#nodeExpandRequest:'
 	                    'MorphTreeMorph>>#selectItemsRequest:' 'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicDummyLintRuleTest class>>#createMatcherFor:method:'
 	                    'RBBasicDummyLintRuleTest class>>#usesAdd' 'RBBasicDummyLintRuleTest class>>#unreferencedVariables'
 	                    'RBBasicDummyLintRuleTest class>>#classNotReferenced' 'RBBasicDummyLintRuleTest class>>#canCall:in:from:'
