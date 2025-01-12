@@ -29,6 +29,34 @@ EFFFICallTest >> noNewLineBetweenTopCommentsConfiguration [
 ]
 
 { #category : 'tests' }
+EFFFICallTest >> testOtherFFI [
+
+	| expr source |
+	expr := OCParser parseMethod: 'loadPath: aPath
+	^ self ffiCall: #( void cairo_append_path (self , AthensCairoPath aPath))
+	'.
+	configurationSelector := #basicConfiguration.
+	source := self formatter format: expr.
+	self assert: source equals:'loadPath: aPath
+	^ self ffiCall: #( void cairo_append_path (self , AthensCairoPath aPath))
+	'.
+]
+
+{ #category : 'tests' }
+EFFFICallTest >> testOtherFFI2 [
+
+	| expr source |
+	expr := OCParser parseMethod: 'primGetCurrentPointX: x Y: y
+	^ self ffiCall: #( void cairo_get_current_point (self, double * x, double * y))
+	'.
+	configurationSelector := #basicConfiguration.
+	source := self formatter format: expr.
+	self assert: source equals:'primGetCurrentPointX: x Y: y
+	^ self ffiCall: #( void cairo_get_current_point (self, double * x, double * y))
+	'.
+]
+
+{ #category : 'tests' }
 EFFFICallTest >> testSimpleFFI [
 
 	| expr source |

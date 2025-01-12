@@ -39,7 +39,8 @@ Class {
 		'context',
 		'isInCascadeNode',
 		'lookAheadCode',
-		'mustSkip'
+		'mustSkip',
+		'doNotFormatSelectors'
 	],
 	#classVars : [
 		'DefaultPrettyPrintContext',
@@ -1001,6 +1002,12 @@ EFFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 		ifTrue: [ self space ]
 ]
 
+{ #category : 'public interface' }
+EFFormatter >> addToUnformattedSelectors: aCol [
+	
+	doNotFormatSelectors addAll: aCol
+]
+
 { #category : 'private' }
 EFFormatter >> areArgumentsTooLong: anArray [
 
@@ -1076,12 +1083,10 @@ EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 { #category : 'public interface' }
 EFFormatter >> format: aParseTree [
 
-	
 	self initializeCodeStream.
 	originalSource := aParseTree source.
 	self visitNode: aParseTree.
-	mustSkip 
-		ifTrue: [ ^ originalSource ].	
+	mustSkip ifTrue: [ ^ originalSource ].
 	^ codeStream contents
 ]
 
@@ -1503,9 +1508,14 @@ EFFormatter >> indentsForKeywords: anInteger [
 EFFormatter >> initialize [
 
 	super initialize.
-	mustSkip := false. 
 	"if at any level the formatter can locally decide to drop the formatting
 	it should set mustSkip to true and the formatter will return the original source code."
+	mustSkip := false.
+
+	"a list of selectors that we do not format"	
+	doNotFormatSelectors := OrderedCollection new.
+	self addToUnformattedSelectors:
+		#( methodSelectorAndArgumentNames ).
 	lineStart := 0.
 	self indent: 0.
 	self isInCascadeNode: false.
@@ -2214,9 +2224,9 @@ EFFormatter >> visitMessageNode: aMessageNode [
 
 { #category : 'visiting' }
 EFFormatter >> visitMethodNode: aMethodNode [
-
 	"Let us avoid to format the template each time we open a browser"
- 	(#(methodSelectorAndArgumentNames) includes: aMethodNode selector)
+
+	(doNotFormatSelectors includes: aMethodNode selector)
 		ifTrue: [ mustSkip := true ].
 	self formatMethodPatternFor: aMethodNode.
 	self formatMethodBodyFor: aMethodNode
