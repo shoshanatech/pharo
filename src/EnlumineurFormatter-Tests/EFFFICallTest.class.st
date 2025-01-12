@@ -31,41 +31,58 @@ EFFFICallTest >> noNewLineBetweenTopCommentsConfiguration [
 { #category : 'tests' }
 EFFFICallTest >> testOtherFFI [
 
-	| expr source |
-	expr := OCParser parseMethod: 'loadPath: aPath
+	| expr source originalSource |
+	originalSource := 'loadPath: aPath
 	^ self ffiCall: #( void cairo_append_path (self , AthensCairoPath aPath))
 	'.
+	expr := OCParser parseMethod: originalSource.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
-	self assert: source equals:'loadPath: aPath
-	^ self ffiCall: #( void cairo_append_path (self , AthensCairoPath aPath))
-	'.
+	self assert: source equals: originalSource
 ]
 
 { #category : 'tests' }
 EFFFICallTest >> testOtherFFI2 [
 
-	| expr source |
-	expr := OCParser parseMethod: 'primGetCurrentPointX: x Y: y
+	| expr source originalSource |
+	originalSource := 'primGetCurrentPointX: x Y: y
 	^ self ffiCall: #( void cairo_get_current_point (self, double * x, double * y))
 	'.
+	expr := OCParser parseMethod: originalSource.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
-	self assert: source equals:'primGetCurrentPointX: x Y: y
-	^ self ffiCall: #( void cairo_get_current_point (self, double * x, double * y))
-	'.
+	self assert: source equals: originalSource
+]
+
+{ #category : 'tests' }
+EFFFICallTest >> testOtherFFI3 [
+
+	| expr source originalSource |
+	originalSource := 'primResetDashes: anOffset
+"	void                cairo_set_dash                      (cairo_t *cr,
+                                                         double *dashes,
+                                                         int num_dashes,
+                                                         double offset);"
+	^ self ffiCall: #(void cairo_set_dash (
+				self,
+				void* 0,
+				int 0,
+				double anOffset) )	'.
+	expr := OCParser parseMethod: originalSource.
+	configurationSelector := #basicConfiguration.
+	source := self formatter format: expr.
+	self assert: source equals: originalSource
 ]
 
 { #category : 'tests' }
 EFFFICallTest >> testSimpleFFI [
 
-	| expr source |
-	expr := OCParser parseMethod: 'getAxis: axis
+	| expr source originalSource |
+	originalSource := 'getAxis: axis
 	^ self ffiCall: #( Sint16 SDL_GameControllerGetAxis(self , int axis) )
 	'.
+	expr := OCParser parseMethod: originalSource. 
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
-	self assert: source equals: 'getAxis: axis
-	^ self ffiCall: #( Sint16 SDL_GameControllerGetAxis(self , int axis) )
-	'
+	self assert: source equals: originalSource
 ]
