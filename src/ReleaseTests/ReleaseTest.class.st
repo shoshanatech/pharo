@@ -590,6 +590,7 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	                    'RBClassDataForRefactoringTest>>#inlineComponent' 'RBClassDataForRefactoringTest>>#textInput:name:symbol:'
 	                    'RBClassDataForRefactoringTest>>#inlineFailed' 'RBClassDataForRefactoringTest>>#renderContentOn:'
 	            
+								'OCIRReconstructorBuilder>>#fixPushNilsForTemps'
 			
 	                    'RBLintRuleTestData>>#runOnEnvironment:'
 	                    'RBTransformationDummyRuleTest class>>#initializeAfterLoad1'
