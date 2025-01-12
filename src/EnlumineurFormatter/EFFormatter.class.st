@@ -40,7 +40,8 @@ Class {
 		'isInCascadeNode',
 		'lookAheadCode',
 		'mustSkip',
-		'doNotFormatSelectors'
+		'doNotFormatMessageSelectors',
+		'doNotFormatMethodSelectors'
 	],
 	#classVars : [
 		'DefaultPrettyPrintContext',
@@ -1003,9 +1004,18 @@ EFFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 ]
 
 { #category : 'public interface' }
-EFFormatter >> addToUnformattedSelectors: aCol [
+EFFormatter >> addToUnformattedMessageSelectors: aCol [
+	"Add message selectors that should not be formatted."
 	
-	doNotFormatSelectors addAll: aCol
+	doNotFormatMessageSelectors addAll: aCol
+]
+
+{ #category : 'public interface' }
+EFFormatter >> addToUnformattedMethodSelectors: aCol [
+	"Add method selectors for method that should not be formatted.
+	Not that this is different from messages."
+	
+	doNotFormatMethodSelectors addAll: aCol
 ]
 
 { #category : 'private' }
@@ -1283,7 +1293,8 @@ EFFormatter >> formatSelectorAndArguments: aMessageNode [
 	| isMultilineMessage hasMultiLineArguments multilineArgumentBeforeAnotherArgument |
 	
 	"we should not format methods performing #ffiCall:"
-	aMessageNode selector = #ffiCall:
+	
+	(doNotFormatMessageSelectors includes: aMessageNode selector) 
 		ifTrue: [ mustSkip := true. ^ self ].
 	
 	multilineArgumentBeforeAnotherArgument := self
@@ -1512,10 +1523,12 @@ EFFormatter >> initialize [
 	it should set mustSkip to true and the formatter will return the original source code."
 	mustSkip := false.
 
-	"a list of selectors that we do not format"	
-	doNotFormatSelectors := OrderedCollection new.
-	self addToUnformattedSelectors:
+	"a list of method selectors that we do not format. Not that this is different from message selectors"	
+	doNotFormatMethodSelectors := OrderedCollection new.
+	self addToUnformattedMethodSelectors:
 		#( methodSelectorAndArgumentNames ).
+	doNotFormatMessageSelectors :=	OrderedCollection new. 
+	self addToUnformattedMessageSelectors: #(ffiCall: ffiCallSafely:options:).	
 	lineStart := 0.
 	self indent: 0.
 	self isInCascadeNode: false.
@@ -2226,7 +2239,7 @@ EFFormatter >> visitMessageNode: aMessageNode [
 EFFormatter >> visitMethodNode: aMethodNode [
 	"Let us avoid to format the template each time we open a browser"
 
-	(doNotFormatSelectors includes: aMethodNode selector)
+	(doNotFormatMethodSelectors includes: aMethodNode selector)
 		ifTrue: [ mustSkip := true ].
 	self formatMethodPatternFor: aMethodNode.
 	self formatMethodBodyFor: aMethodNode
