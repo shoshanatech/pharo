@@ -600,7 +600,7 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	                    'RubSegmentMorph>>#intersects:' 
 	
 	                    'SpTreeColumn>>#rowMorphFor:' 'SpUIThemeDecoratorTest>>#testDoesNotUnderstand'
-	                    'SpWindowPresenter>>#notify:'
+	                    'SpWindowPresenter>>#notify:' 'SpMorphicBackend>>#executeSaveFileDialog:'
 	                  
 							  'StringMorph>>#launchEditor:'  'TransferMorph>>#justDroppedInto:event:'
 	                    'TransferMorph>>#delete').
