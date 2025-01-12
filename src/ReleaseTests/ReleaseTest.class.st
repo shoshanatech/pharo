@@ -537,25 +537,27 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	"String streamContents: [ :aStream | aStream << '#( '.  SystemNavigation default allSentButNotImplementedSelectors do: [ :m | .aStream << '''' << m printString  << ''' ' ]. aStream << ')' ]"
 	knownFailures := #( 'AthensCCWArcSegment>>#accept:' 'AthensCWArcSegment>>#accept:' 'AthensCairoCanvas>>#visitCubicSegment:'
 	                    'AthensCairoCanvas>>#visitQuadSegment:' 'AthensCloseSegment>>#accept:' 'AthensCubicSegment>>#accept:' 'AthensEllipticalArcSegment>>#accept:'
-	                    'AthensInteractiveScene>>#eventHandledByScene:' 'AthensLineSegment>>#accept:' 'AthensMoveSegment>>#accept:' 'AthensParagraph>>#compose:style:from:in:'
+	                    'AthensInteractiveScene>>#eventHandledByScene:' 'AthensLineSegment>>#accept:' 'AthensMoveSegment>>#accept:' 
+	                    'AthensParagraph>>#compose:style:from:in:'
 	                    'AthensPolygon>>#paintFillsUsing:on:' 
 	
 							'BalloonEdgeData>>#stepToFirstScanLine' 'BalloonEdgeData>>#stepToNextScanLine'
 	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
 	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
-	         
-	           'Context>>#simulatePrimitive:in:receiver:arguments:' 
+	             			
 							  'Context>>#doPrimitive:method:receiver:args:'
-	                    'Context>>#failPrimitiveWith:' 'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items'
+	                    'Context>>#failPrimitiveWith:' 
+								
+							'DTReRunConfiguration>>#items'
 	
 	                    'DebugSession>>#shouldDisplayContext:basedOnFilters:'
+	                	'EDTest>>#prepareMethodVersionTest' 
+							'ExternalDropHandler class>>#defaultHandler'
 	
-	                	'EDTest>>#prepareMethodVersionTest' 'ExternalDropHandler class>>#defaultHandler'
-	
-	                    'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:' 'FFIFloatType>>#callbackReturnOn:for:'
-	                    'FFIIndirectFunctionResolution>>#resolveFunction:' 'FileDialogWindow>>#saveForcedSelectedFile' 
-	
-							'FileList class>>#morphicViewOnFile:contents:fileList:'
+	                    'FFICallbackArgumentReader>>#stackPointer' 
+								'FFIFloat32>>#callbackReturnOn:for:' 
+								'FFIFloatType>>#callbackReturnOn:for:'
+	                    'FFIIndirectFunctionResolution>>#resolveFunction:' 
 	      
 	              		'OCIRReconstructor>>#fixPushNilsForTemps' 
 			
