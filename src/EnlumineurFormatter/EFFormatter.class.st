@@ -38,7 +38,9 @@ Class {
 		'lineStart',
 		'context',
 		'isInCascadeNode',
-		'lookAheadCode'
+		'lookAheadCode',
+		'mustSkip',
+		'doNotFormatSelectors'
 	],
 	#classVars : [
 		'DefaultPrettyPrintContext',
@@ -1000,6 +1002,12 @@ EFFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 		ifTrue: [ self space ]
 ]
 
+{ #category : 'public interface' }
+EFFormatter >> addToUnformattedSelectors: aCol [
+	
+	doNotFormatSelectors addAll: aCol
+]
+
 { #category : 'private' }
 EFFormatter >> areArgumentsTooLong: anArray [
 
@@ -1074,10 +1082,11 @@ EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 
 { #category : 'public interface' }
 EFFormatter >> format: aParseTree [
-	
+
 	self initializeCodeStream.
 	originalSource := aParseTree source.
 	self visitNode: aParseTree.
+	mustSkip ifTrue: [ ^ originalSource ].
 	^ codeStream contents
 ]
 
@@ -1270,28 +1279,39 @@ EFFormatter >> formatPragmasFor: aMethodNode [
 { #category : 'private - formatting' }
 EFFormatter >> formatSelectorAndArguments: aMessageNode [
 	"We are formatting a message and here we are about to format the message selector and its arguments."
-	
+
 	| isMultilineMessage hasMultiLineArguments multilineArgumentBeforeAnotherArgument |
-	multilineArgumentBeforeAnotherArgument := self messageHasMultilineArgumentBeforeAnotherArgument: aMessageNode.
-	isMultilineMessage := (self isMultiLineMessage: aMessageNode) or:[multilineArgumentBeforeAnotherArgument].
-	hasMultiLineArguments := self hasAMultiLineMessageArgument: aMessageNode arguments.
+	
+	"we should not format methods performing #ffiCall:"
+	aMessageNode selector = #ffiCall:
+		ifTrue: [ mustSkip := true. ^ self ].
+	
+	multilineArgumentBeforeAnotherArgument := self
+		                                          messageHasMultilineArgumentBeforeAnotherArgument:
+		                                          aMessageNode.
+	isMultilineMessage := (self isMultiLineMessage: aMessageNode) or: [
+		                      multilineArgumentBeforeAnotherArgument ].
+	hasMultiLineArguments := self hasAMultiLineMessageArgument:
+		                         aMessageNode arguments.
 	self
-		indent:
-			(((isMultilineMessage or:[hasMultiLineArguments]) and:[aMessageNode isKeyword])
-				ifTrue: [ self indentsForKeywords ]
-				ifFalse: [ 0 ])
-		around: [ self
+		indent: (((isMultilineMessage or: [ hasMultiLineArguments ]) and: [
+				  aMessageNode isKeyword ])
+				 ifTrue: [ self indentsForKeywords ]
+				 ifFalse: [ 0 ])
+		around: [
+			self
 				formatSelectorAndArguments: aMessageNode
 				firstSeparator:
-					(((self firstSeparatorShouldNotPassLine: aMessageNode) and:[multilineArgumentBeforeAnotherArgument not])
-						ifTrue: [ self space ]
-						ifFalse: [ isMultilineMessage
-								ifTrue: [ [ self newLine ] ]
-								ifFalse: [ [ self space ] ] ])
-				restSeparator:
-					((isMultilineMessage)
-						ifTrue: [ [ self newLine ] ]
-						ifFalse: [ [ self space ] ]) ]
+					(((self firstSeparatorShouldNotPassLine: aMessageNode) and: [
+						  multilineArgumentBeforeAnotherArgument not ])
+						 ifTrue: [ self space ]
+						 ifFalse: [
+							 isMultilineMessage
+								 ifTrue: [ [ self newLine ] ]
+								 ifFalse: [ [ self space ] ] ])
+				restSeparator: (isMultilineMessage
+						 ifTrue: [ [ self newLine ] ]
+						 ifFalse: [ [ self space ] ]) ]
 ]
 
 { #category : 'private - formatting' }
@@ -1486,7 +1506,16 @@ EFFormatter >> indentsForKeywords: anInteger [
 
 { #category : 'initialization' }
 EFFormatter >> initialize [
+
 	super initialize.
+	"if at any level the formatter can locally decide to drop the formatting
+	it should set mustSkip to true and the formatter will return the original source code."
+	mustSkip := false.
+
+	"a list of selectors that we do not format"	
+	doNotFormatSelectors := OrderedCollection new.
+	self addToUnformattedSelectors:
+		#( methodSelectorAndArgumentNames ).
 	lineStart := 0.
 	self indent: 0.
 	self isInCascadeNode: false.
@@ -2194,7 +2223,11 @@ EFFormatter >> visitMessageNode: aMessageNode [
 ]
 
 { #category : 'visiting' }
-EFFormatter >> visitMethodNode: aMethodNode [ 
+EFFormatter >> visitMethodNode: aMethodNode [
+	"Let us avoid to format the template each time we open a browser"
+
+	(doNotFormatSelectors includes: aMethodNode selector)
+		ifTrue: [ mustSkip := true ].
 	self formatMethodPatternFor: aMethodNode.
 	self formatMethodBodyFor: aMethodNode
 ]
