@@ -11,9 +11,9 @@ Class {
 	#name : 'DependentsArray',
 	#superclass : 'Collection',
 	#type : 'weak',
-	#category : 'Kernel-Models',
-	#package : 'Kernel',
-	#tag : 'Models'
+	#category : 'System-Model-Base',
+	#package : 'System-Model',
+	#tag : 'Base'
 }
 
 { #category : 'instance creation' }
