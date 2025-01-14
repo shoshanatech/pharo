@@ -443,6 +443,7 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 		| soFar |
 		soFar := stream upTo: $'.
 		soFar includesSubstring: sourceDataPointers value ] whileFalse.
+		stream atEnd ifTrue: [ ^ nil ].
 		stamp := stream upTo: $' ].
 	^ stamp
 ]
