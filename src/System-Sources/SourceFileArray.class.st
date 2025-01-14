@@ -431,8 +431,11 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 		
 		SourceFileArray methodsFor: 'public - string reading' stamp: '1/14/2025 10:16' prior: 62647896"
 		stream := preamble readStream.
-		stream skipTo: $'; skipTo: $'; skipTo: $'.
-		stamp := stream upTo: $'  ].
+		[
+		| soFar |
+		soFar := stream upTo: $'.
+		soFar includesSubstring: sourceDataPointers value ] whileFalse.
+		stamp := stream upTo: $' ].
 	^ stamp
 ]
 
