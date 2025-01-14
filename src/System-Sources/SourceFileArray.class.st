@@ -426,10 +426,18 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 	preamble := self sourcedDataAt: sourcePointer.
 	(preamble includesSubstring: sourceDataPointers key) ifTrue: [
 		| stream |
-		" Extract the timestamp string from the method preamble.
-		A Preamble is a string of the shape:
+		" Extract the timestamp string from the preamble.
+		This can be a method or a class comment preamble.
+		A method Preamble is a string of the shape:
 		
-		SourceFileArray methodsFor: 'public - string reading' stamp: '1/14/2025 10:16' prior: 62647896"
+			SourceFileArray methodsFor: 'public - string reading' stamp: '1/14/2025 10:16' prior: 62647896
+		
+		A class comment preamble is a string of the shape
+		
+			SHClassWithComment commentStamp: 'anStamp' prior: 0
+		
+		
+		Lookup for the key stamp/commentStamp:, then take the string coming after that"
 		stream := preamble readStream.
 		[
 		| soFar |
