@@ -4,7 +4,6 @@ I store the execeptions silently raised when stepping a process execution to kee
 Class {
 	#name : 'LocalProcessException',
 	#superclass : 'ProcessLocalVariable',
-	#category : 'Kernel-Processes',
-	#package : 'Kernel',
-	#tag : 'Processes'
+	#category : 'Debugging-Core',
+	#package : 'Debugging-Core'
 }
