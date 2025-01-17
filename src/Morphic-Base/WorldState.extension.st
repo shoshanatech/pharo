@@ -195,9 +195,9 @@ WorldState class >> windowsOn: aBuilder [
 		with: [ (aBuilder item: #'Collapse all windows')
 				action: [ self currentWorld collapseAll ];
 				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
-				(aBuilder item: #'Unclose window')
+			(aBuilder item: #'Unclose window')
 				action: [ SystemWindow openLastClosedWindows ];
-				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
+				help: 'Show last 5 closed Windows' translated.
 			(aBuilder item: #'Expand all windows')
 				iconName: #expandBox;
 				action: [ self currentWorld expandAll ];
