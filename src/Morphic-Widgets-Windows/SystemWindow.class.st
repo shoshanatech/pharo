@@ -364,7 +364,7 @@ SystemWindow class >> noteTopWindowIn: aWorld [
 			^m activate]]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'opening' }
 SystemWindow class >> openLastClosedWindows [ 
 	<script>
 	| pres |
@@ -979,7 +979,7 @@ SystemWindow >> discoveredMenuPragmaKeyword [
 	^ #windowMenu
 ]
 
-{ #category : 'displaying' }
+{ #category : 'printing' }
 SystemWindow >> displayStringOn: aStream [
 
 	label
@@ -1672,13 +1672,6 @@ SystemWindow >> presenter [
 
 
 ^ self class presenter
-]
-
-{ #category : 'printing' }
-SystemWindow >> printOn: aStream [
-
-	super printOn: aStream.
-	label ifNotNil: [ aStream nextPutAll: ' named: ', self labelString  ]
 ]
 
 { #category : 'activation' }
