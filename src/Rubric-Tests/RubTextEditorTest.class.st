@@ -19,7 +19,7 @@ RubTextEditorTest >> assertNextCharGroupFrom: actualFrom to: actualTo equals: ex
 
 	actualIndexFrom to: actualIndexTo do: [ :i |
 		self
-			assert: (editor nextCharacterGroup: i)
+			assert: (editor nextWord: i stopOnUpperCase: true)
 			equals: expectedIndex ]
 ]
 
@@ -31,7 +31,7 @@ RubTextEditorTest >> assertNextCharGroupOf: actual equals: expected [
 	expectedIndex := expected indexOf: $¶.
 
 	self
-		assert: (editor nextCharacterGroup: actualIndex)
+		assert: (editor nextWord: actualIndex stopOnUpperCase: true)
 		equals: expectedIndex
 ]
 
@@ -57,7 +57,7 @@ RubTextEditorTest >> assertPreviousCharGroupOf: actual equals: expected [
 	expectedIndex := expected indexOf: $¶.
 
 	self
-		assert: (editor previousCharacterGroup: actualIndex)
+		assert: (editor previousWord: actualIndex stopOnUpperCase: true)
 		equals: expectedIndex
 ]
 
@@ -101,231 +101,6 @@ RubTextEditorTest >> testLineStart [
 		assert: starts
 		equals:
 		#( 1 1 1 1 5 5 5 5 5 5 11 11 11 11 11 11 17 18 19 19 19 22 22 )
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testNextCharacterGroup [
-
-	string := 'loRem ipSum'.
-	editor addString: string.
-
-	self assert: (editor nextCharacterGroup: -999) equals: 3. "Out of range means end of text"
-	self assert: (editor nextCharacterGroup: 0) equals: 3. "Out of range means end of text"
-	self assert: (editor nextCharacterGroup: 999) equals: string size + 1. "Out of range"
-
-	self
-		assertNextCharGroupFrom:	'¶loRem ipSum'
-		to: 							'l¶oRem ipSum'
-		equals: 						'lo¶Rem ipSum'.
-
-	self
-		assertNextCharGroupFrom:	'lo¶Rem ipSum'
-		to: 							'loRe¶m ipSum'
-		equals: 						'loRem¶ ipSum'.
-
-	self
-		assertNextCharGroupOf:	'loRem¶ ipSum'
-		equals: 						'loRem ¶ipSum'.
-
-	self
-		assertNextCharGroupFrom:	'loRem ¶ipSum'
-		to: 							'loRem i¶pSum'
-		equals: 						'loRem ip¶Sum'.
-
-	self
-		assertNextCharGroupFrom:	'loRem ip¶Sum'
-		to: 							'loRem ipSum¶'
-		equals: 						'loRem ipSum¶'.
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testNextCharacterGroupComplex [
-
-	string := 'self loRem: [[ (1 + 2) // 100 ]]'.
-	editor addString: string.
-
-	self
-		assertNextCharGroupFrom:	'self lo¶Rem: [[ (1 + 2) // 100 ]]'
-		to: 							'self loRe¶m: [[ (1 + 2) // 100 ]]'
-		equals: 						'self loRem¶: [[ (1 + 2) // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem¶: [[ (1 + 2) // 100 ]]'
-		equals: 						'self loRem:¶ [[ (1 + 2) // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem:¶ [[ (1 + 2) // 100 ]]'
-		equals: 						'self loRem: ¶[[ (1 + 2) // 100 ]]'.
-
-	self
-		assertNextCharGroupFrom:	'self loRem: ¶[[ (1 + 2) // 100 ]]'
-		to: 							'self loRem: [¶[ (1 + 2) // 100 ]]'
-		equals: 						'self loRem: [[¶ (1 + 2) // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[¶ (1 + 2) // 100 ]]'
-		equals: 						'self loRem: [[ ¶(1 + 2) // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[ ¶(1 + 2) // 100 ]]'
-		equals: 						'self loRem: [[ (¶1 + 2) // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[ (¶1 + 2) // 100 ]]'
-		equals: 						'self loRem: [[ (1¶ + 2) // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[ (1¶ + 2) // 100 ]]'
-		equals: 						'self loRem: [[ (1 ¶+ 2) // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[ (1 ¶+ 2) // 100 ]]'
-		equals: 						'self loRem: [[ (1 +¶ 2) // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[ (1 +¶ 2) // 100 ]]'
-		equals: 						'self loRem: [[ (1 + ¶2) // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[ (1 + ¶2) // 100 ]]'
-		equals: 						'self loRem: [[ (1 + 2¶) // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[ (1 + 2¶) // 100 ]]'
-		equals: 						'self loRem: [[ (1 + 2)¶ // 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[ (1 + 2)¶ // 100 ]]'
-		equals: 						'self loRem: [[ (1 + 2) ¶// 100 ]]'.
-
-	self
-		assertNextCharGroupFrom:	'self loRem: [[ (1 + 2) ¶// 100 ]]'
-		to: 							'self loRem: [[ (1 + 2) /¶/ 100 ]]'
-		equals: 						'self loRem: [[ (1 + 2) //¶ 100 ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[ (1 + 2) //¶ 100 ]]'
-		equals: 						'self loRem: [[ (1 + 2) // ¶100 ]]'.
-
-	self
-		assertNextCharGroupFrom:	'self loRem: [[ (1 + 2) // ¶100 ]]'
-		to: 							'self loRem: [[ (1 + 2) // 10¶0 ]]'
-		equals: 						'self loRem: [[ (1 + 2) // 100¶ ]]'.
-
-	self
-		assertNextCharGroupOf:	'self loRem: [[ (1 + 2) // 100¶ ]]'
-		equals: 						'self loRem: [[ (1 + 2) // 100 ¶]]'.
-
-	self
-		assertNextCharGroupFrom:	'self loRem: [[ (1 + 2) // 100 ¶]]'
-		to: 							'self loRem: [[ (1 + 2) // 100 ]¶]'
-		equals: 						'self loRem: [[ (1 + 2) // 100 ]]¶'.
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testNextCharacterGroupManyUppercases [
-
-	string := 'AAAb'.
-	editor addString: string.
-
-	self
-		assertNextCharGroupFrom:	'¶AAAb'
-		to: 							'A¶AAb'
-		equals: 						'AA¶Ab'.
-
-	self
-		assertNextCharGroupFrom:	'AA¶Ab'
-		to: 							'AAA¶b'
-		equals: 						'AAAb¶'.
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testNextCharacterGroupWithSpecialCharacters [
-
-	string := '^[:x|(''#eur'',$$asString)]'.
-	editor addString: string.
-
-	self
-		assertNextCharGroupFrom:	'¶^[:x|(''#eur'',$$asString)]'
-		to: 							'^[¶:x|(''#eur'',$$asString)]'
-		equals: 						'^[:¶x|(''#eur'',$$asString)]'.
-
-	self
-		assertNextCharGroupOf:	'^[:¶x|(''#eur'',$$asString)]'
-		equals: 						'^[:x¶|(''#eur'',$$asString)]'.
-
-	self
-		assertNextCharGroupOf:	'^[:x¶|(''#eur'',$$asString)]'
-		equals: 						'^[:x|¶(''#eur'',$$asString)]'.
-
-	self
-		assertNextCharGroupFrom:	'^[:x|¶(''#eur'',$$asString)]'
-		to: 							'^[:x|(''¶#eur'',$$asString)]'
-		equals: 						'^[:x|(''#¶eur'',$$asString)]'.
-
-	self
-		assertNextCharGroupFrom:	'^[:x|(''#¶eur'',$$asString)]'
-		to: 							'^[:x|(''#eu¶r'',$$asString)]'
-		equals: 						'^[:x|(''#eur¶'',$$asString)]'.
-
-	self
-		assertNextCharGroupOf:	'^[:x|(''#eur¶'',$$asString)]'
-		equals: 						'^[:x|(''#eur''¶,$$asString)]'.
-
-	self
-		assertNextCharGroupOf:	'^[:x|(''#eur''¶,$$asString)]'
-		equals: 						'^[:x|(''#eur'',¶$$asString)]'.
-
-	self
-		assertNextCharGroupFrom:	'^[:x|(''#eur'',¶$$asString)]'
-		to: 							'^[:x|(''#eur'',$¶$asString)]'
-		equals: 						'^[:x|(''#eur'',$$¶asString)]'.
-
-	self
-		assertNextCharGroupFrom:	'^[:x|(''#eur'',$$¶asString)]'
-		to: 							'^[:x|(''#eur'',$$a¶sString)]'
-		equals: 						'^[:x|(''#eur'',$$as¶String)]'.
-
-	self
-		assertNextCharGroupFrom:	'^[:x|(''#eur'',$$as¶String)]'
-		to: 							'^[:x|(''#eur'',$$asStrin¶g)]'
-		equals: 						'^[:x|(''#eur'',$$asString¶)]'.
-
-	self
-		assertNextCharGroupFrom:	'^[:x|(''#eur'',$$asString¶)]'
-		to: 							'^[:x|(''#eur'',$$asString)¶]'
-		equals: 						'^[:x|(''#eur'',$$asString)]¶'.
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testNextCharacterGroupWithSyntax [
-
-	string := '^"''|[](){}$#<>=;:.'.
-	editor addString: string.
-
-	self
-		assertNextCharGroupFrom:	'¶^"''|[](){}$#<>=;:.'
-		to: 							'^"¶''|[](){}$#<>=;:.'
-		equals: 						'^"''¶|[](){}$#<>=;:.'.
-
-	self
-		assertNextCharGroupOf:	'^"''¶|[](){}$#<>=;:.'
-		equals: 						'^"''|¶[](){}$#<>=;:.'.
-
-	self
-		assertNextCharGroupFrom:	'^"''|¶[](){}$#<>=;:.'
-		to: 							'^"''|[](){}$¶#<>=;:.'
-		equals: 						'^"''|[](){}$#¶<>=;:.'.
-
-	self
-		assertNextCharGroupFrom:	'^"''|[](){}$#¶<>=;:.'
-		to: 							'^"''|[](){}$#<>¶=;:.'
-		equals: 						'^"''|[](){}$#<>=¶;:.'.
-
-	self
-		assertNextCharGroupFrom:	'^"''|[](){}$#<>=¶;:.'
-		to: 							'^"''|[](){}$#<>=;:.¶'
-		equals: 						'^"''|[](){}$#<>=;:.¶'.
 ]
 
 { #category : 'tests' }
@@ -385,7 +160,6 @@ RubTextEditorTest >> testNextWordAtLineWithSpacesGoesToEndOfCurrentLine [
 	self assert: (editor nextWord: 2) equals: 4
 ]
 
-
 { #category : 'tests' }
 RubTextEditorTest >> testNextWordAtStartOfEmptyLineGoesToStartOfNextLine [
 
@@ -423,12 +197,286 @@ RubTextEditorTest >> testNextWordSkipsCurrentSpacesAndGoesToEndOfCurrentWord [
 ]
 
 { #category : 'tests' }
-RubTextEditorTest >> testPreviousCharacterGroup [
+RubTextEditorTest >> testNextWordStopOnUpperCase [
+
+	string := 'loRem ipSum'.
+	editor addString: string.
+
+	self assert: (editor nextWord: -999 stopOnUpperCase: true) equals: 3. "Out of range means end of text"
+	self assert: (editor nextWord: 0 stopOnUpperCase: true) equals: 3. "Out of range means end of text"
+	self assert: (editor nextWord: 999 stopOnUpperCase: true) equals: string size + 1. "Out of range"
+
+	self
+		assertNextCharGroupFrom:	'¶loRem ipSum'
+		to: 							'l¶oRem ipSum'
+		equals: 						'lo¶Rem ipSum'.
+
+	self
+		assertNextCharGroupFrom:	'lo¶Rem ipSum'
+		to: 							'loRe¶m ipSum'
+		equals: 						'loRem¶ ipSum'.
+
+	self
+		assertNextCharGroupFrom:	'loRem¶ ipSum'
+		to: 							'loRem i¶pSum'
+		equals: 						'loRem ip¶Sum'.
+
+	self
+		assertNextCharGroupFrom:	'loRem ip¶Sum'
+		to: 							'loRem ipSum¶'
+		equals: 						'loRem ipSum¶'.
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordStopOnUpperCaseComplex [
+
+	string := 'self loRem: [[ (1 + 2) // 100 ]]'.
+	editor addString: string.
+
+	self
+		assertNextCharGroupFrom:	'self lo¶Rem: [[ (1 + 2) // 100 ]]'
+		to: 							'self loRe¶m: [[ (1 + 2) // 100 ]]'
+		equals: 						'self loRem¶: [[ (1 + 2) // 100 ]]'.
+
+	self
+		assertNextCharGroupOf:	'self loRem¶: [[ (1 + 2) // 100 ]]'
+		equals: 						'self loRem:¶ [[ (1 + 2) // 100 ]]'.
+
+	self
+		assertNextCharGroupFrom:	'self loRem:¶ [[ (1 + 2) // 100 ]]'
+		to: 							'self loRem: [¶[ (1 + 2) // 100 ]]'
+		equals: 						'self loRem: [[¶ (1 + 2) // 100 ]]'.
+
+	self
+		assertNextCharGroupFrom:	'self loRem: [[¶ (1 + 2) // 100 ]]'
+		to: 							'self loRem: [[ ¶(1 + 2) // 100 ]]'
+		equals: 						'self loRem: [[ (¶1 + 2) // 100 ]]'.
+
+	self
+		assertNextCharGroupOf:	'self loRem: [[ (¶1 + 2) // 100 ]]'
+		equals: 						'self loRem: [[ (1¶ + 2) // 100 ]]'.
+
+	self
+		assertNextCharGroupFrom:	'self loRem: [[ (1¶ + 2) // 100 ]]'
+		to: 							'self loRem: [[ (1 ¶+ 2) // 100 ]]'
+		equals: 						'self loRem: [[ (1 +¶ 2) // 100 ]]'.
+
+	self
+		assertNextCharGroupFrom:	'self loRem: [[ (1 +¶ 2) // 100 ]]'
+		to: 							'self loRem: [[ (1 + ¶2) // 100 ]]'
+		equals: 						'self loRem: [[ (1 + 2¶) // 100 ]]'.
+
+	self
+		assertNextCharGroupOf:	'self loRem: [[ (1 + 2¶) // 100 ]]'
+		equals: 						'self loRem: [[ (1 + 2)¶ // 100 ]]'.
+
+	self
+		assertNextCharGroupFrom:	'self loRem: [[ (1 + 2)¶ // 100 ]]'
+		to: 							'self loRem: [[ (1 + 2) /¶/ 100 ]]'
+		equals: 						'self loRem: [[ (1 + 2) //¶ 100 ]]'.
+
+	self
+		assertNextCharGroupFrom:	'self loRem: [[ (1 + 2) //¶ 100 ]]'
+		to: 							'self loRem: [[ (1 + 2) // 10¶0 ]]'
+		equals: 						'self loRem: [[ (1 + 2) // 100¶ ]]'.
+
+	self
+		assertNextCharGroupFrom:	'self loRem: [[ (1 + 2) // 100¶ ]]'
+		to: 							'self loRem: [[ (1 + 2) // 100 ]¶]'
+		equals: 						'self loRem: [[ (1 + 2) // 100 ]]¶'.
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordStopOnUpperCaseManyUppercases [
+
+	string := 'AAAb'.
+	editor addString: string.
+
+	self
+		assertNextCharGroupFrom:	'¶AAAb'
+		to: 							'A¶AAb'
+		equals: 						'AA¶Ab'.
+
+	self
+		assertNextCharGroupFrom:	'AA¶Ab'
+		to: 							'AAA¶b'
+		equals: 						'AAAb¶'.
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordStopOnUpperCaseWithSpecialCharacters [
+
+	string := '^[:x|(''#eur'',$$asString)]'.
+	editor addString: string.
+
+	self
+		assertNextCharGroupFrom:	'¶^[:x|(''#eur'',$$asString)]'
+		to: 							'^[¶:x|(''#eur'',$$asString)]'
+		equals: 						'^[:¶x|(''#eur'',$$asString)]'.
+
+	self
+		assertNextCharGroupOf:	'^[:¶x|(''#eur'',$$asString)]'
+		equals: 						'^[:x¶|(''#eur'',$$asString)]'.
+
+	self
+		assertNextCharGroupOf:	'^[:x¶|(''#eur'',$$asString)]'
+		equals: 						'^[:x|¶(''#eur'',$$asString)]'.
+
+	self
+		assertNextCharGroupFrom:	'^[:x|¶(''#eur'',$$asString)]'
+		to: 							'^[:x|(''¶#eur'',$$asString)]'
+		equals: 						'^[:x|(''#¶eur'',$$asString)]'.
+
+	self
+		assertNextCharGroupFrom:	'^[:x|(''#¶eur'',$$asString)]'
+		to: 							'^[:x|(''#eu¶r'',$$asString)]'
+		equals: 						'^[:x|(''#eur¶'',$$asString)]'.
+
+	self
+		assertNextCharGroupOf:	'^[:x|(''#eur¶'',$$asString)]'
+		equals: 						'^[:x|(''#eur''¶,$$asString)]'.
+
+	self
+		assertNextCharGroupOf:	'^[:x|(''#eur''¶,$$asString)]'
+		equals: 						'^[:x|(''#eur'',¶$$asString)]'.
+
+	self
+		assertNextCharGroupFrom:	'^[:x|(''#eur'',¶$$asString)]'
+		to: 							'^[:x|(''#eur'',$¶$asString)]'
+		equals: 						'^[:x|(''#eur'',$$¶asString)]'.
+
+	self
+		assertNextCharGroupFrom:	'^[:x|(''#eur'',$$¶asString)]'
+		to: 							'^[:x|(''#eur'',$$a¶sString)]'
+		equals: 						'^[:x|(''#eur'',$$as¶String)]'.
+
+	self
+		assertNextCharGroupFrom:	'^[:x|(''#eur'',$$as¶String)]'
+		to: 							'^[:x|(''#eur'',$$asStrin¶g)]'
+		equals: 						'^[:x|(''#eur'',$$asString¶)]'.
+
+	self
+		assertNextCharGroupFrom:	'^[:x|(''#eur'',$$asString¶)]'
+		to: 							'^[:x|(''#eur'',$$asString)¶]'
+		equals: 						'^[:x|(''#eur'',$$asString)]¶'.
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordStopOnUpperCaseWithSyntax [
+
+	string := '^"''|[](){}$#<>=;:.'.
+	editor addString: string.
+
+	self
+		assertNextCharGroupFrom:	'¶^"''|[](){}$#<>=;:.'
+		to: 							'^"¶''|[](){}$#<>=;:.'
+		equals: 						'^"''¶|[](){}$#<>=;:.'.
+
+	self
+		assertNextCharGroupOf:	'^"''¶|[](){}$#<>=;:.'
+		equals: 						'^"''|¶[](){}$#<>=;:.'.
+
+	self
+		assertNextCharGroupFrom:	'^"''|¶[](){}$#<>=;:.'
+		to: 							'^"''|[](){}$¶#<>=;:.'
+		equals: 						'^"''|[](){}$#¶<>=;:.'.
+
+	self
+		assertNextCharGroupFrom:	'^"''|[](){}$#¶<>=;:.'
+		to: 							'^"''|[](){}$#<>¶=;:.'
+		equals: 						'^"''|[](){}$#<>=¶;:.'.
+
+	self
+		assertNextCharGroupFrom:	'^"''|[](){}$#<>=¶;:.'
+		to: 							'^"''|[](){}$#<>=;:.¶'
+		equals: 						'^"''|[](){}$#<>=;:.¶'.
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWord [
+
+	| textSize |
+	textSize := 'Lorem ipsum ' size.
+	self assert: (editor previousWord: -999) equals: 1. "Out of range"
+	self assert: (editor previousWord: 0) equals: 1. "Out of range"
+
+	1 to: 7 do: [ :i |
+		"From:   |Lorem ipsum
+		 To:     Lorem |ipsum
+		 Should be: |Lorem ipsum"
+		self assert: (editor previousWord: i) equals: 1 ].
+
+	8 to: 12 do: [ :i |
+		"From:   Lorem |ipsum
+		 To:     Lorem ipsum|
+		 Should be: Lorem |ipsum"
+		self assert: (editor previousWord: i) equals: 7 ].
+
+	self assert: (editor previousWord: 999) equals: 7. "Out of range"
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordAtEndOfFirstWordOfLineGoesToStartOfLine [
+
+	editor addString: 'a
+
+a'.
+
+	self assert: (editor previousWord: 5) equals: 4
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordAtLineWithSpacesGoesToStartOfCurrentLine [
+
+	editor addString: 'a
+
+  a'.
+
+	self assert: (editor previousWord: 6) equals: 4
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordAtStartOfLineGoesToEndOfLastWordOfPreviousLine [
+
+	editor addString: 'a	
+a'.
+
+	self assert: (editor previousWord: 4) equals: 1
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordAtStartOfLineGoesToPreviousLine [
+
+	editor addString: 'a
+
+a'.
+
+	self assert: (editor previousWord: 4) equals: 3
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordGoesToStartOfCurrentWord [
+
+	editor addString: 'abc def'.
+
+	self assert: (editor previousWord: 6) equals: 5
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordSkipsCurrentSpacesAndGoesToStartOfCurrentWord [
+
+	editor addString: 'abc def'.
+
+	self assert: (editor previousWord: 5) equals: 1
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordStopOnUpperCase [
 
     string := 'loRem ipSum'.
     editor addString: string.
-	self assert: (editor previousCharacterGroup: -999) equals: 1. "Out of range means start of text"
-	self assert: (editor previousCharacterGroup: 0) equals: 1. "Out of range means start of text"
+	self assert: (editor previousWord: -999 stopOnUpperCase: true) equals: 1. "Out of range means start of text"
+	self assert: (editor previousWord: 0 stopOnUpperCase: true) equals: 1. "Out of range means start of text"
 
 	self
 		assertPreviousCharGroupFrom:	'loRem ipSum¶'
@@ -441,11 +489,7 @@ RubTextEditorTest >> testPreviousCharacterGroup [
 		equals: 								'loRem ¶ipSum'.
 
 	self
-		assertPreviousCharGroupOf:		'loRem ¶ipSum'
-		equals: 								'loRem¶ ipSum'.
-
-	self
-		assertPreviousCharGroupFrom:	'loRem¶ ipSum'
+		assertPreviousCharGroupFrom:	'loRem ¶ipSum'
 		to: 									'loR¶em ipSum'
 		equals: 								'lo¶Rem ipSum'.
 
@@ -456,7 +500,7 @@ RubTextEditorTest >> testPreviousCharacterGroup [
 ]
 
 { #category : 'tests' }
-RubTextEditorTest >> testPreviousCharacterGroupComplex [
+RubTextEditorTest >> testPreviousWordStopOnUpperCaseComplex [
 
 	string := 'self loRem: [[ (1 + 2) // 100 ]]'.
 	editor addString: string.
@@ -467,29 +511,18 @@ RubTextEditorTest >> testPreviousCharacterGroupComplex [
 		equals: 								'self loRem: [[ (1 + 2) // 100 ¶]]'.
 
 	self
-		assertPreviousCharGroupOf:		'self loRem: [[ (1 + 2) // 100 ¶]]'
-		equals: 								'self loRem: [[ (1 + 2) // 100¶ ]]'.
-
-	self
-		assertPreviousCharGroupFrom:	'self loRem: [[ (1 + 2) // 100¶ ]]'
+		assertPreviousCharGroupFrom:	'self loRem: [[ (1 + 2) // 100 ¶]]'
 		to: 									'self loRem: [[ (1 + 2) // 1¶00 ]]'
 		equals: 								'self loRem: [[ (1 + 2) // ¶100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'self loRem: [[ (1 + 2) // ¶100 ]]'
-		equals: 								'self loRem: [[ (1 + 2) //¶ 100 ]]'.
-
-	self
-		assertPreviousCharGroupFrom:	'self loRem: [[ (1 + 2) //¶ 100 ]]'
+		assertPreviousCharGroupFrom:	'self loRem: [[ (1 + 2) // ¶100 ]]'
 		to: 									'self loRem: [[ (1 + 2) /¶/ 100 ]]'
 		equals: 								'self loRem: [[ (1 + 2) ¶// 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'self loRem: [[ (1 + 2) ¶// 100 ]]'
-		equals: 								'self loRem: [[ (1 + 2)¶ // 100 ]]'.
-
-	self
-		assertPreviousCharGroupOf:		'self loRem: [[ (1 + 2)¶ // 100 ]]'
+		assertPreviousCharGroupFrom:	'self loRem: [[ (1 + 2) ¶// 100 ]]'
+		to: 									'self loRem: [[ (1 + 2)¶ // 100 ]]'
 		equals: 								'self loRem: [[ (1 + 2¶) // 100 ]]'.
 
 	self
@@ -497,19 +530,13 @@ RubTextEditorTest >> testPreviousCharacterGroupComplex [
 		equals: 								'self loRem: [[ (1 + ¶2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'self loRem: [[ (1 + ¶2) // 100 ]]'
-		equals: 								'self loRem: [[ (1 +¶ 2) // 100 ]]'.
-
-	self
-		assertPreviousCharGroupOf:		'self loRem: [[ (1 +¶ 2) // 100 ]]'
+		assertPreviousCharGroupFrom:	'self loRem: [[ (1 + ¶2) // 100 ]]'
+		to: 									'self loRem: [[ (1 +¶ 2) // 100 ]]'
 		equals: 								'self loRem: [[ (1 ¶+ 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'self loRem: [[ (1 ¶+ 2) // 100 ]]'
-		equals: 								'self loRem: [[ (1¶ + 2) // 100 ]]'.
-
-	self
-		assertPreviousCharGroupOf:		'self loRem: [[ (1¶ + 2) // 100 ]]'
+		assertPreviousCharGroupFrom:	'self loRem: [[ (1 ¶+ 2) // 100 ]]'
+		to: 									'self loRem: [[ (1¶ + 2) // 100 ]]'
 		equals: 								'self loRem: [[ (¶1 + 2) // 100 ]]'.
 
 	self
@@ -517,20 +544,13 @@ RubTextEditorTest >> testPreviousCharacterGroupComplex [
 		equals: 								'self loRem: [[ ¶(1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'self loRem: [[ ¶(1 + 2) // 100 ]]'
-		equals: 								'self loRem: [[¶ (1 + 2) // 100 ]]'.
-
-	self
-		assertPreviousCharGroupFrom:	'self loRem: [[¶ (1 + 2) // 100 ]]'
+		assertPreviousCharGroupFrom:	'self loRem: [[ ¶(1 + 2) // 100 ]]'
 		to: 									'self loRem: [¶[ (1 + 2) // 100 ]]'
 		equals: 								'self loRem: ¶[[ (1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'self loRem: ¶[[ (1 + 2) // 100 ]]'
-		equals: 								'self loRem:¶ [[ (1 + 2) // 100 ]]'.
-
-	self
-		assertPreviousCharGroupOf:		'self loRem:¶ [[ (1 + 2) // 100 ]]'
+		assertPreviousCharGroupFrom:	'self loRem: ¶[[ (1 + 2) // 100 ]]'
+		to: 									'self loRem:¶ [[ (1 + 2) // 100 ]]'
 		equals: 								'self loRem¶: [[ (1 + 2) // 100 ]]'.
 
 	self
@@ -544,17 +564,31 @@ RubTextEditorTest >> testPreviousCharacterGroupComplex [
 		equals: 								'self ¶loRem: [[ (1 + 2) // 100 ]]'.
 
 	self
-		assertPreviousCharGroupOf:		'self ¶loRem: [[ (1 + 2) // 100 ]]'
-		equals: 								'self¶ loRem: [[ (1 + 2) // 100 ]]'.
-
-	self
-		assertPreviousCharGroupFrom:	'self¶ loRem: [[ (1 + 2) // 100 ]]'
+		assertPreviousCharGroupFrom:	'self ¶loRem: [[ (1 + 2) // 100 ]]'
 		to: 									'¶self loRem: [[ (1 + 2) // 100 ]]'
 		equals: 								'¶self loRem: [[ (1 + 2) // 100 ]]'.
 ]
 
 { #category : 'tests' }
-RubTextEditorTest >> testPreviousCharacterGroupManyUppercases [
+RubTextEditorTest >> testPreviousWordStopOnUpperCaseManyUpercases [
+
+	string := 'AAAb'.
+	editor addString: string.
+
+	self
+		assertPreviousCharGroupFrom: 	'AAAb¶'
+		to: 							  		'AAA¶b'
+		equals: 						  		'AA¶Ab'.
+
+	self
+		assertPreviousCharGroupFrom:	'AA¶Ab'
+		to: 							  		'¶AAAb'
+		equals: 						  		'¶AAAb'.	
+
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordStopOnUpperCaseManyUppercases [
 	string := 'AAAb'.
 	editor addString: string.
 
@@ -570,7 +604,7 @@ RubTextEditorTest >> testPreviousCharacterGroupManyUppercases [
 ]
 
 { #category : 'tests' }
-RubTextEditorTest >> testPreviousCharacterGroupWithSpecialCharacters [
+RubTextEditorTest >> testPreviousWordStopOnUpperCaseWithSpecialCharacters [
 
 	string := '^[:x|(''#eur'',$$asString)]'.
 	editor addString: string.
@@ -628,7 +662,7 @@ RubTextEditorTest >> testPreviousCharacterGroupWithSpecialCharacters [
 ]
 
 { #category : 'tests' }
-RubTextEditorTest >> testPreviousCharacterGroupWithSyntax [
+RubTextEditorTest >> testPreviousWordStopOnUpperCaseWithSyntax [
 
 	string := '^"''|[](){}$#<>=;:.'.
 	editor addString: string.
@@ -656,102 +690,6 @@ RubTextEditorTest >> testPreviousCharacterGroupWithSyntax [
 		assertPreviousCharGroupFrom:	'^"''¶|[](){}$#<>=;:.'
 		to: 									'¶^"''|[](){}$#<>=;:.'
 		equals: 								'¶^"''|[](){}$#<>=;:.'.
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testPreviousWord [
-
-	| textSize |
-	textSize := 'Lorem ipsum ' size.
-	self assert: (editor previousWord: -999) equals: 1. "Out of range"
-	self assert: (editor previousWord: 0) equals: 1. "Out of range"
-
-	1 to: 7 do: [ :i |
-		"From:   |Lorem ipsum
-		 To:     Lorem |ipsum
-		 Should be: |Lorem ipsum"
-		self assert: (editor previousWord: i) equals: 1 ].
-
-	8 to: 12 do: [ :i |
-		"From:   Lorem |ipsum
-		 To:     Lorem ipsum|
-		 Should be: Lorem |ipsum"
-		self assert: (editor previousWord: i) equals: 7 ].
-
-	self assert: (editor previousWord: 999) equals: 7. "Out of range"
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testPreviousWordAtEndOfFirstWordOfLineGoesToStartOfLine [
-
-	editor addString: 'a
-
-a'.
-
-	self assert: (editor previousWord: 5) equals: 4
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testPreviousWordAtLineWithSpacesGoesToStartOfCurrentLine [
-
-	editor addString: 'a
-
-  a'.
-
-	self assert: (editor previousWord: 6) equals: 4
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testPreviousWordAtStartOfLineGoesToEndOfLastWordOfPreviousLine [
-
-	editor addString: 'a	
-a'.
-
-	self assert: (editor previousWord: 4) equals: 2
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testPreviousWordAtStartOfLineGoesToPreviousLine [
-
-	editor addString: 'a
-
-a'.
-
-	self assert: (editor previousWord: 4) equals: 3
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testPreviousWordGoesToStartOfCurrentWord [
-
-	editor addString: 'abc def'.
-
-	self assert: (editor previousWord: 6) equals: 5
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testPreviousWordSkipsCurrentSpacesAndGoesToStartOfCurrentWord [
-
-	editor addString: 'abc def'.
-
-	self assert: (editor previousWord: 5) equals: 1
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testPreviousWordStopOnUpperCaseManyUpercases [
-
-	string := 'AAAb'.
-	editor addString: string.
-
-	self
-		assertPreviousJumpPointFrom: 	'AAAb¶'
-		to: 							  		'AAA¶b'
-		equals: 						  		'AA¶Ab'.	
-
-	self
-		assertPreviousJumpPointFrom:	'AA¶Ab'
-		to: 							  		'¶AAAb'
-		equals: 						  		'¶AAAb'.	
-
 ]
 
 { #category : 'test-selection' }
