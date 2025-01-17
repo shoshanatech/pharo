@@ -32,6 +32,10 @@ Class {
 		'FullscreenMargin',
 		'TopWindow'
 	],
+	#classInstVars : [
+		'lastClosedWindows',
+		'presenter'
+	],
 	#category : 'Morphic-Widgets-Windows-Widgets',
 	#package : 'Morphic-Widgets-Windows',
 	#tag : 'Widgets'
@@ -333,6 +337,12 @@ SystemWindow class >> labelled: labelString [
 ]
 
 { #category : 'accessing' }
+SystemWindow class >> lastClosedWindows [
+
+	^ lastClosedWindows ifNil: [  lastClosedWindows := OrderedCollection new ]
+]
+
+{ #category : 'accessing' }
 SystemWindow class >> menuBoxImage [
 
 	^ (Form
@@ -352,6 +362,24 @@ SystemWindow class >> noteTopWindowIn: aWorld [
 	aWorld submorphsDo: [:m |
 		(m isSystemWindow and: [m isCollapsed not]) ifTrue: [
 			^m activate]]
+]
+
+{ #category : 'as yet unclassified' }
+SystemWindow class >> openLastClosedWindows [ 
+	<script>
+	| pres |
+	pres := self presenter.
+	pres
+		items: self lastClosedWindows;
+		openWithLayout: SpClosedWindowListPresenter layoutWithOrdering.
+	pres resetSelection.
+	pres withWindowDo: [ :w | w title: 'Last Closed Windows' ].
+	^ pres
+]
+
+{ #category : 'accessing' }
+SystemWindow class >> presenter [ 
+	^ presenter ifNil: [ presenter := SpClosedWindowListPresenter new ]
 ]
 
 { #category : 'top window' }
@@ -458,7 +486,13 @@ SystemWindow class >> windowMenuOn: aBuilder [
 
 	<windowMenu>
 	| closableLabel draggableLabel maximizeLabel |
-	(aBuilder item: #Close)
+	(aBuilder item: #FakeClose)
+		order: 1.0;
+		action: [ aBuilder model hide. self new addClosedWindow: aBuilder model ];
+		iconName: #windowClose;
+		enabledBlock: [ aBuilder model allowedToClose ];
+		withSeparatorAfter.
+			(aBuilder item: #Close)
 		order: 1.0;
 		action: [ aBuilder model closeBoxHit ];
 		iconName: #windowClose;
@@ -571,6 +605,15 @@ SystemWindow >> addCloseBox [
 	frame := LayoutFrame identity leftOffset: 2.
 	closeBox layoutFrame: frame.
 	labelArea addMorphBack: closeBox
+]
+
+{ #category : 'adding' }
+SystemWindow >> addClosedWindow: aModel [
+
+	self class lastClosedWindows size >= 5 ifTrue: [
+		self class lastClosedWindows removeLast close ].
+	self class lastClosedWindows addFirst: aModel.
+	self presenter refresh
 ]
 
 { #category : 'menu actions' }
@@ -936,6 +979,14 @@ SystemWindow >> discoveredMenuPragmaKeyword [
 	^ #windowMenu
 ]
 
+{ #category : 'displaying' }
+SystemWindow >> displayStringOn: aStream [
+
+	label
+		ifNotNil: [ aStream nextPutAll: self labelString ]
+		ifNil: [ aStream nextPutAll: 'Untilted Window' ]
+]
+
 { #category : 'events' }
 SystemWindow >> doFastFrameDrag: grabPoint [
 	"Do fast frame dragging from the given point"
@@ -1242,6 +1293,12 @@ SystemWindow >> labelRect [
 { #category : 'label' }
 SystemWindow >> labelWidgetAllowance [
 	^ labelWidgetAllowance ifNil: [self setLabelWidgetAllowance]
+]
+
+{ #category : 'accessing' }
+SystemWindow >> lastClosedWindows [
+
+	^ self class lastClosedWindows
 ]
 
 { #category : 'layout' }
@@ -1608,6 +1665,13 @@ SystemWindow >> preOpenInWorld: aWorld [
 	"This msg and its callees result in the window being activeOnlyOnTop"
 
 	self bounds: (RealEstateAgent initialFrameFor: self initialExtent: self initialExtent world: aWorld)
+]
+
+{ #category : 'accessing' }
+SystemWindow >> presenter [ 
+
+
+^ self class presenter
 ]
 
 { #category : 'printing' }
