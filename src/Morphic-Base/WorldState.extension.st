@@ -189,6 +189,7 @@ WorldState class >> systemStartupFolderMenuOn: aBuilder [
 { #category : '*Morphic-Base' }
 WorldState class >> windowsOn: aBuilder [
 	<worldMenu>
+	
 	(aBuilder item: #Windows)
 		order: 90;
 		with: [ (aBuilder item: #'Collapse all windows')
@@ -196,7 +197,7 @@ WorldState class >> windowsOn: aBuilder [
 				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
 				(aBuilder item: #'Unclose window')
 				action: [ SystemWindow openLastClosedWindows ];
-				help: 'bouboubou' translated.
+				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
 			(aBuilder item: #'Expand all windows')
 				iconName: #expandBox;
 				action: [ self currentWorld expandAll ];
