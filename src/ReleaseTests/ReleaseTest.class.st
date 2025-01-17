@@ -547,7 +547,7 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	                    'IceTipHiedraAltHistoryBrowser>>#newCommitRow:commit:' 'IceTipHiedraAltHistoryBrowser>>#initializeCommitList'
 	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:'
 	                    'LazyListMorph>>#drawOnAthensCanvas:' 'MCFileTreeAbstractReader>>#packageProperties'
-	                    'MicrodownSpecComponentForTest class>>#open' 'MorphTreeMorph>>#nodeExpandRequest:' 'MorphTreeMorph>>#selectItemsRequest:'
+	                    'MicrodownSpecComponentForTest class>>#open'
 	                    'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicDummyLintRuleTest class>>#createMatcherFor:method:'
 	                    'RBBasicDummyLintRuleTest class>>#usesAdd' 'RBBasicDummyLintRuleTest class>>#unreferencedVariables'
 	                    'RBBasicDummyLintRuleTest class>>#classNotReferenced' 'RBBasicDummyLintRuleTest class>>#canCall:in:from:'
