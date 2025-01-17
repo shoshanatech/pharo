@@ -425,7 +425,7 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 	flushChanges ifFalse: [ ^ stamp ].
 	preamble := self sourcedDataAt: sourcePointer.
 	(preamble includesSubstring: sourceDataPointers key) ifTrue: [
-		| stream |
+		| index stream |
 		" Extract the timestamp string from the preamble.
 		This can be a method or a class comment preamble.
 		A method Preamble is a string of the shape:
@@ -438,13 +438,17 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 		
 		
 		Lookup for the key stamp/commentStamp:, then take the string coming after that"
-		stream := preamble readStream.
-		[
-		| soFar |
-		soFar := stream upTo: $'.
-		soFar includesSubstring: sourceDataPointers value ] whileFalse.
-		stream atEnd ifTrue: [ ^ nil ].
-		stamp := stream upTo: $' ].
+
+		index := preamble findLastOccurrenceOfString: sourceDataPointers value startingAt: 1.
+		index = 0 ifFalse: [
+			stream :=
+				ReadStream
+					on: preamble
+					from: index + sourceDataPointers value size
+					to: preamble size.
+			stream upTo: $'.
+			stamp := stream upTo: $' ] ].
+
 	^ stamp
 ]
 
