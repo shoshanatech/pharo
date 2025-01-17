@@ -540,7 +540,7 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	                    'AthensPolygon>>#paintFillsUsing:on:' 'BalloonEdgeData>>#stepToFirstScanLine' 'BalloonEdgeData>>#stepToNextScanLine'
 	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
 	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
-	                    'Context>>#doPrimitive:method:receiver:args:' 'Context>>#failPrimitiveWith:' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
+	                    'Context>>#doPrimitive:method:receiver:args:' 'Context>>#failPrimitiveWith:'
 	                    'EDTest>>#prepareMethodVersionTest' 'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer'
 	                    'FFIFloat32>>#callbackReturnOn:for:' 'FFIFloatType>>#callbackReturnOn:for:' 'FFIIndirectFunctionResolution>>#resolveFunction:'
 	                    'OCIRReconstructor>>#fixPushNilsForTemps' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
