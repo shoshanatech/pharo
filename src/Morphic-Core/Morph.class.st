@@ -1598,6 +1598,18 @@ Morph >> changeClipSubmorphs [
 	self clipSubmorphs: self clipSubmorphs not
 ]
 
+{ #category : 'user prompt' }
+Morph >> changeColor [
+
+	| dialog |
+	dialog := ColorSelectorDialogWindow new
+		title: 'Choose color';
+		selectedColor: self color.
+	dialog openModal.
+	dialog cancelled
+		ifFalse: [self fillStyle: dialog selectedColor]
+]
+
 { #category : 'meta-actions' }
 Morph >> changeColorTarget: anObject selector: aSymbol originalColor: aColor hand: aHand [
 	"Put up a color picker for changing some kind of color."
@@ -5416,6 +5428,11 @@ Morph >> rubberBandCells: aBool [
 { #category : 'rotate scale and flex' }
 Morph >> scale: newScale [
 	"Backstop for morphs that don't have to do something special to set their scale"
+]
+
+{ #category : 'scaling, rotation' }
+Morph >> scaledIntoFormOfSize: aSmallInteger [
+	^ self imageForm scaledIntoFormOfSize: aSmallInteger
 ]
 
 { #category : 'geometry' }
