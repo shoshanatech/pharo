@@ -79,25 +79,25 @@ lesson:
 Now let''s talk about basic objects.
 
 1, 2, 100, 2/3 ... are Numbers, and respond to many messages evaluating mathematical expressions.
-Evaluate these ones:"
+Evaluate (Print It) these ones:"
 
-2.
+	2
 
-20 factorial.
+	20 factorial
 
-1000 factorial / 999 factorial.
+	1000 factorial / 999 factorial
 
-(1/3).
+	(1/3)
 
-(1/3) + (4/5).
+	(1/3) + (4/5)
 
-(1/3) asFloat.
+	(1/3) asFloat
 
-1 class.
+	1 class
 
-1 class maxVal class.
+	1 class maxVal class
 
-(1 class maxVal + 1) class.
+	(1 class maxVal + 1) class
 
 ProfStef next.'
 ]
@@ -276,22 +276,22 @@ PharoSyntaxTutorial >> inspecting [
 	^ Lesson
 title: 'Inspecting'
 lesson:
-'"Now you''re a Do it and Print it master! Let''s talk about inspecting. It''s a Do it which opens an Inspector on the result of evaluating the expression you''ve selected.
-The Inspector is a tool that allows you to have a look inside an object.
+'"Now you''re a Do it and Print it Master! Let''s talk about inspecting. It''s a Do it which opens an Inspector on the result of evaluating the expression you''ve selected.
+The Inspector is a super cool tool that allows you to have a look inside an object.
 
 For example, select the text below, open the menu and click on ''Inspect it'':"
 
-1 / 2.
+Date today
 
 "You''ve seen the keyboard keys next to the ''Inspect it''? It indicates the Ctrl- (or Cmd-) shortcut to execute this command.
 
 Try ''Ctrl + I'' (or ''Cmd + I'') on the following expressions:"
 
-DateAndTime today.
+DateAndTime today
 
-Float pi.
+Float pi
 
-SystemVersion current.
+SystemVersion current
 
 ProfStef next.'
 ]
@@ -627,10 +627,10 @@ Try ''Ctrl + P'' (or ''Cmd + P'') on the following expressions:"
 
 SmalltalkImage current datedVersion.
 
-If you want a string and not just the tooltip, for example, if you want edit it or copy and paste the result of Print It in another tools simply double the command: 
+"If you want a string and not just the tooltip, for example, if you want edit it or copy and paste the result of Print It in another tools simply double the command: 
  ''Ctrl + P''  ''Ctrl + P''
 
-Try it on 
+Try it on" 
 
 	Date today.
 
@@ -689,6 +689,47 @@ ProfStef default executeMethod: (ProfStef lookupSelector:#next).'
 ]
 
 { #category : 'lessons' }
+PharoSyntaxTutorial >> selecting [
+	^ Lesson
+title: 'Selecting text'
+lesson:
+'"You see that you are often selecting text. And Pharo offers some nice ways to do it super fast. 
+
+Double click on the beginning of a line, select the line. 
+So you do not have to move the mouse (and miss the last charater :), you can just double click and Print it. Much much faster isn''t
+
+Try it on the following expressions:"
+
+1000 factorial numberOfDigits
+
+"It works also with space before"	
+	
+	1000 factorial numberOfDigits
+	
+"If you double click on the LAST character of a line, it selects the full line, Try it on the expressions above."	
+	
+"Cool! no?
+
+Pharo can do better! If you have an expression on multiple lines you can double click at the end or the beginning of the expression to select the complete expression. Notice how you can select a line like the first one and get 3 printed or get the full result 24"
+
+StPlaygroundPresenter new contents: ''1 * 2 
+     * (4 + 8)''; open
+
+"When you see class name in a text. You can jump to the class by Command + clicking on it,
+Try it on"
+
+OrderedCollection, Bag and Set are Collection 
+
+"Yes there is no s at Collection so that you jump to the class :)"
+
+"So now you are really a Do it Full Master!"
+ 
+
+
+ProfStef next.'
+]
+
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> theEnd [
 	^ Lesson
 title: 'Tutorial done!'
@@ -718,6 +759,7 @@ welcome
 doingVSPrinting
 printing
 inspecting
+selecting
 
 basicTypesNumbers
 basicTypesCharacters
