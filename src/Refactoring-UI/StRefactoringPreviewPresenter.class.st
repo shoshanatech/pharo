@@ -104,14 +104,8 @@ StRefactoringPreviewPresenter >> changesFrom: aCompositeChange [
 { #category : 'initialization' }
 StRefactoringPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollection [
 
-	compositeChange := aCompositeChange.
-	"we keep the composite because we want to use it for performing changes later on."
-	
-	changes := aCompositeChange whatToDisplayIn: self.
 	scopes := aCollection.
-	self updateScopeList.
-	self updateChanges.
-	self updateTablePresenter
+	self changesFrom: aCompositeChange.
 ]
 
 { #category : 'action' }
