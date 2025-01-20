@@ -420,12 +420,20 @@ SourceFileArray >> timeStampAt: sourcePointer [
 SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 	"Answer the authoring time-stamp for the given method, retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
 
-	| preamble stamp |
-	stamp := ''.
-	flushChanges ifFalse: [ ^ stamp ].
+	| preamble |
+	flushChanges ifFalse: [ ^ '' ].
 	preamble := self sourcedDataAt: sourcePointer.
+	^ self timeStampFromPreamble: preamble for: sourceDataPointers
+]
+
+{ #category : 'public - string reading' }
+SourceFileArray >> timeStampFromPreamble: preamble for: sourceDataPointers [
+	"Answer the authoring time-stamp for the given method, retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
+
+	| stamp index |
+	stamp := ''.
 	(preamble includesSubstring: sourceDataPointers key) ifTrue: [
-		| index stream |
+		| stream |
 		" Extract the timestamp string from the preamble.
 		This can be a method or a class comment preamble.
 		A method Preamble is a string of the shape:
@@ -438,7 +446,7 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 		
 		
 		Lookup for the key stamp/commentStamp:, then take the string coming after that"
-
+		
 		index := preamble findLastOccurrenceOfString: sourceDataPointers value startingAt: 1.
 		index = 0 ifFalse: [
 			stream :=
@@ -448,7 +456,6 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 					to: preamble size.
 			stream upTo: $'.
 			stamp := stream upTo: $' ] ].
-
 	^ stamp
 ]
 
