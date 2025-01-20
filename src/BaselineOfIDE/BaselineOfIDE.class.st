@@ -127,12 +127,12 @@ BaselineOfIDE >> baseline: spec [
 			group: 'Tool-DependencyAnalyser-UI-Tab'
 			spec: spec.
 		self specCode: spec.
+		self roassal: spec.
 		self newTools: spec.
 		self drTests: spec.
 		self microdown: spec.
 		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
 		self welcomeBrowser: spec.
-		self roassal: spec.
 		
 		spec package: 'IconPacks'.
 
