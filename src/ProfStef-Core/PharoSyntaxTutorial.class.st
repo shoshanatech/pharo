@@ -262,9 +262,9 @@ You can also Do it using the keyboard shortcut ''Ctrl + D'' (or ''Cmd + D'' on M
 
 Try to evaluate these expressions:"
 
-StPlayground open.
+	StPlaygroundPresenter open.
 
-SmalltalkImage current aboutThisSystem.
+	ProfStef openPharoZenWorkspace.
 
 "Then go to the next lesson:"
 
@@ -610,22 +610,33 @@ PharoSyntaxTutorial >> printing [
 	^ Lesson
 title: 'Printing'
 lesson:
-'"Now you''re a Do it master! Let''s talk about printing. It''s a Do it which prints the result next to the expression you''ve selected.
+'"Now you''re a Do it Master! Let''s talk about printing. It''s a Do it which prints the result in a tooltip next to the expression you''ve selected.
 For example, select the text below, open the menu and click on ''Print it'':"
 
-1 + 2.
+	1 + 2.
 
 "You''ve seen the keyboard keys next to the ''Print it''? It indicates the Ctrl- (or Cmd-) shortcut to execute this command.
 
 Try ''Ctrl + P'' (or ''Cmd + P'') on the following expressions:"
 
-Date today.
+	Date today.
 
-Time now.
+	Time now.
 
 "The result is selected, so you can erase it using the backspace key. Try it!"
 
 SmalltalkImage current datedVersion.
+
+If you want a string and not just the tooltip, for example, if you want edit it or copy and paste the result of Print It in another tools simply double the command: 
+ ''Ctrl + P''  ''Ctrl + P''
+
+Try it on 
+
+	Date today.
+
+	Time now
+
+Now you are a Print It Master!
 
 ProfStef next.'
 ]
@@ -749,8 +760,7 @@ title: 'Welcome'
 lesson:
 '"Hello! I''m Professor Stef.
 
-You must want me to help you learn Pharo.
-
+I''m here to  help you learn Pharo.
 So let''s go to the first lesson. Select the text below, right-click and choose ''Do it''"
 
 ProfStef next.'
