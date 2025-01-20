@@ -14,6 +14,12 @@ Class {
 }
 
 { #category : 'accessing' }
+MiniDrTests class >> defaultPreferredExtent [ 
+
+	^  200@180
+]
+
+{ #category : 'accessing' }
 MiniDrTests >> currentPlugin: anObject [
 
 	currentPlugin := anObject
@@ -46,16 +52,6 @@ MiniDrTests >> initializeButtons [
 		icon: (self iconNamed: #smallUpdate);
 		action: [ self runPlugin ];
 		yourself
-]
-
-{ #category : 'initialization' }
-MiniDrTests >> initializeWindow: aWindowPresenter [
-
-	super initializeWindow: aWindowPresenter.
-	aWindowPresenter
-		title: self title;
-		initialExtent: 200@180;
-		windowIcon: (self iconNamed: self class systemIconName)
 ]
 
 { #category : 'accessing' }

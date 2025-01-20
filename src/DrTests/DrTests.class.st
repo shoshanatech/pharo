@@ -38,6 +38,12 @@ DrTests class >> beDefaultTestRunner [
 	
 ]
 
+{ #category : 'api' }
+DrTests class >> defaultPreferredExtent [ 
+
+	^  800@600
+]
+
 { #category : 'class initialization' }
 DrTests class >> initialize [
 
@@ -172,15 +178,6 @@ DrTests >> initializePresenters [
 DrTests >> initializeStatusLabel [
 
 	statusLabel := self newLabel
-]
-
-{ #category : 'initialization' }
-DrTests >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter
-		title: self title;
-		initialExtent: 800@600;
-		windowIcon: (self iconNamed: self class systemIconName)
 ]
 
 { #category : 'private' }
@@ -319,4 +316,10 @@ DrTests >> updateWithResults: results [
 
 	pluginResult := results.
 	pluginPresenter updateWithResults: results
+]
+
+{ #category : 'TOREMOVE' }
+DrTests >> windowIcon [
+	
+	^ self application iconNamed: #testRunner
 ]

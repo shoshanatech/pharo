@@ -194,3 +194,9 @@ AbstractDrTestsPresenter >> updateWithResults: results [
 
 	self subclassResponsibility
 ]
+
+{ #category : 'TOREMOVE' }
+AbstractDrTestsPresenter >> windowIcon [
+	
+	^ self application iconNamed: #testRunner
+]
