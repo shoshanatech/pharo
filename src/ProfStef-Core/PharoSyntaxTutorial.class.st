@@ -322,16 +322,26 @@ This is the same in any programming language"
 PharoSyntaxTutorial >> debugger [
 	^ Lesson
 title: 'Debugger'
-lesson: '"The Debugger may be the most famous tool of Smalltalk environments. It will open as soon as an unmanaged Exception occurs.
+lesson: '"The Debugger may be the most famous tool of Pharo environment. It will open as soon as an unmanaged Exception occurs."
 
-The following code will open the debugger on the message stack, select PharoSyntaxTutorial>>divideTwoByZero".
+The following code will open the debugger on the message stack."
+
+1 / 0
+
+"
+Close the debugger. 
+
+Now you can also invoke a debugger by inserting a breakpoint in your code.
+There are different breakpoints but a simple one is self halt.
+
+When you execute the following expression you will get another debugger, click on the line PharoSyntaxTutorial>>divideTwoByZero and follow the instruction within the debugger itself.
 
 PharoSyntaxTutorial new divideTwoByZero.'
 ]
 
 { #category : 'interactive' }
 PharoSyntaxTutorial >> divideTwoByZero [
-	2/0.
+	
 
 	"Oops! 2/0 raises a ZeroDivide exception. So the debugger opens to let you fix the code.
 
@@ -440,30 +450,33 @@ PharoSyntaxTutorial >> iterators [
 	^ Lesson
 title: 'Iterators'
 lesson:
-'"The message do: is sent to a collection of objects (Array, Set, OrderedCollection), evaluating the block for each element.
+'"Pharo offers a large set of iterators. 
+
+One of the iconic one is the message do:. It is sent to a collection of objects (Array, Set, OrderedCollection), executing the block for each element.
 
 Here we want to print all the numbers on the Transcript (a console)"
 
-#(11 38 3 -2 10) do: [:each |
-     Transcript show: each printString; cr].
+Transcript open; clear. 
+#(11 38 3 -2 10) do: [ :each | each traceCr ].
+
 
 "Some other really nice iterators"
 
-#(11 38 3 -2 10) collect: [:each | each abs].
+#(11 38 3 -2 10) collect: [ :each | each abs ].
 
-#(11 38 3 -2 10) collect: [:each | each odd].
+#(11 38 3 -2 10) collect: [ :each | each odd ].
 
-#(11 38 3 -2 10) select: [:each | each odd].
+#(11 38 3 -2 10) select: [ :each | each odd ].
 
-#(11 38 3 -2 10) select: [:each | each > 10].
+#(11 38 3 -2 10) select: [ :each | each > 10 ].
 
-#(11 38 3 -2 10) reject: [:each | each > 10].
+#(11 38 3 -2 10) reject: [ :each | each > 10 ].
 
 #(11 38 3 -2 10)
-     do: [:each | Transcript show: each printString]
-     separatedBy: [Transcript show: ''.''].
+     do: [ :each | each traceCr ]
+     separatedBy: [ ''.'' traceCr ].
 
-ProfStef allInstances do: [:aPharoTutorial | aPharoTutorial next].'
+{ 1 } do: [ :each |  ProfStef next ]'
 ]
 
 { #category : 'lessons' }
@@ -885,9 +898,12 @@ ProfStef class removeSelector: #goToNextLesson.
 
 ProfStef respondsTo: #goToNextLesson.
 
-"Then move forward:"
+"Pharo offers a lot of powerful reflective methods. 
+Normally you should use when you build tools and not when you develop your application code.
+So watch out.
+Then move forward:"
 
-ProfStef default executeMethod: (ProfStef lookupSelector:#next).'
+ProfStef default executeMethod: (ProfStef lookupSelector: #next).'
 ]
 
 { #category : 'lessons' }
@@ -940,7 +956,7 @@ lesson:
 
 Don''t forget to read ''Pharo By Example'' found here:
 
-	https://books.pharo.org/updated-pharo-by-example
+	https://books.pharo.org/
 
 You can run this tutorial again by evaluating:"
 
@@ -987,8 +1003,6 @@ loops
 iterators
 
 understandYourself
-
-instantiation
 
 reflection
 reflectionContinued
