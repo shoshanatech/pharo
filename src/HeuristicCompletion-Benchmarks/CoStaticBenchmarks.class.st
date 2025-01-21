@@ -168,39 +168,53 @@ CoStaticBenchmarks >> averageTimeForPrefix: prefixSize [
 
 { #category : 'benchmarks' }
 CoStaticBenchmarks >> benchCallsite: aMessageNode atPosition: aPosition [
+ 
+    | originalSelector |
+    originalSelector := aMessageNode selector.
 
-	| originalSelector |
-	originalSelector := aMessageNode selector.
-	2 to: (aMessageNode selector size min: 8) do: [ :index | | prefix completion candidates completionIndex previousResultsPerIndexPerPrefixSize |
+    2 to: (aMessageNode selector size min: 8) do: [ :index | 
+        | prefix startTime endTime executionTime 
+          completion candidates completionIndex 
+          previousResultsPerIndexPerPrefixSize |
 
-		"The CoGlobalSorterResultSetBuilder uses the selector to pre-narrow the results"
-		prefix := originalSelector copyFrom: 1 to: index.
-		aMessageNode selector: prefix.
+        "Start timing"
+        startTime := Time millisecondClockValue.
 
-		completion := builder
-			node: aMessageNode;
-			completionContext: (CoBenchmarkContext new
-				callsite: aMessageNode;
-				position: aPosition;
-				yourself);
-			buildCompletion.
+        prefix := originalSelector copyFrom: 1 to: index.
+        aMessageNode selector: prefix.
 
-		completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: prefix).
-		candidates := completion first: 10.
+        completion := builder
+            node: aMessageNode;
+            completionContext: (CoBenchmarkContext new
+                callsite: aMessageNode;
+                position: aPosition;
+                yourself);
+            buildCompletion.
 
-		completionIndex := (candidates collect: [:each | each contents]) indexOf: originalSelector.
+        completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: prefix).
+        candidates := completion first: 10.
 
-		previousResultsPerIndexPerPrefixSize := completionBenchs
-			at: completionIndex
-			at: prefix size
-			ifAbsent: [ {0 . Set new } ].
-		previousResultsPerIndexPerPrefixSize second add: originalSelector.
-		completionBenchs
-			at: completionIndex
-			at: prefix size
-			put: {previousResultsPerIndexPerPrefixSize first + 1 . previousResultsPerIndexPerPrefixSize second }
-	].
-	aMessageNode selector: originalSelector
+        completionIndex := (candidates collect: [ :each | each contents ]) indexOf: originalSelector.
+
+        "Existing logic: update completionBenchs dictionary"
+        previousResultsPerIndexPerPrefixSize := completionBenchs
+            at: completionIndex
+            at: prefix size
+            ifAbsent: [ { 0 . Set new } ].
+        previousResultsPerIndexPerPrefixSize second add: originalSelector.
+        completionBenchs
+            at: completionIndex
+            at: prefix size
+            put: { previousResultsPerIndexPerPrefixSize first + 1 . previousResultsPerIndexPerPrefixSize second }.
+
+        "Stop timing and record it"
+        endTime := Time millisecondClockValue.
+        executionTime := endTime - startTime.
+        self logTime: executionTime forPrefix: prefix size
+    ].
+
+    "Restore the original selector"
+    aMessageNode selector: originalSelector
 ]
 
 { #category : 'accessing' }
@@ -338,12 +352,18 @@ CoStaticBenchmarks >> timeResults [
                 title: 'Total (ms)'
                 evaluated: [ :prefixSize | (self totalTimeForPrefix: prefixSize) asString ]
         );
+		  addColumn: (
+            SpStringTableColumn
+                title: 'Count'
+                evaluated: [ :prefixSize |
+                    (completionTimes at: prefixSize ifAbsent: [ #( 0 0 ) ]) second asString ]
+        );
         addColumn: (
             SpStringTableColumn
                 title: 'Average (ms)'
                 evaluated: [ :prefixSize | 
                     (self averageTimeForPrefix: prefixSize) 
-                        roundTo: 0.1;  "some rounding if desired"
+                       asFloat round:2;
                         asString 
                 ]
         );
