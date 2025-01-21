@@ -446,13 +446,26 @@ PharoSyntaxTutorial >> mathematicalPrecedence [
 	^ Lesson
 title: 'Mathematical precedence'
 lesson:
-'"Traditional precedence rules from mathematics do not apply in Pharo."
+'"Traditional precedence rules from mathematics do not apply in Pharo.
+Let us have a look at the following expression"
 
-2 * 10 + 2.
+2 + 10 * 2
 
-"Here the message * is sent to 2, which answers 20, then 20 receive the message +
+"Here the message + is sent to 2, which answers 12, then 12 receives the message *, so we get 24.
+Clearly this does not follow mathematical evaluation.
+To get the mathematical result we should use parentheses as follows: "
 
-Remember that all messages always follow a simple left-to-right precedence rule, * without exceptions *."
+2 + (10 * 2)
+
+
+"Of course, sometimes this is not necessary to use parentheses as in the following two expressions that are equivalent:"
+
+5 * 10 + 2
+(5 * 10) + 2
+
+
+"Remember that all messages always follow a simple left-to-right precedence rule, without any exceptions.
+So try to guess the value returned by the following expressions:"
 
 2 + 2 * 10
 
@@ -463,6 +476,8 @@ Remember that all messages always follow a simple left-to-right precedence rule,
 (8 - 5) / 2
 
 8 - (5 / 2)
+
+
 
 ProfStef next.'
 ]
@@ -530,24 +545,30 @@ title: 'Message syntax: Cascade'
 lesson:
 '"; is the cascade operator. It''s useful to send message to the SAME receiver.
 
-Open a Transcript (console):"
+Open a Transcript und (console):"
 
 Transcript open.
+Transcript clear.
 
 "Then:"
 
-Transcript show: ''hello''.
-Transcript show: ''Pharo''.
+Transcript show: ''hello ''.
+Transcript show: '' Pharo''.
 Transcript cr.
 
 "is equivalent to:"
 
 Transcript
-	   show: ''hello'';
-	   show: ''Pharo'' ;
+	   show: ''hello '';
+	   show: '' Pharo'' ;
 	   cr.
 
+"The cascade is usefull because it helps not having to use a temporary variable."
+
+
 "Try to go to the next lesson with a cascade of two ''next'' messages:"
+
+
 
 ProfStef'
 ]
@@ -604,7 +625,14 @@ PharoSyntaxTutorial >> messageSyntaxExecutionOrderParentheses [
 	^ Lesson
 title: 'Message syntax: Parentheses'
 lesson:
-'"Use parentheses to change order of evaluation"
+'"
+Unary messages are executed before binary messages, and binary messages are executed before keywords. Messages of the same priority are evaluated from left to right.
+
+Use parentheses to change order of evaluation.
+Guess the result of the following expression. Follow the priority and the flow of execution.
+"
+
+
 
 
 (2 + 3) squared
@@ -623,26 +651,11 @@ Let us try again.
 Do you see that some parentheses are unnecessary in the following expressions?"
 
 
-
 (2 asString) = (2 asString)
 
 (2 asString asSymbol) = (2 asString asSymbol)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+"Remove some parentheses in the expressions of this lesson and try to guess the result you will get."
 
 
 
@@ -912,6 +925,8 @@ conditionals
 loops
 iterators
 
+understandYourself
+
 instantiation
 
 reflection
@@ -922,6 +937,47 @@ debugger
 
 theEnd
 )
+]
+
+{ #category : 'lessons' }
+PharoSyntaxTutorial >> understandYourself [
+	^ Lesson
+title: 'Understand yourself'
+lesson:
+'
+"yourself is a simple message that does nothing but returning self (the receiver of the message). The message yourself deserves a bit of explanation.
+Sending yourself is handy to get the receiver of a message. It is especially useful when using a cascade since all the cascaded messages are sent to the receiver. Let us look at an example.
+
+Imagine that you have the following expression"
+	
+		#(''hello'' ''world'') copy at: 2 put: ''pharo''
+	
+"and that you would like to get the modified array #(''hello'' ''pharo'') copy - the receiver of the message at:put:. We use the message copy because the literal array is read only. 
+
+Execute the expression above  returns ''pharo'' and not the receiver because the message at:put: always returns the second argument.
+
+To get the receiver we can simply use a cascade as follows:"
+
+		#(''hello'' ''world'') copy at: 2 put: ''pharo''; yourself
+
+"and since yourself returns the receiver of the message we will get the modified array.
+
+Stepping back using a cascade and yourself is equivalent to declare a variable, assign the expression and return the variable as follows:"
+
+
+	| a |
+	a := #(''hello'' ''world'').
+	a at: 2 put: ''pharo''.
+	a
+
+So you see the cascade is quite handy.
+
+
+
+
+
+
+ProfStef next'
 ]
 
 { #category : 'lessons' }
