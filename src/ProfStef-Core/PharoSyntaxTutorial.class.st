@@ -181,9 +181,12 @@ Try the following expression: "
 
 "The following expressions returns different results. Do you guess why?"
 
+
 (2 asString) == (2 asString)
 
 (2 asString asSymbol) == (2 asString asSymbol)
+
+
 
 "This is because the message asString returns a new string. So the first expression checks that two different strings are the same objects: clearly this is false.  
 
@@ -490,25 +493,32 @@ PharoSyntaxTutorial >> messageSyntaxBinary [
 title: 'Message syntax: Binary messages'
 lesson:
 '"Binary messages have the following form:
-    anObject + anotherObject"
 
-3 * 2.
+    anObject aBinarySelector anotherObject
 
-Date today + 3 weeks.
+where a binary selector is from a list of non alphabetical characters e.g. ~ = , < > + - / *
+& @ %. A binary selector can be for example == or <="
 
-false | false.
+3 * 2
 
-true & true.
+Date today + 3 weeks
 
-true & false.
+false | false
 
-10 @ 100.
+true & true
 
-10 <= 12.
+true & false
 
-''ab'', ''cd''.
+10 @ 100
 
-Date today < Date yesterday.
+10 <= 12
+
+''ab'' , ''cd''
+
+Date today < Date yesterday
+
+
+
 
 ProfStef next.'
 ]
@@ -559,22 +569,32 @@ PharoSyntaxTutorial >> messageSyntaxExecutionOrder [
 	^ Lesson
 title: 'Message syntax: Execution order'
 lesson:
-'"Unary messages are executed first, then binary messages and finally keyword messages:
+'"
+Pharo distinguishes three kinds of messages: unary, binary, keywords. This distinction is used to minimize the number of parentheses to be written. It is because there is a priority between the message kinds. 
+
+Unary messages are executed first, then binary messages and finally keyword messages:
+
     Unary > Binary > Keywords"
 
-2 + 3 squared.
+"Make sure that you understand the order of which each expression is executed: "
 
-2 raisedTo: 3 + 2.
 
-(0@0) class.
+2 + 3 squared
 
-0@0 corner: 100@200.
+2 raisedTo: 3 + 2
 
-(0@0 corner: 100@200) class.
+(0@0) class
 
-"Between messages of similar precedence, expressions are executed from left to right"
+0@0 corner: 100@200
+
+(0@0 corner: 100@200) class
+
+
+"Between messages of the same precedence, expressions are executed from left to right"
 
 -3 abs negated reciprocal.
+
+
 
 ProfStef next.'
 ]
@@ -586,11 +606,14 @@ title: 'Message syntax: Parentheses'
 lesson:
 '"Use parentheses to change order of evaluation"
 
-(2 + 3) squared.
 
-(2 raisedTo: 3) + 2.
+(2 + 3) squared
 
-(0@0 extent: 100@200) bottomRight.
+(2 raisedTo: 3) + 2
+
+(0@0 extent: 100@200) bottomRight
+
+
 
 
 "Are you sure that you understand how message precedence works?
@@ -598,6 +621,7 @@ A bit... this is normal.
 
 Let us try again. 
 Do you see that some parentheses are unnecessary in the following expressions?"
+
 
 
 (2 asString) = (2 asString)
@@ -631,22 +655,28 @@ PharoSyntaxTutorial >> messageSyntaxKeyword [
 title: 'Message syntax: Keyword messages'
 lesson:
 '"Keyword messages are messages with arguments. They have the following form:
-    anObject akey: anotherObject akey2: anotherObject2"
 
-4 between: 0 and: 10.
+    anObject akey: anotherObject akey2: anotherObject2 "
 
-"The message is between:and: sent to the Number 4"
+4 between: 0 and: 10
 
-1 max: 3.
+"The message selector is between:and: sent to the Number 4 with 0 and 10 as argument."
 
-Color r:1 g:0 b:0.
+"Identify the message selectors for the following expressions:"
 
-"The message is r:g:b: implemented on class Color. Note you can also write"
+
+1 max: 3
+
+Color r: 1 g: 0 b: 0
+
+
+"The message selector is r:g:b: implemented on class Color. Note you can also write"
 
 Color
-	r:1
-	g:1
-	b:0.
+	r: 1
+	g: 1
+	b: 0
+
 
 ProfStef perform: #next.'
 ]
@@ -659,19 +689,22 @@ lesson:
 '"Messages are sent to objects. There are three types of message: unary, binary and keyword.
 
 Unary messages have the following form:
-    anObject aMessage
+    
+	anObject aMessageSelector
 
 You''ve already sent unary messages. For example:"
 
-1 class.
+1 class
 
-false not.
+false not
 
-Time now.
+Time now
 
-Date today.
+Date today
 
-Float pi.
+Float pi
+
+
 
 "And of course:"
 
