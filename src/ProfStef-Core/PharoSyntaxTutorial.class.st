@@ -165,11 +165,13 @@ PharoSyntaxTutorial >> basicTypesSymbol [
 title: 'Basic types: Symbols'
 lesson:
 '"A Symbol is a String which is guaranteed to be globally unique.
-A symbol starts with # sign.
+A symbol starts with # sign and followed by characters.
 
-There is one and only one Symbol #ProfStef. There may be several ''ProfStef'' String objects.
+For example, there is one and only one Symbol #ProfStef. Even here #ProfStef #ProfStef refer to the same unique symbol whose representation is ''ProfStef''. 
 
-(Message == returns true if the two objects are the SAME)
+There may be several ''ProfStef'' String objects.
+
+The message == returns true if the two objects are the SAME object.
 
 Try the following expression: "
 
@@ -177,9 +179,18 @@ Try the following expression: "
 
 #ProfStef asString
 
+"The following expressions returns different results. Do you guess why?"
+
 (2 asString) == (2 asString)
 
-(2 asString) asSymbol == (2 asString) asSymbol
+(2 asString asSymbol) == (2 asString asSymbol)
+
+"This is because the message asString returns a new string. So the first expression checks that two different strings are the same objects: clearly this is false.  
+
+The message asSymbol turn the receiver in an unique symbol (the same if already exists).
+So the second expression creates new strings but turns these strings into a unique symbol
+using the message asSymbol. Then it compares the symbols are they refer to exactly the same object so the results is true."
+
 
 ProfStef next.'
 ]
@@ -440,15 +451,15 @@ lesson:
 
 Remember that all messages always follow a simple left-to-right precedence rule, * without exceptions *."
 
-2 + 2 * 10.
+2 + 2 * 10
 
-2 + (2 * 10).
+2 + (2 * 10)
 
-8 - 5 / 2.
+8 - 5 / 2
 
-(8 - 5) / 2.
+(8 - 5) / 2
 
-8 - (5 / 2).
+8 - (5 / 2)
 
 ProfStef next.'
 ]
@@ -581,6 +592,36 @@ lesson:
 
 (0@0 extent: 100@200) bottomRight.
 
+
+"Are you sure that you understand how message precedence works?
+A bit... this is normal.
+
+Let us try again. 
+Do you see that some parentheses are unnecessary in the following expressions?"
+
+
+(2 asString) = (2 asString)
+
+(2 asString asSymbol) = (2 asString asSymbol)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ProfStef next.'
 ]
 
@@ -690,7 +731,7 @@ Try it on"
 
 	Time now
 
-Now you are a Print It Master!
+"Now you are a Print It Master!"
 
 ProfStef next.'
 ]
