@@ -10,10 +10,12 @@ Example
 
 Script:
 ```
-	(RBDeprecateMethodTransformation 
+| transformation |
+transformation :=  (RBDeprecateMethodTransformation 
 		deprecateMethod: #called:on: 
-		in: RBRefactoryTestDataApp 
-		using: #callFoo) asRefactoring; execute
+		in: RBClassDataForRefactoringTest 
+		using: #callFoo) generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 Before
