@@ -205,29 +205,42 @@ title: 'Blocks'
 lesson:
 '"Cascade is cool! Let''s talk about blocks.
 
-Blocks are anonymous methods that can be stored into variables and executed on demand.
+Blocks are anonymous methods that can be stored into variables, passed as method arguments and executed on demand.
 
-Blocks are delimited by square brackets: []"
+Blocks are delimited by square brackets: [].
 
-[StPlayground open].
+There is a difference between defining a block and executing a block. Let us have a look.
+Execute the following expression:
+"
 
-"does not open a Browser because the block is not executed.
+[ StPlaygroundPresenter open ]
 
-Here is a block that adds 2 to its argument (its argument is named x):"
+"It does not open a Browser because the block is defined but not executed. 
+To execute a block we should send it the message value as follows: "
 
-[:x | x+2].
 
-"We can execute a block by sending it value messages."
+[ StPlaygroundPresenter open ] value
 
-[:x | x+2] value: 5.
 
-[StPlayground open] value.
 
-[:x | x+2] value: 10.
+"
+Let us take another example. Here is a block that adds 2 to its argument (its argument is named x):"
 
-[:x :y| x + y] value:3 value:5.
+[ :x | x + 2 ]
 
-[ProfStef next] value.'
+"We can execute a block by sending the message value: because the block has one argument."
+
+[ :x | x + 2 ] value: 5
+
+
+[ :x | x + 2 ] value: 10
+
+"We can have block with two or more arguments and we will use the value:value: message as follows:"
+
+
+[ :x :y | x + y] value: 3 value: 5
+
+[ProfStef next] value'
 ]
 
 { #category : 'lessons' }
