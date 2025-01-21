@@ -13,10 +13,14 @@ PharoSyntaxTutorial >> basicTypesArray [
 	^ Lesson
 title: 'Basic types: Array'
 lesson:
-'"Pharo supports arrays (sequences of objects). Arrays can be created in different ways: Sending the nessage new to the class Array, using the literal syntax #(1 2 3), and using the dynamic syntax { 1 . 2 . 3 }
+'"Pharo supports arrays (sequences of objects). Arrays can be created in different ways: 
+- Sending the nessage new: to the class Array, 
+- Using the literal syntax #(1 2 3), and 
+- Using the dynamic syntax { 1 . 2 . 3 }
 
 Here we look at literal arrays.
-Literal arrays are created at parse time and are read-only:"
+Literal arrays are created at parse time and are read-only.
+They can only contain literal objects (objects created by the parser, it means without messages)"
 
 #(1 2 3)
 
@@ -30,6 +34,8 @@ Literal arrays are created at parse time and are read-only:"
 
 "You can modify a copy"
 #(''hello'' ''World'') copy at: 2 put: ''Pharo''; yourself
+
+
 
 ProfStef next.'
 ]
@@ -65,11 +71,31 @@ PharoSyntaxTutorial >> basicTypesDynamicArray [
 	^ Lesson
 title: 'Basic types: Dynamic Array'
 lesson:
-'"Dynamic Arrays are created at execution time:"
+'"The other syntax to define array is called Dynamic Arrays.
+Contrary to literal arrays they are created at execution time:"
+
+"The following creates an array of 6 nil elements"
+
+Array new: 6
+
+"The following two lines create the same array. On expressed as message to the class Array and one using the { } syntax."
+
+Array with: (2+3) with: (6*6)
 
 { (2+3) . (6*6) }.
 
+"Guess the result before trying and understand why you get that result"
+
 { (2+3) . (6*6) . ''hello'', '' Stef''} size.
+
+
+"Compare the two following expression results:"
+
+{  Point new setX: 100 setY: 200 }
+
+#({  Point new setX: 100 setY: 200 })
+
+
 
 { ProfStef } first next.'
 ]
