@@ -246,19 +246,24 @@ Let us take another example. Here is a block that adds 2 to its argument (its ar
 { #category : 'lessons' }
 PharoSyntaxTutorial >> blocksAssignation [
 	^ Lesson
-title: 'Block assignation'
+title: 'Block assignment'
 lesson:
 '"Blocks can be assigned to a variable then executed later.
 
-Note that |b| is the declaration of a variable named ''b'' and that '':='' assigns a value to a variable.
+Note that | b | is the declaration of a variable named ''b'' and that '':='' assigns a value to a variable.
 
 Select the three lines then Print it:"
 
-|b|
-b := [:x | x+2].
+
+| b |
+b := [ :x | x + 2 ].
 b value: 12.
 
-ProfStef next.'
+| b | 
+b := [ ProfStef next ].
+b value
+
+'
 ]
 
 { #category : 'lessons' }
@@ -266,23 +271,51 @@ PharoSyntaxTutorial >> conditionals [
 	^ Lesson
 title: 'Conditionals'
 lesson:
-'"Conditionals are just messages sent to Boolean objects"
+'"Conditionals are just messages sent to Boolean objects.
+Here is a simple conditional."
 
 1 < 2
-  ifTrue: [100]
-  ifFalse: [42].
+ 	ifTrue: [ 100 ]
+	ifFalse: [ 42 ]
 
-"Here the message is ifTrue:ifFalse:
+"Here the message is ifTrue:ifFalse: sent to a Boolean (the result of the expression 1 < 2)
 
-Try this:"
+There are several messages to express conditions: ifTrue:ifFalse: and ifFalse:ifTrue:.
+The following expression is the same as the previous one, it is handy because sometimes 
+the developer wants to stress an aspect.
 
-Transcript open.
+1 < 2
+	ifFalse: [ 42 ]
+	ifTrue: [ 100 ]
 
-3 > 10
-	ifTrue: [Transcript show: ''Maybe there''''s a bug ....'']
-	ifFalse: [Transcript show: ''No: 3 is less than 10''].
+"In addition Pharo offers the two messages ifTrue: and ifFalse:.
+The following expression returns 33."
 
-3 = 3 ifTrue: [ProfStef next].'
+1 < 10 
+	ifTrue: [  33 ]  
+
+
+"Note that the following expressions are not equivalent"
+
+| c |
+c := 0.
+(c := c + 1) < 1
+	ifFalse: [ 42 ]
+	ifTrue: [ 100 ]
+
+
+| c |
+c := 0.
+(c := c + 1) < 1
+	ifFalse: [ 42 ].
+(c := c + 1) < 1
+	ifTrue: [ 100 ]
+
+"Why? Because in the second case the condition is executed twice. While in the first one the condition is only invoked once.
+This is the same in any programming language"
+
+
+3 = 3 ifTrue: [ ProfStef next ]'
 ]
 
 { #category : 'lessons' }
