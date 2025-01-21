@@ -244,7 +244,7 @@ StRefactoringPreviewPresenter >> updateActiveScope [
 StRefactoringPreviewPresenter >> updateChanges [
 
 	changesInScope := changes select: [ :change |
-		                  activeScope includesClass: change changeClass ].
+							change isInScope: activeScope ].
 	selectedChanges := OrderedCollection withAll: changesInScope
 ]
 
