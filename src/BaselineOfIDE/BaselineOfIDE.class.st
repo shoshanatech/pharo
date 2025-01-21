@@ -72,7 +72,6 @@ BaselineOfIDE >> baseline: spec [
 
 		self load: 'Metacello' group: 'Tests' spec: spec.
 
-		spec package: 'MonticelloGUI-Tests'.
 		"Later we will load the UI of enlumineur probably here
 		"
 		spec baseline: 'Shout' with: [ spec repository: repository ].
