@@ -471,20 +471,35 @@ PharoSyntaxTutorial >> loops [
 	^ Lesson
 title: 'Loops'
 lesson:
-'"Loops are high-level collection iterators, implemented as regular methods."
+'"
+Pharo offers a large set of loops: basic loops, conditional loops, and iterators. 
+In this lesson we focus on basic loops"
 
-"Basic loops:
-  to:do:
-  to:by:do:
+"Pharo offers several basic loops:
+	timesRepeat:
+  	to:do:
+  	to:by:do:
+
+Execute the following expression 
 "
 
-1 to: 100 do: [:i | Transcript show: i asString; cr].
+Transcript open; clear.
 
-1 to: 100 by: 3 do: [:i | Transcript show: i asString; cr].
+"Then try the following expressions:"
 
-100 to: 0 by: -2 do: [:i | Transcript show: i asString; cr].
+5 timesRepeat: [  ''A'' traceCr ].
 
-1 to: 1 do: [:i | ProfStef next].'
+1 to: 100 do: [ :i | i traceCr ].
+
+1 to: 100 by: 3 do: [ :i | i traceCr ].
+
+100 to: 0 by: -2 do: [ :i | i traceCr ].
+
+
+"Then to pass to the next lesson."
+
+
+1 to: 1 do: [ :i | ProfStef next ]'
 ]
 
 { #category : 'lessons' }
