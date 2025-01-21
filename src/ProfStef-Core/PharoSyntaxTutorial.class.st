@@ -13,20 +13,23 @@ PharoSyntaxTutorial >> basicTypesArray [
 	^ Lesson
 title: 'Basic types: Array'
 lesson:
-'"Literal arrays are created at parse time and are read-only:"
+'"Pharo supports arrays (sequences of objects). Arrays can be created in different ways: Sending the nessage new to the class Array, using the literal syntax #(1 2 3), and using the dynamic syntax { 1 . 2 . 3 }
 
-#(1 2 3).
+Here we look at literal arrays.
+Literal arrays are created at parse time and are read-only:"
 
-#(1 2 3 #(4 5 6)) size.
+#(1 2 3)
 
-#(1 2 4) isEmpty.
+#(1 2 3 #(4 5 6)) size
 
-#(1 2 3) first.
+#(1 2 4) isEmpty
 
-#(''hello'' ''World'') at: 2.
+#(1 2 3) first
+
+#(''hello'' ''World'') at: 2
 
 "You can modify a copy"
-#(''hello'' ''World'') copy at: 2 put: ''Pharo''; yourself.
+#(''hello'' ''World'') copy at: 2 put: ''Pharo''; yourself
 
 ProfStef next.'
 ]
@@ -136,20 +139,23 @@ PharoSyntaxTutorial >> basicTypesSymbol [
 title: 'Basic types: Symbols'
 lesson:
 '"A Symbol is a String which is guaranteed to be globally unique.
+A symbol starts with # sign.
 
 There is one and only one Symbol #ProfStef. There may be several ''ProfStef'' String objects.
 
-(Message == returns true if the two objects are the SAME)"
+(Message == returns true if the two objects are the SAME)
 
-''ProfStef'' asSymbol.
+Try the following expression: "
 
-#ProfStef asString.
+''ProfStef'' asSymbol
 
-(2 asString) == (2 asString).
+#ProfStef asString
 
-(2 asString) asSymbol == (2 asString) asSymbol.
+(2 asString) == (2 asString)
 
-(Smalltalk globals at: #ProfStef) next.'
+(2 asString) asSymbol == (2 asString) asSymbol
+
+ProfStef next.'
 ]
 
 { #category : 'lessons' }
