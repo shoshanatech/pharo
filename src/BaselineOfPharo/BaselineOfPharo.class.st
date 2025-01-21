@@ -179,23 +179,6 @@ BaselineOfPharo class >> toploRepository [
 	^ (self externalProjectNamed: 'Toplo') repository
 ]
 
-{ #category : 'accessing - external projects' }
-BaselineOfPharo class >> welcomeBrowser [
-	<externalProject>
-	
-	^ PharoExternalProject 
-		newName: 'WelcomeBrowser' 
-		owner: 'pharo-spec' 
-		project: 'NewTools-WelcomeBrowser' 
-		version: 'main'
-]
-
-{ #category : 'repository urls' }
-BaselineOfPharo class >> welcomeBrowserRepository [
-
-	^ (self externalProjectNamed: 'WelcomeBrowser') repository
-]
-
 { #category : 'baselines' }
 BaselineOfPharo >> baseline: spec [
 

@@ -132,7 +132,6 @@ BaselineOfIDE >> baseline: spec [
 		self newTools: spec.
 		self drTests: spec.
 		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
-		self welcomeBrowser: spec.
 		
 		spec package: 'IconPacks'.
 
@@ -223,7 +222,6 @@ BaselineOfIDE >> loadIceberg [
 	self registerProject: 'Roassal'.
 	self registerProject: 'Microdown'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
-	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
 ]
 
@@ -408,11 +406,4 @@ BaselineOfIDE >> specCode: spec [
 			repository: (self classNamed: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
-]
-
-{ #category : 'baselines - dependencies' }
-BaselineOfIDE >> welcomeBrowser: spec [
-
-	spec baseline: 'WelcomeBrowser' with: [
-		spec repository: (self classNamed: #BaselineOfPharo) welcomeBrowserRepository ]
 ]
