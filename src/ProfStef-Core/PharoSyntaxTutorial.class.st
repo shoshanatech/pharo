@@ -38,19 +38,21 @@ title: 'Basic types: Characters'
 lesson:
 '"A Character can be instantiated using $ operator:"
 
-$A.
+$A
 
-$A class.
+$A class
 
-$B charCode.
+$B charCode
 
-Character cr.
+"To get special characters we send message to the Character class."
 
-Character space.
+Character cr
+
+Character space
 
 "You can print all 256 characters of the ASCII extended set:"
 
-Character allByteCharacters.
+Character allByteCharacters
 
 ProfStef next.'
 ]
@@ -420,6 +422,26 @@ ProfStef next.'
 ]
 
 { #category : 'lessons' }
+PharoSyntaxTutorial >> messageCanBeSeparatedByDot [
+	^ Lesson
+title: 'Execution in Sequence'
+lesson:
+'"You can execute multiple messages in sequence by separating them with a dot (.)"
+
+
+"Here we open an inspector on the point created by (0@0 corner: 100@200) and after we open an empty playground. Select the two following lines."
+
+(0@0 corner: 100@200) inspect.
+StPlaygroundPresenter open
+
+"Notice that the last sentence could finish by a period but this is optional since a dot is a separator,"
+
+"Notice also that you can select a single line. You can also execute an expression finishing by a period. Try to select and execute each of the previous line one by one."
+
+ProfStef next.'
+]
+
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> messageSyntaxBinary [
 	^ Lesson
 title: 'Message syntax: Binary messages'
@@ -760,6 +782,7 @@ doingVSPrinting
 printing
 inspecting
 selecting
+messageCanBeSeparatedByDot
 
 basicTypesNumbers
 basicTypesCharacters
