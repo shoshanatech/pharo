@@ -8,9 +8,8 @@ Class {
 	#instVars : [
 		'slotDisplay'
 	],
-	#category : 'Kernel-Tests-Fluid',
-	#package : 'Kernel-Tests',
-	#tag : 'Fluid'
+	#category : 'ClassDefinitionPrinters-Tests',
+	#package : 'ClassDefinitionPrinters-Tests'
 }
 
 { #category : 'running' }

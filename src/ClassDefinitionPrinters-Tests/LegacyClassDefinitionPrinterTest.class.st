@@ -1,9 +1,8 @@
 Class {
 	#name : 'LegacyClassDefinitionPrinterTest',
 	#superclass : 'CommonClassDefinitionPrinterTest',
-	#category : 'Kernel-Tests-Fluid',
-	#package : 'Kernel-Tests',
-	#tag : 'Fluid'
+	#category : 'ClassDefinitionPrinters-Tests',
+	#package : 'ClassDefinitionPrinters-Tests'
 }
 
 { #category : 'helpers' }
