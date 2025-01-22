@@ -5,8 +5,6 @@ OCCodeSnippetTest >> testMonticello [
 
 	| definition |
 
-	self flag: 'Should be an extention method in Monticello-Test, but package dependency is garbage.'.
-
 	"Force non method to be inside a method"
 	snippet isScripting ifTrue: [
 		snippet := snippet copy.
