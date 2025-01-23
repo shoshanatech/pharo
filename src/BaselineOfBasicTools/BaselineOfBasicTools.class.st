@@ -238,6 +238,8 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	 OCPatternPragmaNode deprecatedAliases:
 		 { #RBPatternPragmaNode. #ASTPatternPragmaNode }.
 
+	OCDoItVariable deprecatedAliases: { #DoItVariable }.
+
 	 CompletionSorter register.
 	 RubSmalltalkEditor completionEngineClass: CompletionEngine.
 
