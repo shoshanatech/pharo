@@ -259,6 +259,10 @@ Select the three lines then Print it:"
 b := [ :x | x + 2 ].
 b value: 12.
 
+
+"Execute the following expression to pass to the next lesson."
+
+
 | b | 
 b := [ ProfStef next ].
 b value
@@ -1007,7 +1011,6 @@ reflection
 reflectionContinued
 
 pharoEnvironment
-debugger
 
 theEnd
 )
