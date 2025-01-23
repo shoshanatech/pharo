@@ -460,7 +460,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 	| closableLabel draggableLabel maximizeLabel |
 	(aBuilder item: #FakeClose)
 		order: 1.0;
-		action: [ aBuilder model hide. SpClosedWindowListPresenter addClosedWindow: aBuilder model ];
+		action: [ aBuilder model hide. SpClosedWindowListPresenter new addClosedWindow: aBuilder model ];
 		iconName: #windowClose;
 		enabledBlock: [ aBuilder model allowedToClose ];
 		withSeparatorAfter.
