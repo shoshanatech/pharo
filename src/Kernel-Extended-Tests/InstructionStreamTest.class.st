@@ -99,7 +99,7 @@ InstructionStreamTest >> testBlockWithASuperWithoutArgumentsSendHasCorrectNumber
 { #category : 'tests' }
 InstructionStreamTest >> testNextPcAnswerNextBytecodePcInCaseOfExtension [
 
-	| stream methodToTest ir startingPc |
+	| stream methodToTest startingPc |
 	methodToTest := ClassUsedInInstructionStreamTest
 	                >> #newMethodWithALotOfLiteralsToTestExtensions.
 
