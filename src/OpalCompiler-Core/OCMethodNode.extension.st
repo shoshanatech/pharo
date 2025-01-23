@@ -9,6 +9,10 @@ OCMethodNode >> bcToASTCache [
 { #category : '*OpalCompiler-Core' }
 OCMethodNode >> bcToASTCache: anObject [
 
+	anObject ifNil: [ 
+		^ self
+			removeProperty: #bcToASTCache
+			ifAbsent: [ "Do nothing" ] ]. 
 	self propertyAt: #bcToASTCache put: anObject.
 ]
 
