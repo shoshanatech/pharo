@@ -282,7 +282,7 @@ Here is a simple conditional."
 
 There are several messages to express conditions: ifTrue:ifFalse: and ifFalse:ifTrue:.
 The following expression is the same as the previous one, it is handy because sometimes 
-the developer wants to stress an aspect.
+the developer wants to stress an aspect."
 
 1 < 2
 	ifFalse: [ 42 ]
@@ -322,19 +322,18 @@ This is the same in any programming language"
 PharoSyntaxTutorial >> debugger [
 	^ Lesson
 title: 'Debugger'
-lesson: '"The Debugger may be the most famous tool of Pharo environment. It will open as soon as an unmanaged Exception occurs."
+lesson: '"The Debugger may be the most famous tool of Pharo environment. It will open as soon as an unmanaged Exception occurs.
 
 The following code will open the debugger on the message stack."
 
-1 / 0
+PharoSyntaxTutorial new divideTwoByZero.
 
-"
-Close the debugger. 
+"Close the debugger. 
 
 Now you can also invoke a debugger by inserting a breakpoint in your code.
 There are different breakpoints but a simple one is self halt.
 
-When you execute the following expression you will get another debugger, click on the line PharoSyntaxTutorial>>divideTwoByZero and follow the instruction within the debugger itself.
+When you execute the following expression you will get another debugger, click on the line PharoSyntaxTutorial>>divideTwoByZero and follow the instruction within the debugger itself."
 
 PharoSyntaxTutorial new divideTwoByZero.'
 ]

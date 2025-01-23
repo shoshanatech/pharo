@@ -100,6 +100,11 @@ ProfStef class >> goOn: aTutorialClass [
 	^ self default goOn: aTutorialClass
 ]
 
+{ #category : 'as yet unclassified' }
+ProfStef class >> goToNextLesson [
+  self next
+]
+
 { #category : 'navigating' }
 ProfStef class >> last [
 
