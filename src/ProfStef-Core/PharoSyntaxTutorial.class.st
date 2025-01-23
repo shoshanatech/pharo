@@ -326,7 +326,7 @@ lesson: '"The Debugger may be the most famous tool of Pharo environment. It will
 
 The following code will open the debugger on the message stack."
 
-PharoSyntaxTutorial new divideTwoByZero.
+1 / 0 
 
 "Close the debugger. 
 
@@ -935,7 +935,7 @@ StPlaygroundPresenter new contents: ''1 * 2
 "When you see class name in a text. You can jump to the class by Command + clicking on it,
 Try it on"
 
-OrderedCollection, Bag and Set are Collection 
+OrderedCollection Bag Set 
 
 "Yes there is no s at Collection so that you jump to the class :)"
 
@@ -1044,8 +1044,7 @@ Stepping back using a cascade and yourself is equivalent to declare a variable, 
 	a at: 2 put: ''pharo''.
 	a
 
-So you see the cascade is quite handy.
-
+"So you see the cascade is quite handy."
 
 
 
