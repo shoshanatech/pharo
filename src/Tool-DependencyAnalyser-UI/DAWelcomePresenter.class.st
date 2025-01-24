@@ -15,9 +15,9 @@ Class {
 	#tag : 'Core'
 }
 
-{ #category : 'specs' }
-DAWelcomePresenter class >> defaultPreferredExtent [
-	^ 800@800
+{ #category : 'accessing' }
+DAWelcomePresenter class >> defaultPreferredExtent [ 
+	^ (800@800)
 ]
 
 { #category : 'world menu' }
@@ -42,11 +42,6 @@ DAWelcomePresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : 'accessing' }
-DAWelcomePresenter >> initialExtent [
-	^ (800@800)
-]
-
 { #category : 'initialization' }
 DAWelcomePresenter >> initializePresenters [
 
@@ -61,14 +56,6 @@ DAWelcomePresenter >> initializePresenters [
 		icon: (self iconNamed: #package);
 		action: [ self selectedPackages ifNotEmpty: [ self openDependencyAnalyzer ] ]
 		yourself
-]
-
-{ #category : 'initialization' }
-DAWelcomePresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter
-		title: self class title;
-		initialExtent: self initialExtent
 ]
 
 { #category : 'action' }

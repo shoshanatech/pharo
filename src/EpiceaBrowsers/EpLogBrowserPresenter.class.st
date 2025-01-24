@@ -59,6 +59,12 @@ EpLogBrowserPresenter class >> defaultLog [
 	^ EpMonitor current log
 ]
 
+{ #category : 'accessing' }
+EpLogBrowserPresenter class >> defaultPreferredExtent [
+
+	^ 550@700
+]
+
 { #category : 'instance creation' }
 EpLogBrowserPresenter class >> newWithLog: aLog [
 
@@ -580,11 +586,6 @@ EpLogBrowserPresenter >> initializeSearchPresenters [
 		disable;
 		action: [ self searchList: searchPresenter text ];
 		yourself.
-]
-
-{ #category : 'initialization' }
-EpLogBrowserPresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter initialExtent: (550 @ 700) scaledByDisplayScaleFactor
 ]
 
 { #category : 'menu - operations' }
