@@ -259,6 +259,10 @@ Select the three lines then Print it:"
 b := [ :x | x + 2 ].
 b value: 12.
 
+
+"Execute the following expression to pass to the next lesson."
+
+
 | b | 
 b := [ ProfStef next ].
 b value
@@ -282,7 +286,7 @@ Here is a simple conditional."
 
 There are several messages to express conditions: ifTrue:ifFalse: and ifFalse:ifTrue:.
 The following expression is the same as the previous one, it is handy because sometimes 
-the developer wants to stress an aspect.
+the developer wants to stress an aspect."
 
 1 < 2
 	ifFalse: [ 42 ]
@@ -322,19 +326,18 @@ This is the same in any programming language"
 PharoSyntaxTutorial >> debugger [
 	^ Lesson
 title: 'Debugger'
-lesson: '"The Debugger may be the most famous tool of Pharo environment. It will open as soon as an unmanaged Exception occurs."
+lesson: '"The Debugger may be the most famous tool of Pharo environment. It will open as soon as an unmanaged Exception occurs.
 
 The following code will open the debugger on the message stack."
 
-1 / 0
+1 / 0 
 
-"
-Close the debugger. 
+"Close the debugger. 
 
 Now you can also invoke a debugger by inserting a breakpoint in your code.
 There are different breakpoints but a simple one is self halt.
 
-When you execute the following expression you will get another debugger, click on the line PharoSyntaxTutorial>>divideTwoByZero and follow the instruction within the debugger itself.
+When you execute the following expression you will get another debugger, click on the line PharoSyntaxTutorial>>divideTwoByZero and follow the instruction within the debugger itself."
 
 PharoSyntaxTutorial new divideTwoByZero.'
 ]
@@ -936,7 +939,7 @@ StPlaygroundPresenter new contents: ''1 * 2
 "When you see class name in a text. You can jump to the class by Command + clicking on it,
 Try it on"
 
-OrderedCollection, Bag and Set are Collection 
+OrderedCollection Bag Set 
 
 "Yes there is no s at Collection so that you jump to the class :)"
 
@@ -1008,7 +1011,6 @@ reflection
 reflectionContinued
 
 pharoEnvironment
-debugger
 
 theEnd
 )
@@ -1045,8 +1047,7 @@ Stepping back using a cascade and yourself is equivalent to declare a variable, 
 	a at: 2 put: ''pharo''.
 	a
 
-So you see the cascade is quite handy.
-
+"So you see the cascade is quite handy."
 
 
 
