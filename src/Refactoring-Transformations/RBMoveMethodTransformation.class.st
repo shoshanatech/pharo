@@ -351,12 +351,6 @@ RBMoveMethodTransformation >> needsToReplaceSelfReferences [
 ]
 
 { #category : 'executing' }
-RBMoveMethodTransformation >> prepareForExecution [ 
-
-	NautilusRefactoring new refactoringOptions: self
-]
-
-{ #category : 'executing' }
 RBMoveMethodTransformation >> privateTransform [
 	self
 		abstractVariables;
