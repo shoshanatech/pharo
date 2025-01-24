@@ -31,6 +31,12 @@ CoverageDemoPresenter class >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'accessing' }
+CoverageDemoPresenter class >> defaultPreferredExtent [
+
+	^ 700 @ 600
+]
+
 { #category : 'examples' }
 CoverageDemoPresenter class >> exampleIfTrueIfFalse [
 	| t |
@@ -48,11 +54,6 @@ CoverageDemoPresenter class >> exampleMethod [
 CoverageDemoPresenter class >> open [
 	<script>
 	self new open
-]
-
-{ #category : 'specs' }
-CoverageDemoPresenter class >> title [
-	^'Coverage Demo'
 ]
 
 { #category : 'adding' }
