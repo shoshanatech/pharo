@@ -37,15 +37,6 @@ StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring [
 ]
 
 { #category : 'instance creation' }
-StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring scopes: scopes [
-	self deprecated: 'Use `for:scopes:` instead.' on: '2024-01-20' in: 'Pharo13' transformWith: '`@receiver changes: `@arg1 scopes: `@arg2' -> '`@receiver for: `@arg1 scopes: `@arg2'.
-
-	^ self new
-		  changesFrom: aCompositeRefactoring scopes: scopes;
-		  yourself
-]
-
-{ #category : 'instance creation' }
 StRefactoringPreviewPresenter class >> for: aCompositeRefactoring [
 	
 	^ self new
@@ -55,6 +46,7 @@ StRefactoringPreviewPresenter class >> for: aCompositeRefactoring [
 
 { #category : 'instance creation' }
 StRefactoringPreviewPresenter class >> for: aCompositeRefactoring scopes: scopes [
+	self deprecated: 'Use `for:scopes:` instead.' on: '2024-01-20' in: 'Pharo13' transformWith: '`@receiver changes: `@arg1 scopes: `@arg2' -> '`@receiver for: `@arg1 scopes: `@arg2'.
 
 	^ self new
 		  changesFrom: aCompositeRefactoring scopes: scopes;
