@@ -15,6 +15,11 @@ Class {
 	#tag : 'Core'
 }
 
+{ #category : 'specs' }
+DAWelcomePresenter class >> defaultPreferredExtent [
+	^ 800@800
+]
+
 { #category : 'world menu' }
 DAWelcomePresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
@@ -26,12 +31,6 @@ DAWelcomePresenter class >> menuCommandOn: aBuilder [
 		iconName: #package;
 		help: 'Analyze dependencies between different packages in the image.';
 		action: [ self new open ]
-]
-
-{ #category : 'specs' }
-DAWelcomePresenter class >> title [
-
-	^ 'Package Dependencies Browser'
 ]
 
 { #category : 'layout' }
@@ -86,4 +85,10 @@ DAWelcomePresenter >> selectedPackageNames [
 { #category : 'accessing' }
 DAWelcomePresenter >> selectedPackages [
 	^ choosePresenter chosenItems
+]
+
+{ #category : 'accessing' }
+DAWelcomePresenter >> windowTitle [
+
+	^ 'Package Dependencies Browser'
 ]
