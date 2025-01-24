@@ -33,19 +33,19 @@ Internal Representation and Key Implementation Points.
 	doItContext:		<Context>
 "
 Class {
-	#name : 'DoItVariable',
+	#name : 'OCDoItVariable',
 	#superclass : 'Variable',
 	#instVars : [
 		'actualVariable',
 		'doItContext'
 	],
-	#category : 'Kernel-CodeModel-Variables',
-	#package : 'Kernel-CodeModel',
-	#tag : 'Variables'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
 { #category : 'instance creation' }
-DoItVariable class >> fromContext: aContext variable: aVariable [
+OCDoItVariable class >> fromContext: aContext variable: aVariable [
 
 	^self new
 		doItContext: aContext;
@@ -53,40 +53,40 @@ DoItVariable class >> fromContext: aContext variable: aVariable [
 ]
 
 { #category : 'instance creation' }
-DoItVariable class >> named: aString fromContext: aContext [
+OCDoItVariable class >> named: aString fromContext: aContext [
 	^self
 		fromContext: aContext
 		variable: (aContext lookupVar: aString)
 ]
 
 { #category : 'accessing' }
-DoItVariable >> actualVariable [
+OCDoItVariable >> actualVariable [
 	^ actualVariable
 ]
 
 { #category : 'accessing' }
-DoItVariable >> actualVariable: aVariable [
+OCDoItVariable >> actualVariable: aVariable [
 	actualVariable := aVariable.
 	name := actualVariable name
 ]
 
 { #category : 'testing' }
-DoItVariable >> allowsShadowing [
+OCDoItVariable >> allowsShadowing [
 	^true
 ]
 
 { #category : 'accessing' }
-DoItVariable >> doItContext [
+OCDoItVariable >> doItContext [
 	^ doItContext
 ]
 
 { #category : 'accessing' }
-DoItVariable >> doItContext: anObject [
+OCDoItVariable >> doItContext: anObject [
 	doItContext := anObject
 ]
 
 { #category : 'code generation' }
-DoItVariable >> emitStore: aMethodBuilder [
+OCDoItVariable >> emitStore: aMethodBuilder [
 	"generate bytecode to call the reflective write method of the Slot"
 	| tempName |
 	tempName := '0slotTempForStackManipulation'.
@@ -100,94 +100,94 @@ DoItVariable >> emitStore: aMethodBuilder [
 ]
 
 { #category : 'code generation' }
-DoItVariable >> emitValue: aMethodBuilder [
+OCDoItVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder
 		pushLiteral: self;
 		send: #read
 ]
 
 { #category : 'testing' }
-DoItVariable >> isArgumentVariable [
+OCDoItVariable >> isArgumentVariable [
 	^actualVariable isArgumentVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isClassVariable [
+OCDoItVariable >> isClassVariable [
 	^actualVariable isClassVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isGlobalVariable [
+OCDoItVariable >> isGlobalVariable [
 	^actualVariable isGlobalVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isInstanceVariable [
+OCDoItVariable >> isInstanceVariable [
 	^actualVariable isInstanceVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isLiteralVariable [
+OCDoItVariable >> isLiteralVariable [
 	^actualVariable isLiteralVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isLocalVariable [
+OCDoItVariable >> isLocalVariable [
 	^actualVariable isLocalVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isPseudoVariable [
+OCDoItVariable >> isPseudoVariable [
 	^actualVariable isPseudoVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isSelfVariable [
+OCDoItVariable >> isSelfVariable [
 	^actualVariable isSelfVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isSuperVariable [
+OCDoItVariable >> isSuperVariable [
 	^actualVariable isSuperVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isTempVariable [
+OCDoItVariable >> isTempVariable [
 	^actualVariable isTempVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isThisContextVariable [
+OCDoItVariable >> isThisContextVariable [
 	^actualVariable isThisContextVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isThisProcessVariable [
+OCDoItVariable >> isThisProcessVariable [
 	^actualVariable isThisProcessVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isUndeclaredVariable [
+OCDoItVariable >> isUndeclaredVariable [
 	^actualVariable isUndeclaredVariable
 ]
 
 { #category : 'testing' }
-DoItVariable >> isUninitialized [
+OCDoItVariable >> isUninitialized [
 	^actualVariable isUninitialized
 ]
 
 { #category : 'testing' }
-DoItVariable >> isWorkspaceVariable [
+OCDoItVariable >> isWorkspaceVariable [
 	^actualVariable isWorkspaceVariable
 ]
 
 { #category : 'accessing' }
-DoItVariable >> key [
+OCDoItVariable >> key [
 	^self name
 ]
 
 { #category : 'printing' }
-DoItVariable >> printOn: aStream [
+OCDoItVariable >> printOn: aStream [
 	super printOn: aStream.
 
 	aStream nextPut: $(.
@@ -196,31 +196,31 @@ DoItVariable >> printOn: aStream [
 ]
 
 { #category : 'meta-object-protocol' }
-DoItVariable >> read [
+OCDoItVariable >> read [
 	^actualVariable readInContext: doItContext
 ]
 
 { #category : 'debugging' }
-DoItVariable >> readInContext: aContext [
+OCDoItVariable >> readInContext: aContext [
 	^self read
 ]
 
 { #category : 'accessing' }
-DoItVariable >> scope [
+OCDoItVariable >> scope [
 	^ actualVariable scope
 ]
 
 { #category : 'queries' }
-DoItVariable >> usingMethods [
+OCDoItVariable >> usingMethods [
 	^actualVariable usingMethods
 ]
 
 { #category : 'meta-object-protocol' }
-DoItVariable >> write: aValue [
+OCDoItVariable >> write: aValue [
 	^actualVariable write: aValue inContext: doItContext
 ]
 
 { #category : 'debugging' }
-DoItVariable >> write: aValue inContext: aContext [
+OCDoItVariable >> write: aValue inContext: aContext [
 	self write: aValue
 ]
