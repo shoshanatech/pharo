@@ -75,6 +75,7 @@ BaselineOfBasicTools >> baseline: spec [
 
 		spec package: 'Kernel-CodeModel-Tests'.
 		spec package: 'Monticello-Tests'.
+		spec package: 'MonticelloMocks'.
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'ProfStef-Core'.
