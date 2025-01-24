@@ -1,5 +1,5 @@
 Class {
-	#name : 'IconPacksFetchPresenter',
+	#name : 'SpIconPacksFetchPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'fetchButton',
@@ -23,13 +23,19 @@ Class {
 }
 
 { #category : 'accessing' }
-IconPacksFetchPresenter class >> descriptionText [
+SpIconPacksFetchPresenter class >> defaultPreferredExtent [
+
+	^ 950 @ 650 
+]
+
+{ #category : 'accessing' }
+SpIconPacksFetchPresenter class >> descriptionText [
 
 	^ 'UI tool to query, download and set Icon Packs in the system'
 ]
 
 { #category : 'accessing' }
-IconPacksFetchPresenter class >> fetchJsonList [
+SpIconPacksFetchPresenter class >> fetchJsonList [
 
 	^ ZnClient new
 			get: 'https://api.github.com/repos/pharo-project/pharo-icon-packs/branches';
@@ -37,7 +43,7 @@ IconPacksFetchPresenter class >> fetchJsonList [
 ]
 
 { #category : 'accessing' }
-IconPacksFetchPresenter class >> jsonList [
+SpIconPacksFetchPresenter class >> jsonList [
 	"Answer a <String> representing a JSON with the icon-packs meta-information obtained from remote repository"
 
 	^ JSONList
@@ -45,14 +51,14 @@ IconPacksFetchPresenter class >> jsonList [
 ]
 
 { #category : 'accessing' }
-IconPacksFetchPresenter class >> jsonList: aJSONString [
+SpIconPacksFetchPresenter class >> jsonList: aJSONString [
 	"Set a <String> representing a JSON with the icon-packs meta-information obtained from remote repository"
 
 	JSONList := aJSONString
 ]
 
 { #category : 'world menu' }
-IconPacksFetchPresenter class >> menuCommandOn: aBuilder [
+SpIconPacksFetchPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: 'Icons Pack Manager')
@@ -64,21 +70,21 @@ IconPacksFetchPresenter class >> menuCommandOn: aBuilder [
 ]
 
 { #category : 'instance creation' }
-IconPacksFetchPresenter class >> open [
+SpIconPacksFetchPresenter class >> open [
 	<script>
 
 	^ self new open
 ]
 
 { #category : 'class initialization' }
-IconPacksFetchPresenter class >> reset [
+SpIconPacksFetchPresenter class >> reset [
 	<script>
 
 	JSONList := nil.
 ]
 
 { #category : 'settings' }
-IconPacksFetchPresenter class >> settingsOn: aBuilder [
+SpIconPacksFetchPresenter class >> settingsOn: aBuilder [
 	<systemsettings>
 
 	(aBuilder button: #open)
@@ -90,7 +96,7 @@ IconPacksFetchPresenter class >> settingsOn: aBuilder [
 ]
 
 { #category : 'private' }
-IconPacksFetchPresenter >> checkAPILimitExceeded: jsonResponse [
+SpIconPacksFetchPresenter >> checkAPILimitExceeded: jsonResponse [
 	"Private - GitHub answer a JSON dictionary if there is any API error. Check jsonResponse and raise an <Error> if there was a API rate limit problem"
 	
 	(jsonResponse includesKey: 'message')
@@ -102,7 +108,7 @@ IconPacksFetchPresenter >> checkAPILimitExceeded: jsonResponse [
 ]
 
 { #category : 'layout' }
-IconPacksFetchPresenter >> defaultLayout [
+SpIconPacksFetchPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom 
 		spacing: 5;
@@ -134,14 +140,14 @@ IconPacksFetchPresenter >> defaultLayout [
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> downloadedIconPacksNames [
+SpIconPacksFetchPresenter >> downloadedIconPacksNames [
 	"Answer a <Collection> of <ThemeIcons> each one representing a downloaded Icon Pack"
 
 	^ ThemeIcons availablePacks
 ]
 
 { #category : 'accessing' }
-IconPacksFetchPresenter >> fetchPacks [
+SpIconPacksFetchPresenter >> fetchPacks [
 	"Retrieve all packs available from repository. This fetch the **names** of the icon packs, not the icon resources. Answer a <Collection> of <ThemeIcon>"
 
 	| jsonResponse fetchedJSONList |
@@ -167,13 +173,13 @@ IconPacksFetchPresenter >> fetchPacks [
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> fetchSelectedIconPack: aThemeIcons [
+SpIconPacksFetchPresenter >> fetchSelectedIconPack: aThemeIcons [
 
 	self updateLogPresenter: (self newLogEntryFromZipFile: aThemeIcons downloadFromUrl).
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> fetchSelectedIconPacks [
+SpIconPacksFetchPresenter >> fetchSelectedIconPacks [
 	"Callback to make a remote request to download available icon packs"
 
 	self selectedIconPacks 
@@ -187,7 +193,7 @@ IconPacksFetchPresenter >> fetchSelectedIconPacks [
 ]
 
 { #category : 'accessing' }
-IconPacksFetchPresenter >> fetchedIconPacks [
+SpIconPacksFetchPresenter >> fetchedIconPacks [
 	"Answer a <Collection> of <ThemeIcons>"
 	
 	^ fetchedIconPacks
@@ -195,7 +201,7 @@ IconPacksFetchPresenter >> fetchedIconPacks [
 ]
 
 { #category : 'private' }
-IconPacksFetchPresenter >> iconDimensions: aForm [
+SpIconPacksFetchPresenter >> iconDimensions: aForm [
 
 	^ String streamContents: [ : stream |
 		stream 
@@ -208,7 +214,7 @@ IconPacksFetchPresenter >> iconDimensions: aForm [
 ]
 
 { #category : 'initialization' }
-IconPacksFetchPresenter >> initializeButtonsPresenters [
+SpIconPacksFetchPresenter >> initializeButtonsPresenters [
 
 	applyButton := self newButton
 		label: 'Set Current';
@@ -228,7 +234,7 @@ IconPacksFetchPresenter >> initializeButtonsPresenters [
 ]
 
 { #category : 'initialization' }
-IconPacksFetchPresenter >> initializeIconPacksButtonsPresenters [
+SpIconPacksFetchPresenter >> initializeIconPacksButtonsPresenters [
 
 	updateListButton := self newButton
 		label: 'Update';
@@ -251,7 +257,7 @@ IconPacksFetchPresenter >> initializeIconPacksButtonsPresenters [
 ]
 
 { #category : 'initialization' }
-IconPacksFetchPresenter >> initializeIconPacksPresenters [
+SpIconPacksFetchPresenter >> initializeIconPacksPresenters [
 
 	repositoryListIconPacksPresenter := (self instantiate: SpFilteringSelectableListPresenter)
 		"headerTitle: 'Remote Icon Packs';"
@@ -270,7 +276,7 @@ IconPacksFetchPresenter >> initializeIconPacksPresenters [
 ]
 
 { #category : 'initialization' }
-IconPacksFetchPresenter >> initializeIconTablePresenter [
+SpIconPacksFetchPresenter >> initializeIconTablePresenter [
 
 	iconsTablePresenter := self newTable
 		addColumn: (SpImageTableColumn new 
@@ -294,13 +300,13 @@ IconPacksFetchPresenter >> initializeIconTablePresenter [
 ]
 
 { #category : 'initialization' }
-IconPacksFetchPresenter >> initializeLogPresenter [
+SpIconPacksFetchPresenter >> initializeLogPresenter [
 
 	logPresenter := self newList
 ]
 
 { #category : 'initialization' }
-IconPacksFetchPresenter >> initializePresenters [ 
+SpIconPacksFetchPresenter >> initializePresenters [ 
 
 	self 
 		initializeSearchPresenters;
@@ -312,7 +318,7 @@ IconPacksFetchPresenter >> initializePresenters [
 ]
 
 { #category : 'initialization' }
-IconPacksFetchPresenter >> initializeSearchPresenters [
+SpIconPacksFetchPresenter >> initializeSearchPresenters [
 
 	searchIconTextPresenter := self newSearchInput 
 		placeholder: 'Search icon by name';
@@ -326,42 +332,39 @@ IconPacksFetchPresenter >> initializeSearchPresenters [
 ]
 
 { #category : 'initialization' }
-IconPacksFetchPresenter >> initializeWindow: aWindowPresenter [
+SpIconPacksFetchPresenter >> initializeWindow: aWindowPresenter [
+
 	super initializeWindow: aWindowPresenter.
-	
-	aWindowPresenter 
-		title: 'Icon Packs Manager';
-		initialExtent: (950 @ 650) scaledByDisplayScaleFactor;
-		centered
+	aWindowPresenter centered
 ]
 
 { #category : 'accessing' }
-IconPacksFetchPresenter >> installedFetchPacks [
+SpIconPacksFetchPresenter >> installedFetchPacks [
 	"Answer a <Collection> with the receiver's icon packs which are installed in the system"
 
 	^ self fetchedIconPacks select: [ : iconPack | iconPack hasIcons ]
 ]
 
 { #category : 'accessing' }
-IconPacksFetchPresenter >> jsonList [
+SpIconPacksFetchPresenter >> jsonList [
 	"Answer a <String> representing a JSON with the icon-packs meta-information obtained from remote repository"
 	
 	^ self class jsonList
 ]
 
 { #category : 'accessing' }
-IconPacksFetchPresenter >> jsonList: aJSONString [
+SpIconPacksFetchPresenter >> jsonList: aJSONString [
 
 	self class jsonList: aJSONString
 ]
 
 { #category : 'accessing' }
-IconPacksFetchPresenter >> logPresenter [
+SpIconPacksFetchPresenter >> logPresenter [
 	^ logPresenter
 ]
 
 { #category : 'private' }
-IconPacksFetchPresenter >> newLogEntryFromThemeIcons: aThemeIcons [
+SpIconPacksFetchPresenter >> newLogEntryFromThemeIcons: aThemeIcons [
 
 	^ String streamContents: [ : stream |
 		stream 
@@ -377,7 +380,7 @@ IconPacksFetchPresenter >> newLogEntryFromThemeIcons: aThemeIcons [
 ]
 
 { #category : 'private' }
-IconPacksFetchPresenter >> newLogEntryFromZipFile: aFileLocator [ 
+SpIconPacksFetchPresenter >> newLogEntryFromZipFile: aFileLocator [ 
 	"Answer a <String> with aFileLocator information for a log reporter"
 
 	^ aFileLocator isZipFile 
@@ -391,7 +394,7 @@ IconPacksFetchPresenter >> newLogEntryFromZipFile: aFileLocator [
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> searchIcon: aString [ 
+SpIconPacksFetchPresenter >> searchIcon: aString [ 
 	"Update the receiver's icon entries with items matching aString"
 
 	iconsTablePresenter items: (self searchedIconMatches: aString) reversed.
@@ -399,7 +402,7 @@ IconPacksFetchPresenter >> searchIcon: aString [
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> searchedIconMatches: aString [ 
+SpIconPacksFetchPresenter >> searchedIconMatches: aString [ 
 	"If there are filters applied, then search aString in the subset of the filtered entries, otherwise search in the cached log entries"
 	
 	^ iconsTablePresenter items
@@ -409,14 +412,14 @@ IconPacksFetchPresenter >> searchedIconMatches: aString [
 ]
 
 { #category : 'accessing' }
-IconPacksFetchPresenter >> selectedIconPacks [ 
+SpIconPacksFetchPresenter >> selectedIconPacks [ 
 	"Answer a <Collection> of <ThemeIcons> found in the repository"
 	
 	^ repositoryListIconPacksPresenter selectedItems
 ]
 
 { #category : 'initialization' }
-IconPacksFetchPresenter >> setCurrentIconPack [
+SpIconPacksFetchPresenter >> setCurrentIconPack [
 	
 	| selectedIconsPack |
 
@@ -429,20 +432,20 @@ IconPacksFetchPresenter >> setCurrentIconPack [
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> sortedIconsList: iconsCollection [
+SpIconPacksFetchPresenter >> sortedIconsList: iconsCollection [
 
 	^ iconsCollection associations asSortedCollection
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> updateDownloadedIconPacks [
+SpIconPacksFetchPresenter >> updateDownloadedIconPacks [
 
 	availableIconPacksPresenter 
 		items: self downloadedIconPacksNames
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> updateIconsTable: aThemeIcons [
+SpIconPacksFetchPresenter >> updateIconsTable: aThemeIcons [
 
 	aThemeIcons hasIcons
 		ifFalse: [ aThemeIcons loadIconsFromUrl ].
@@ -453,7 +456,7 @@ IconPacksFetchPresenter >> updateIconsTable: aThemeIcons [
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> updateLogPresenter: aString [
+SpIconPacksFetchPresenter >> updateLogPresenter: aString [
 	"Private - Write aString to the receiver's log presenter pane"
 
 	| logItems newLogItems |
@@ -463,7 +466,7 @@ IconPacksFetchPresenter >> updateLogPresenter: aString [
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> updateSearch: aString [
+SpIconPacksFetchPresenter >> updateSearch: aString [
 
 	iconsTablePresenter items: (self sortedIconsList: availableIconPacksPresenter selectedItem icons).
 	aString 
@@ -473,7 +476,7 @@ IconPacksFetchPresenter >> updateSearch: aString [
 ]
 
 { #category : 'callbacks' }
-IconPacksFetchPresenter >> updateSelectedIconPack: anIconPack [
+SpIconPacksFetchPresenter >> updateSelectedIconPack: anIconPack [
 
 	anIconPack 
 		ifNotNil: [ 
@@ -482,4 +485,9 @@ IconPacksFetchPresenter >> updateSelectedIconPack: anIconPack [
 		ifNil: [ 
 			applyButton disable ]
 
+]
+
+{ #category : 'initialization' }
+SpIconPacksFetchPresenter >> windowTitle [ 
+	^ 'Icon Packs Manager'
 ]
