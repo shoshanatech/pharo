@@ -10,9 +10,8 @@ Class {
 		'callsite',
 		'position'
 	],
-	#category : 'HeuristicCompletion-Model-Benchmarks',
-	#package : 'HeuristicCompletion-Model',
-	#tag : 'Benchmarks'
+	#category : 'HeuristicCompletion-Benchmarks',
+	#package : 'HeuristicCompletion-Benchmarks'
 }
 
 { #category : 'accessing' }
