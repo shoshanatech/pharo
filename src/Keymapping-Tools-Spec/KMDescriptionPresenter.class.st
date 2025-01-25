@@ -15,6 +15,12 @@ Class {
 	#package : 'Keymapping-Tools-Spec'
 }
 
+{ #category : 'accessing' }
+KMDescriptionPresenter class >> defaultPreferredExtent [
+
+	 ^ 900 @ 650
+]
+
 { #category : 'instance creation' }
 KMDescriptionPresenter class >> descriptionText [
 
@@ -181,13 +187,6 @@ KMDescriptionPresenter >> initializeShortcutList [
 ]
 
 { #category : 'initialization' }
-KMDescriptionPresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter
-		title: 'Shortcuts Editor';
-		initialExtent: 900 @ 650
-]
-
-{ #category : 'initialization' }
 KMDescriptionPresenter >> keymapsAtCategory: aKMCategoryOrKMCategoryItemPresenter [
 	"Answer a <Collection> of keymaps "
 
@@ -262,4 +261,9 @@ KMDescriptionPresenter >> updateCodePresenter: actionBlock [
 						  selectedAction sourceNode sourceInterval last + 1);
 				 highlightColor: self highlightColor;
 				 yourself) ]
+]
+
+{ #category : 'initialization' }
+KMDescriptionPresenter >> windowTitle [ 
+	^ 'Shortcuts Editor'
 ]
