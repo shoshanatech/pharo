@@ -76,6 +76,7 @@ WatchesWindowPresenter >> initializePresenters [
 { #category : 'initialization' }
 WatchesWindowPresenter >> initializeWindow: aWindowPresenter [
 
+	super initializeWindow: aWindowPresenter. 
 	aWindowPresenter whenOpenedDo: [ self startService ].
 	aWindowPresenter whenClosedDo: [ self stopService ].
 ]
