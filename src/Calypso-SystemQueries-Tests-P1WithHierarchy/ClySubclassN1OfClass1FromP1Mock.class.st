@@ -35,10 +35,6 @@ ClySubclassN1OfClass1FromP1Mock >> subclassSameVar [
 ]
 
 { #category : 'tag1' }
-ClySubclassN1OfClass1FromP1Mock >> tag1Method1 [
-]
-
-{ #category : 'tag1' }
 ClySubclassN1OfClass1FromP1Mock >> tag1Method2 [
 ]
 

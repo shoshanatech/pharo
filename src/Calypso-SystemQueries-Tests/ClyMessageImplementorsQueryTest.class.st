@@ -10,10 +10,6 @@ Class {
 ClyMessageImplementorsQueryTest class >> clyMessageImplementor1 [
 ]
 
-{ #category : 'methods for tests' }
-ClyMessageImplementorsQueryTest >> clyMessageImplementor1 [
-]
-
 { #category : 'running' }
 ClyMessageImplementorsQueryTest >> createQuery [
 	^ ClyMessageImplementorsQuery
