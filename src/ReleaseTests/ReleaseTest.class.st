@@ -318,8 +318,8 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 	methods := SystemNavigation new allMethods reject: [ :method | method isFromTrait ].
 
 	methods := methods select: [ :method | method hasEquivalentMethodInSuperclass ].
-
-	self assert: methods size <= 48
+	self halt.
+	self assert: methods size <= 42
 ]
 
 { #category : 'tests - variables' }
