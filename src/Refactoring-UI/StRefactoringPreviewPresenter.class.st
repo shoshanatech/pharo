@@ -43,12 +43,6 @@ StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring scopes: sc
 		  yourself
 ]
 
-{ #category : 'specs' }
-StRefactoringPreviewPresenter class >> defaultPreferredExtent [ 
-
-	^ 700 @ 500
-]
-
 { #category : 'action' }
 StRefactoringPreviewPresenter >> accept [
 	
