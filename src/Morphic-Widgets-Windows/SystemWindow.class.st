@@ -458,54 +458,45 @@ SystemWindow class >> windowMenuOn: aBuilder [
 
 	<windowMenu>
 	| closableLabel draggableLabel maximizeLabel |
-	(aBuilder item: #FakeClose)
-		order: 1.0;
-		action: [ aBuilder model hide. SpClosedWindowListPresenter new addClosedWindow: aBuilder model ];
-		iconName: #windowClose;
-		enabledBlock: [ aBuilder model allowedToClose ];
-		withSeparatorAfter.
-			(aBuilder item: #Close)
+	
+	(aBuilder item: #Close)
 		order: 1.0;
 		action: [ aBuilder model closeBoxHit ];
 		iconName: #windowClose;
-		enabledBlock: [ aBuilder model allowedToClose ];
-		withSeparatorAfter.
+		enabledBlock: [ aBuilder model allowedToClose ].
 	(aBuilder item: #About)
 		action: [ aBuilder model showAbout ];
 		iconName: #smallHelp;
 		withSeparatorAfter.
-	(aBuilder item: #'Change title')
-		action: [ aBuilder model relabel ].
+	(aBuilder item: #'Change title') action: [ aBuilder model relabel ].
 	(aBuilder item: #'Copy title')
 		action: [ aBuilder model copyTitle ];
 		withSeparatorAfter.
-	(aBuilder item: #'Send to back')
-		action: [ aBuilder model sendToBack ].
+	(aBuilder item: #'Send to back') action: [ aBuilder model sendToBack ].
 	(aBuilder item: #'Make next-to-topmost')
 		action: [ aBuilder model makeSecondTopmost ];
 		withSeparatorAfter.
-	(aBuilder item: #'Create window group')
-		action: [ aBuilder model createWindowGroup ].
+	(aBuilder item: #'Create window group') action: [
+		aBuilder model createWindowGroup ].
 	(aBuilder item: #'Open as external window')
 		action: [ aBuilder model openAsExternalWindow ];
 		withSeparatorAfter.
 	closableLabel := aBuilder model mustNotClose
-		ifFalse: [ #'Make unclosable' ]
-		ifTrue: [ #'Make closable' ].
-	(aBuilder item: closableLabel)
-		action: [
-			(closableLabel = #'Make unclosable')
-				ifTrue: [ aBuilder model makeUnclosable ]
-				ifFalse:[ aBuilder model makeClosable] ].
+		                 ifFalse: [ #'Make unclosable' ]
+		                 ifTrue: [ #'Make closable' ].
+	(aBuilder item: closableLabel) action: [
+		closableLabel = #'Make unclosable'
+			ifTrue: [ aBuilder model makeUnclosable ]
+			ifFalse: [ aBuilder model makeClosable ] ].
 	draggableLabel := aBuilder model isSticky
-		ifTrue: [ #'Make draggable' ]
-		ifFalse: [ #'Make undraggable' ].
+		                  ifTrue: [ #'Make draggable' ]
+		                  ifFalse: [ #'Make undraggable' ].
 	(aBuilder item: draggableLabel)
 		action: [ aBuilder model toggleStickiness ];
 		withSeparatorAfter.
 	maximizeLabel := aBuilder model isMaximized
-		ifTrue: [ #Restore ]
-		ifFalse: [ #Maximize ].
+		                 ifTrue: [ #Restore ]
+		                 ifFalse: [ #Maximize ].
 	(aBuilder item: maximizeLabel)
 		action: [ aBuilder model expandBoxHit ];
 		iconName: #windowMaximizeForm
@@ -929,11 +920,12 @@ SystemWindow >> deleteDiscardingChanges [
 				releaseActionMap ].
 	model := nil.
 	SystemWindow noteTopWindowIn: thisWorld.
+	
 	announcement := WindowClosed new
 		window: self;
 		yourself.
 	self announce: announcement.
-	self currentWorld announcer announce: announcement
+
 ]
 
 { #category : 'menu building' }

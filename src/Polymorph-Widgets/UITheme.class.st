@@ -1194,12 +1194,16 @@ UITheme >> createBoxOfSize: finalSizeInteger color: aColor [
 UITheme >> createCloseBoxFor: aSystemWindow [
 	"Answer a button for closing the window."
 
+	| announcement |
 	^ (self
 		   newCloseControlIn: aSystemWindow
 		   for: aSystemWindow
-		   action: [ 
+		   action: [
 			   aSystemWindow hide.
-			   SpClosedWindowListPresenter new addClosedWindow: aSystemWindow ]
+			   announcement := WindowClosed new
+				                   window: aSystemWindow;
+				                   yourself.
+			   self currentWorld announcer announce: announcement ]
 		   help: 'Close this window' translated) extent:
 		  aSystemWindow boxExtent
 ]
