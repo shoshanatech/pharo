@@ -77,7 +77,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'ClassDefinitionPrinters-Tests'.
 		spec package: 'Kernel-CodeModel-Tests'.
 		spec package: 'Monticello-Tests'.
-		spec package: 'MonticelloGUI-Tests'.
+		spec package: 'MonticelloMocks'.
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'ProfStef-Core'.
@@ -240,6 +240,8 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 		 { #RBPatternVariableNode. #ASTPatternVariableNode }.
 	 OCPatternPragmaNode deprecatedAliases:
 		 { #RBPatternPragmaNode. #ASTPatternPragmaNode }.
+
+	OCDoItVariable deprecatedAliases: { #DoItVariable }.
 
 	 CompletionSorter register.
 	 RubSmalltalkEditor completionEngineClass: CompletionEngine.

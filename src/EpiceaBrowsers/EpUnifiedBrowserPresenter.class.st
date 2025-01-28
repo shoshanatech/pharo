@@ -18,6 +18,12 @@ Class {
 	#tag : 'UI-Unified'
 }
 
+{ #category : 'accessing' }
+EpUnifiedBrowserPresenter class >> defaultPreferredExtent [
+
+	^ (950 @ 650)
+]
+
 { #category : 'instance creation' }
 EpUnifiedBrowserPresenter class >> open [
 
@@ -143,9 +149,8 @@ EpUnifiedBrowserPresenter >> initializeToolbar [
 { #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializeWindow: aWindowPresenter [
 
+	super initializeWindow: aWindowPresenter.	
 	aWindowPresenter
-		title: 'Epicea - Code Changes';
-		initialExtent: (950 @ 650) scaledByDisplayScaleFactor;
 		whenClosedDo: [ self updatesAnnouncer unsubscribe: self ]
 ]
 
@@ -208,4 +213,10 @@ EpUnifiedBrowserPresenter >> selectDirectory [
 { #category : 'initialization' }
 EpUnifiedBrowserPresenter >> updatesAnnouncer [
 	^ EpMonitor current sessionStore announcer
+]
+
+{ #category : 'initialization' }
+EpUnifiedBrowserPresenter >> windowTitle [
+	^  'Epicea - Code Changes'
+		
 ]

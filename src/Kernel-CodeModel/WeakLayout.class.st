@@ -35,11 +35,6 @@ WeakLayout >> instanceSpecification [
 ]
 
 { #category : 'testing' }
-WeakLayout >> isVariable [
-	^ true
-]
-
-{ #category : 'testing' }
 WeakLayout >> isWeak [
 	^ true
 ]

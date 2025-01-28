@@ -317,9 +317,3 @@ DrTests >> updateWithResults: results [
 	pluginResult := results.
 	pluginPresenter updateWithResults: results
 ]
-
-{ #category : 'TOREMOVE' }
-DrTests >> windowIcon [
-	
-	^ self application iconNamed: #testRunner
-]

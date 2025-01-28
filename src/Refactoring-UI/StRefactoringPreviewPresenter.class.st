@@ -43,11 +43,6 @@ StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring scopes: sc
 		  yourself
 ]
 
-{ #category : 'specs' }
-StRefactoringPreviewPresenter class >> title [
-	^ 'Refactoring changes'
-]
-
 { #category : 'action' }
 StRefactoringPreviewPresenter >> accept [
 	
@@ -196,14 +191,6 @@ StRefactoringPreviewPresenter >> initializePresenters [
 		add: buttonCancel
 ]
 
-{ #category : 'initialization' }
-StRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter
-		title: self title;
-		initialExtent: 700 @ 500
-]
-
 { #category : 'action' }
 StRefactoringPreviewPresenter >> performChanges [
 	"the following behavior should not be kept in the UI. 
@@ -254,4 +241,10 @@ StRefactoringPreviewPresenter >> updateTablePresenter [
 
 	table items: changesInScope.
 	table items ifNotEmpty: [ table selectIndex: 1 ]
+]
+
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter >> windowTitle [ 
+	
+	^ 'Refactoring changes'
 ]
