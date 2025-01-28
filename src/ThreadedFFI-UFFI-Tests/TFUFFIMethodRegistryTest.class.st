@@ -10,9 +10,9 @@ TFUFFIMethodRegistryTest >> testRegistryDoesNotRestoreUninstalledMethods [
 
 	"Call the method to force installation"
 	| ffiMethod |
-	TFUFFITestClassWithTrait uniqueInstance pidfortest.
+	TFUFFITestClassWithTrait uniqueInstance shortCallout.
 	
-	ffiMethod := TFUFFITestClassWithTrait >> #pidfortest.
+	ffiMethod := TFUFFITestClassWithTrait >> #shortCallout.
 	ffiMethod recompile.
 	FFIMethodRegistry uniqueInstance resetMethod: ffiMethod.
 

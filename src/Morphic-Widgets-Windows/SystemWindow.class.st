@@ -32,10 +32,6 @@ Class {
 		'FullscreenMargin',
 		'TopWindow'
 	],
-	#classInstVars : [
-		'lastClosedWindows',
-		'presenter'
-	],
 	#category : 'Morphic-Widgets-Windows-Widgets',
 	#package : 'Morphic-Widgets-Windows',
 	#tag : 'Widgets'
@@ -337,12 +333,6 @@ SystemWindow class >> labelled: labelString [
 ]
 
 { #category : 'accessing' }
-SystemWindow class >> lastClosedWindows [
-
-	^ lastClosedWindows ifNil: [  lastClosedWindows := OrderedCollection new ]
-]
-
-{ #category : 'accessing' }
 SystemWindow class >> menuBoxImage [
 
 	^ (Form
@@ -362,24 +352,6 @@ SystemWindow class >> noteTopWindowIn: aWorld [
 	aWorld submorphsDo: [:m |
 		(m isSystemWindow and: [m isCollapsed not]) ifTrue: [
 			^m activate]]
-]
-
-{ #category : 'opening' }
-SystemWindow class >> openLastClosedWindows [ 
-	<script>
-	| pres |
-	pres := self presenter.
-	pres
-		items: self lastClosedWindows;
-		openWithLayout: SpClosedWindowListPresenter layoutWithOrdering.
-	pres resetSelection.
-	pres withWindowDo: [ :w | w title: 'Last Closed Windows' ].
-	^ pres
-]
-
-{ #category : 'accessing' }
-SystemWindow class >> presenter [ 
-	^ presenter ifNil: [ presenter := SpClosedWindowListPresenter new ]
 ]
 
 { #category : 'top window' }
@@ -488,7 +460,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 	| closableLabel draggableLabel maximizeLabel |
 	(aBuilder item: #FakeClose)
 		order: 1.0;
-		action: [ aBuilder model hide. self new addClosedWindow: aBuilder model ];
+		action: [ aBuilder model hide ];
 		iconName: #windowClose;
 		enabledBlock: [ aBuilder model allowedToClose ];
 		withSeparatorAfter.
@@ -605,15 +577,6 @@ SystemWindow >> addCloseBox [
 	frame := LayoutFrame identity leftOffset: 2.
 	closeBox layoutFrame: frame.
 	labelArea addMorphBack: closeBox
-]
-
-{ #category : 'adding' }
-SystemWindow >> addClosedWindow: aModel [
-
-	self class lastClosedWindows size >= 5 ifTrue: [
-		self class lastClosedWindows removeLast close ].
-	self class lastClosedWindows addFirst: aModel.
-	"self presenter refresh"
 ]
 
 { #category : 'menu actions' }
@@ -1293,12 +1256,6 @@ SystemWindow >> labelRect [
 { #category : 'label' }
 SystemWindow >> labelWidgetAllowance [
 	^ labelWidgetAllowance ifNil: [self setLabelWidgetAllowance]
-]
-
-{ #category : 'accessing' }
-SystemWindow >> lastClosedWindows [
-
-	^ self class lastClosedWindows
 ]
 
 { #category : 'layout' }

@@ -29,6 +29,7 @@ Class {
 
 { #category : 'instance creation' }
 StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring [
+	self deprecated: 'Use `for:` instead.' on: '2024-01-20' in: 'Pharo13' transformWith: '`@receiver changes: `@arg' -> '`@receiver for: `@arg'.
 	
 	^ self new
 		  changesFrom: aCompositeRefactoring scopes: { RBBrowserEnvironment new };
@@ -36,7 +37,16 @@ StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring [
 ]
 
 { #category : 'instance creation' }
-StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring scopes: scopes [
+StRefactoringPreviewPresenter class >> for: aCompositeRefactoring [
+	
+	^ self new
+		  changesFrom: aCompositeRefactoring scopes: { RBBrowserEnvironment new };
+		  yourself
+]
+
+{ #category : 'instance creation' }
+StRefactoringPreviewPresenter class >> for: aCompositeRefactoring scopes: scopes [
+	self deprecated: 'Use `for:scopes:` instead.' on: '2024-01-20' in: 'Pharo13' transformWith: '`@receiver changes: `@arg1 scopes: `@arg2' -> '`@receiver for: `@arg1 scopes: `@arg2'.
 
 	^ self new
 		  changesFrom: aCompositeRefactoring scopes: scopes;
@@ -81,14 +91,8 @@ StRefactoringPreviewPresenter >> changesFrom: aCompositeChange [
 { #category : 'initialization' }
 StRefactoringPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollection [
 
-	compositeChange := aCompositeChange.
-	"we keep the composite because we want to use it for performing changes later on."
-	
-	changes := aCompositeChange whatToDisplayIn: self.
 	scopes := aCollection.
-	self updateScopeList.
-	self updateChanges.
-	self updateTablePresenter
+	self changesFrom: aCompositeChange.
 ]
 
 { #category : 'action' }
@@ -219,7 +223,7 @@ StRefactoringPreviewPresenter >> updateActiveScope [
 StRefactoringPreviewPresenter >> updateChanges [
 
 	changesInScope := changes select: [ :change |
-		                  activeScope includesClass: change changeClass ].
+							change isInScope: activeScope ].
 	selectedChanges := OrderedCollection withAll: changesInScope
 ]
 

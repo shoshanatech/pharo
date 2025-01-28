@@ -9,22 +9,24 @@ Class {
 
 { #category : 'accessing - platform' }
 TFUFFITestClassWithTrait >> macLibraryName [
-	^ 'libc.dylib'
+
+	^ 'libTestLibrary.dylib'
 ]
 
 { #category : 'accessing' }
-TFUFFITestClassWithTrait >> pidfortest [
+TFUFFITestClassWithTrait >> shortCallout [
 
-	self ffiCall: #(size_t getpid())
+	^ self ffiCall: #(int shortCallout())
 ]
 
 { #category : 'accessing - platform' }
 TFUFFITestClassWithTrait >> unixLibraryName [
-	^ 'libc.so.6'
+
+	^ 'libTestLibrary.so'
 ]
 
 { #category : 'accessing - platform' }
 TFUFFITestClassWithTrait >> win32LibraryName [
-	"While this is not a 'libc' properly, msvcrt has the functions we are defining here"
-	^ 'msvcrt.dll'
+
+	^ 'TestLibrary.dll'
 ]
