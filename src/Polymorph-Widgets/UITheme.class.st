@@ -149,7 +149,7 @@ UITheme class >> newDefault [
 	^self new
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'class initialization' }
 UITheme class >> resetBuilder [
 	<script>
 
