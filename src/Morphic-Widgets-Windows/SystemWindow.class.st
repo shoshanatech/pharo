@@ -333,12 +333,6 @@ SystemWindow class >> labelled: labelString [
 ]
 
 { #category : 'accessing' }
-SystemWindow class >> lastClosedWindows [
-
-	^ lastClosedWindows ifNil: [  lastClosedWindows := OrderedCollection new ]
-]
-
-{ #category : 'accessing' }
 SystemWindow class >> menuBoxImage [
 
 	^ (Form
@@ -1262,12 +1256,6 @@ SystemWindow >> labelRect [
 { #category : 'label' }
 SystemWindow >> labelWidgetAllowance [
 	^ labelWidgetAllowance ifNil: [self setLabelWidgetAllowance]
-]
-
-{ #category : 'accessing' }
-SystemWindow >> lastClosedWindows [
-
-	^ self class lastClosedWindows
 ]
 
 { #category : 'layout' }
