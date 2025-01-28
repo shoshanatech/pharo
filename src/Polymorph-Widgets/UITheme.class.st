@@ -1198,8 +1198,7 @@ UITheme >> createCloseBoxFor: aSystemWindow [
 		   newCloseControlIn: aSystemWindow
 		   for: aSystemWindow
 		   action: [
-			   aSystemWindow hide.
-			   aSystemWindow addClosedWindow: aSystemWindow ]
+			   aSystemWindow hide ]
 		   help: 'Close this window' translated) extent:
 		  aSystemWindow boxExtent
 ]
