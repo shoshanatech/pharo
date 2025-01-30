@@ -65,7 +65,7 @@ CompiledMethod >> sourceNodeForPC: aPC [
 	sourceNode := self sourceNode.
 
 	self propertyAt: #bcToASTCache ifPresent: [ :bcToASTCache |
-		^ sourceNode sourceNodeForPC: aPC usingBcToASTCache: bcToASTCache ].
+		^ bcToASTCache nodeForPC: aPC ].
 	^ sourceNode sourceNodeForPC: aPC
 ]
 

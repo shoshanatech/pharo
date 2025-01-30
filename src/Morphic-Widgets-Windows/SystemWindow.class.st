@@ -1250,12 +1250,6 @@ SystemWindow >> labelWidgetAllowance [
 	^ labelWidgetAllowance ifNil: [self setLabelWidgetAllowance]
 ]
 
-{ #category : 'accessing' }
-SystemWindow >> lastClosedWindows [
-
-	^ self class lastClosedWindows
-]
-
 { #category : 'layout' }
 SystemWindow >> layoutBounds [
 	"Bounds of pane area only."
