@@ -463,6 +463,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 
 	<windowMenu>
 	| closableLabel draggableLabel maximizeLabel |
+
 	
 	(aBuilder item: #Close)
 		order: 1.0;
@@ -1253,12 +1254,6 @@ SystemWindow >> labelRect [
 { #category : 'label' }
 SystemWindow >> labelWidgetAllowance [
 	^ labelWidgetAllowance ifNil: [self setLabelWidgetAllowance]
-]
-
-{ #category : 'accessing' }
-SystemWindow >> lastClosedWindows [
-
-	^ self class lastClosedWindows
 ]
 
 { #category : 'layout' }

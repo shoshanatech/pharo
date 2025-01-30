@@ -1,9 +1,8 @@
 Class {
 	#name : 'OCCodeReparatorTest',
 	#superclass : 'TestCase',
-	#category : 'OpalCompiler-Tests-FromOld',
-	#package : 'OpalCompiler-Tests',
-	#tag : 'FromOld'
+	#category : 'OpalCompiler-UI-Tests',
+	#package : 'OpalCompiler-UI-Tests'
 }
 
 { #category : 'tests' }

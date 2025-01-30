@@ -1,3 +1,6 @@
+"
+I am common superclass for transformations that modify method's name. I am storing common state and behavior that is shared among these refactorings.
+"
 Class {
 	#name : 'RBChangeMethodNameTransformation',
 	#superclass : 'RBMethodTransformation',

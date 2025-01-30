@@ -1,13 +1,12 @@
 Class {
-	#name : 'OCBytecodeDecompilerExamplesTest',
+	#name : 'FBDBytecodeDecompilerExamplesTest',
 	#superclass : 'TestCase',
-	#category : 'OpalCompiler-Tests-Bytecode',
-	#package : 'OpalCompiler-Tests',
-	#tag : 'Bytecode'
+	#category : 'Flashback-Decompiler-Tests',
+	#package : 'Flashback-Decompiler-Tests'
 }
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
+FBDBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockArgument) parseTree
@@ -23,7 +22,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
+FBDBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockExternal) parseTree
@@ -39,7 +38,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
+FBDBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockExternal2) parseTree
@@ -55,7 +54,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
+FBDBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockExternalArg) parseTree
@@ -71,7 +70,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
+FBDBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockExternalNested) parseTree
@@ -87,7 +86,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
+FBDBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockInternal) parseTree
@@ -103,7 +102,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleBlockNested [
+FBDBytecodeDecompilerExamplesTest >> testExampleBlockNested [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockNested) parseTree
@@ -119,7 +118,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockNested [
 ]
 
 { #category : 'tests - simple' }
-OCBytecodeDecompilerExamplesTest >> testExampleEmptyMethod [
+FBDBytecodeDecompilerExamplesTest >> testExampleEmptyMethod [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleEmptyMethod) parseTree
@@ -135,7 +134,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleEmptyMethod [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleIfFalse [
+FBDBytecodeDecompilerExamplesTest >> testExampleIfFalse [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfFalse) parseTree
@@ -151,7 +150,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfFalse [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleIfFalseIfTrue [
+FBDBytecodeDecompilerExamplesTest >> testExampleIfFalseIfTrue [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfFalseIfTrue) parseTree
@@ -167,7 +166,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfFalseIfTrue [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleIfIfNotNilReturnNil [
+FBDBytecodeDecompilerExamplesTest >> testExampleIfIfNotNilReturnNil [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfNotNilReturnNil) parseTree
@@ -183,7 +182,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfIfNotNilReturnNil [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleIfNotNilArg [
+FBDBytecodeDecompilerExamplesTest >> testExampleIfNotNilArg [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfNotNilArg) parseTree
@@ -199,7 +198,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfNotNilArg [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleIfTrue [
+FBDBytecodeDecompilerExamplesTest >> testExampleIfTrue [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfTrue) parseTree generateMethod.
@@ -214,7 +213,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfTrue [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleIfTrueIfFalse [
+FBDBytecodeDecompilerExamplesTest >> testExampleIfTrueIfFalse [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfTrueIfFalse) parseTree
@@ -230,7 +229,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfTrueIfFalse [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleMethodTempInNestedBlock [
+FBDBytecodeDecompilerExamplesTest >> testExampleMethodTempInNestedBlock [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleMethodTempInNestedBlock)
@@ -246,7 +245,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleMethodTempInNestedBlock [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleMethodWithOptimizedBlocksA [
+FBDBytecodeDecompilerExamplesTest >> testExampleMethodWithOptimizedBlocksA [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleMethodWithOptimizedBlocksA)
@@ -262,7 +261,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleMethodWithOptimizedBlocksA [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleNestedBlockScoping [
+FBDBytecodeDecompilerExamplesTest >> testExampleNestedBlockScoping [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleNestedBlockScoping) parseTree
@@ -278,7 +277,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleNestedBlockScoping [
 ]
 
 { #category : 'tests - simple' }
-OCBytecodeDecompilerExamplesTest >> testExampleNewArray [
+FBDBytecodeDecompilerExamplesTest >> testExampleNewArray [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleNewArray) parseTree
@@ -294,7 +293,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleNewArray [
 ]
 
 { #category : 'tests - misc' }
-OCBytecodeDecompilerExamplesTest >> testExamplePushArray [
+FBDBytecodeDecompilerExamplesTest >> testExamplePushArray [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #examplePushArray) parseTree
@@ -310,7 +309,7 @@ OCBytecodeDecompilerExamplesTest >> testExamplePushArray [
 ]
 
 { #category : 'tests - simple' }
-OCBytecodeDecompilerExamplesTest >> testExampleReturn1 [
+FBDBytecodeDecompilerExamplesTest >> testExampleReturn1 [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleReturn42) parseTree
@@ -326,7 +325,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleReturn1 [
 ]
 
 { #category : 'tests - simple' }
-OCBytecodeDecompilerExamplesTest >> testExampleReturn1plus2 [
+FBDBytecodeDecompilerExamplesTest >> testExampleReturn1plus2 [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleReturn1plus2) parseTree
@@ -342,7 +341,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleReturn1plus2 [
 ]
 
 { #category : 'tests - variables' }
-OCBytecodeDecompilerExamplesTest >> testExampleSelf [
+FBDBytecodeDecompilerExamplesTest >> testExampleSelf [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSelf) parseTree generateMethod.
@@ -357,7 +356,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSelf [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlock [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlock [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlock) parseTree
@@ -374,7 +373,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlock [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument1 [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument1 [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockArgument1) parseTree
@@ -390,7 +389,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument1 [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument2 [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument2 [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockArgument2) parseTree
@@ -406,7 +405,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument2 [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument3 [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument3 [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockArgument3) parseTree
@@ -422,7 +421,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument3 [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument4 [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument4 [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockArgument4) parseTree
@@ -438,7 +437,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument4 [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument5 [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument5 [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockArgument5) parseTree
@@ -454,7 +453,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument5 [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockEmpty [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockEmpty [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockEmpty) parseTree
@@ -470,7 +469,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockEmpty [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocal [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocal [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockLocal) parseTree
@@ -486,7 +485,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocal [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalIf [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalIf [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockLocalIf) parseTree
@@ -502,7 +501,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalIf [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalNested [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalNested [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockNested) parseTree
@@ -518,7 +517,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalNested [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalWhile [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalWhile [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockLocalWhile) parseTree
@@ -534,7 +533,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalWhile [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockNested [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockNested [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockNested) parseTree
@@ -550,7 +549,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockNested [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockReturn [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockReturn [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockReturn) parseTree
@@ -566,7 +565,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockReturn [
 ]
 
 { #category : 'tests - blocks' }
-OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockiVar [
+FBDBytecodeDecompilerExamplesTest >> testExampleSimpleBlockiVar [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockiVar) parseTree
@@ -582,7 +581,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockiVar [
 ]
 
 { #category : 'tests - variables' }
-OCBytecodeDecompilerExamplesTest >> testExampleSuper [
+FBDBytecodeDecompilerExamplesTest >> testExampleSuper [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSuper) parseTree generateMethod.
@@ -597,7 +596,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSuper [
 ]
 
 { #category : 'tests - variables' }
-OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
+FBDBytecodeDecompilerExamplesTest >> testExampleThisContext [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleThisContext) parseTree
@@ -613,7 +612,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleToDoArgument [
+FBDBytecodeDecompilerExamplesTest >> testExampleToDoArgument [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoArgument) parseTree
@@ -629,7 +628,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoArgument [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleToDoArgumentNotInlined [
+FBDBytecodeDecompilerExamplesTest >> testExampleToDoArgumentNotInlined [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoArgumentNotInlined)
@@ -645,7 +644,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoArgumentNotInlined [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTemp [
+FBDBytecodeDecompilerExamplesTest >> testExampleToDoInsideTemp [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoInsideTemp) parseTree
@@ -661,7 +660,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTemp [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTempNotInlined [
+FBDBytecodeDecompilerExamplesTest >> testExampleToDoInsideTempNotInlined [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoInsideTempNotInlined)
@@ -677,7 +676,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTempNotInlined [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTemp [
+FBDBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTemp [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoOutsideTemp) parseTree
@@ -693,7 +692,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTemp [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTempNotInlined [
+FBDBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTempNotInlined [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoOutsideTempNotInlined)
@@ -709,7 +708,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTempNotInlined [
 ]
 
 { #category : 'tests - misc' }
-OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
+FBDBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoValue) parseTree
@@ -725,7 +724,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined [
+FBDBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined [
 
 	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileModificationAfterNotInlined)
@@ -741,7 +740,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined 
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
+FBDBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleWhileModificationBefore)
@@ -757,7 +756,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined [
+FBDBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined [
 
 	| ir method newMethod |
 	method := (OCOpalExamples
@@ -774,7 +773,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
+FBDBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
 
 	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileWithTemp) parseTree
@@ -790,7 +789,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
 ]
 
 { #category : 'tests - blocks-optimized' }
-OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
+FBDBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
 
 	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileWithTempNotInlined)
@@ -806,7 +805,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
 ]
 
 { #category : 'tests - variables' }
-OCBytecodeDecompilerExamplesTest >> testExampleiVar [
+FBDBytecodeDecompilerExamplesTest >> testExampleiVar [
 
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleiVar) parseTree generateMethod.
