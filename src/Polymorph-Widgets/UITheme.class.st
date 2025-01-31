@@ -1199,11 +1199,14 @@ UITheme >> createCloseBoxFor: aSystemWindow [
 		   newCloseControlIn: aSystemWindow
 		   for: aSystemWindow
 		   action: [
-			   aSystemWindow hide.
-			   announcement := WindowClosed new
-				                   window: aSystemWindow;
-				                   yourself.
-			   self currentWorld announcer announce: announcement ]
+			   SystemWindow useHideForClose
+				   ifTrue: [
+					   aSystemWindow hide.
+					   announcement := WindowClosed new
+						                   window: aSystemWindow;
+						                   yourself.
+					   self currentWorld announcer announce: announcement ]
+				   ifFalse: [ aSystemWindow closeBoxHit ] ]
 		   help: 'Close this window' translated) extent:
 		  aSystemWindow boxExtent
 ]

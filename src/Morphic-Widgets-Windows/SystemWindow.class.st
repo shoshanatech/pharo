@@ -30,7 +30,8 @@ Class {
 		'CloseBoxImage',
 		'CollapseBoxImage',
 		'FullscreenMargin',
-		'TopWindow'
+		'TopWindow',
+		'UseHideForClose'
 	],
 	#category : 'Morphic-Widgets-Windows-Widgets',
 	#package : 'Morphic-Widgets-Windows',
@@ -442,6 +443,18 @@ SystemWindow class >> tilingMenuOn: aBuilder [
 { #category : 'top window' }
 SystemWindow class >> topWindow [
 	^ TopWindow
+]
+
+{ #category : 'accessing' }
+SystemWindow class >> useHideForClose [
+
+	^ UseHideForClose ifNil: [ UseHideForClose := false ]
+]
+
+{ #category : 'setting' }
+SystemWindow class >> useHideForClose: aBoolean [
+
+	UseHideForClose := aBoolean 
 ]
 
 { #category : 'top window' }
@@ -925,6 +938,7 @@ SystemWindow >> deleteDiscardingChanges [
 		window: self;
 		yourself.
 	self announce: announcement.
+	 self useHideForClose ifFalse: [ self currentWorld announcer announce: announcement ]
 
 ]
 
@@ -1978,6 +1992,12 @@ SystemWindow >> updatePaneColors [
 SystemWindow >> updatePanesFromSubmorphs [
 	"Having removed some submorphs, make sure this is reflected in my paneMorphs."
 	paneMorphs := paneMorphs select: [ :pane | submorphs includes: pane ]
+]
+
+{ #category : 'accessing' }
+SystemWindow >> useHideForClose [
+
+	^ self class useHideForClose
 ]
 
 { #category : 'resize/collapse' }

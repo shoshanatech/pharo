@@ -34,7 +34,7 @@ SpRubFindReplaceDialog class >> defaultLayout [
 				   beRowHomogeneous;
 				   add: #regExpCheckBox atPoint: 1 @ 1;
 				   add: #backwardsCheckBox atPoint: 2 @ 1;
-				   add: #caseCheckBox at: 1 @ 2;
+				   add: #caseCheckBox atPoint: 1 @ 2;
 				   add: #wrapCheckBox at: 2 @ 2;
 				   add: #entireCheckBox at: 1 @ 3;
 				   yourself);
