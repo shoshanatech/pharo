@@ -15,6 +15,12 @@ Class {
 	#package : 'Keymapping-Tools-Spec'
 }
 
+{ #category : 'accessing' }
+KMDescriptionPresenter class >> defaultPreferredExtent [
+
+	^ 900 @ 650
+]
+
 { #category : 'instance creation' }
 KMDescriptionPresenter class >> descriptionText [
 
@@ -43,7 +49,7 @@ KMDescriptionPresenter class >> menuCommandOn: aBuilder [
 KMDescriptionPresenter class >> open [
 
 	<script>
-	^ self new open
+	^ (self newApplication: StPharoApplication current) open
 ]
 
 { #category : 'initialization' }
@@ -138,20 +144,13 @@ KMDescriptionPresenter >> initializePresenters [
 	actionBar := self newActionBar.
 	actionBar
 		addLast: (SpButtonPresenter new
-				 action: [ shortcutTable selectedItem action browse ];
+				 action: [ "self application tools browser openOn:" shortcutTable selectedItem action browser ];
 				 label: 'Browse';
 				 yourself);
 		addLast: (SpButtonPresenter new
-				 action: [ shortcutTable selectedItem inspect ];
-				 label: 'Insepct';
+				 action: [ self application tools inspector openOn: shortcutTable selectedItem inspect ];
+				 label: 'Inspect';
 				 yourself)
-]
-
-{ #category : 'initialization' }
-KMDescriptionPresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter
-		title: 'Shortcuts Browser';
-		initialExtent: 900 @ 650
 ]
 
 { #category : 'callbacks' }
@@ -179,4 +178,10 @@ KMDescriptionPresenter >> shortcutActivationCategoriesItems [
 KMDescriptionPresenter >> shortcutActivationCmdInstances [
 
 	^ CmdShortcutActivation registeredInstances copyWithoutAll: CmdShortcutActivation redefiningInstances
+]
+
+{ #category : 'initialization' }
+KMDescriptionPresenter >> windowTitle [
+
+	^ 'Shortcuts Browser'
 ]
