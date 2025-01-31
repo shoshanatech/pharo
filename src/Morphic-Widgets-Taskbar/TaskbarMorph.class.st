@@ -433,9 +433,7 @@ TaskbarMorph >> updateTasks [
 	taskbarTasksFromWorldMorph := (wm collect: [ :m | m taskbarTask ])
 		                              reject: [ :task |
 			                              task isNil or: [
-				                              SpClosedWindowListPresenter 
-					                              lastClosedWindows includes:
-					                              task morph  ] ] .
+				                              task morph extension otherProperties includes: 'isClosed' ] ] .
 
 	self tasks: taskbarTasksFromWorldMorph.
 	deadTasks := self orderedTasks difference: self tasks.
