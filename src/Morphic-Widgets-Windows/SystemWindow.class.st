@@ -463,7 +463,6 @@ SystemWindow class >> windowMenuOn: aBuilder [
 
 	<windowMenu>
 	| closableLabel draggableLabel maximizeLabel |
-
 	
 	(aBuilder item: #Close)
 		order: 1.0;
