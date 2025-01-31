@@ -149,7 +149,7 @@ UITheme class >> newDefault [
 	^self new
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'class initialization' }
 UITheme class >> resetBuilder [
 	<script>
 
@@ -1194,14 +1194,22 @@ UITheme >> createBoxOfSize: finalSizeInteger color: aColor [
 UITheme >> createCloseBoxFor: aSystemWindow [
 	"Answer a button for closing the window."
 
+	| announcement |
 	^ (self
 		   newCloseControlIn: aSystemWindow
 		   for: aSystemWindow
 		   action: [
-			   aSystemWindow hide.
-			   aSystemWindow addClosedWindow: aSystemWindow ]
+			   SystemWindow useHideForClose
+				   ifTrue: [
+					   aSystemWindow hide.
+					   announcement := WindowClosed new
+						                   window: aSystemWindow;
+						                   yourself.
+					   self currentWorld announcer announce: announcement ]
+				   ifFalse: [ aSystemWindow closeBoxHit ] ]
 		   help: 'Close this window' translated) extent:
 		  aSystemWindow boxExtent
+
 ]
 
 { #category : 'label-styles' }
