@@ -276,16 +276,11 @@ SystemWindow class >> closeBoxImage [
 
 { #category : 'top window' }
 SystemWindow class >> closeTopWindow [
-
-	| announcement |
 	"Try to close the top window.  It may of course decline"
 	TopWindow ifNotNil: [ :window |
 		TopWindow := nil.
-		window hide.
-		announcement := WindowClosed new
-			                window: window;
-			                yourself.
-		self currentWorld announcer announce: announcement ]
+		window delete.
+	]
 ]
 
 { #category : 'accessing' }
