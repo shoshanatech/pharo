@@ -1206,6 +1206,7 @@ UITheme >> createCloseBoxFor: aSystemWindow [
 			   self currentWorld announcer announce: announcement ]
 		   help: 'Close this window' translated) extent:
 		  aSystemWindow boxExtent
+
 ]
 
 { #category : 'label-styles' }
