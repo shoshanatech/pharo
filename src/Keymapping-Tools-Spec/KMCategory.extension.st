@@ -9,6 +9,5 @@ KMCategory >> scopeName [
 { #category : '*Keymapping-Tools-Spec' }
 KMCategory >> shortcuts [
 
-	1 halt.
 	^ (self entriesAt: #all) keymaps
 ]
