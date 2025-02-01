@@ -28,7 +28,7 @@ EpUnifiedBrowserPresenter class >> defaultPreferredExtent [
 EpUnifiedBrowserPresenter class >> open [
 
 	<script>
-	^ self new
+	^ (self newApplication: StPharoApplication current)
 		  refresh;
 		  open;
 		  yourself
