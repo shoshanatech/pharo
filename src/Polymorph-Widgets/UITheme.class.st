@@ -1209,7 +1209,6 @@ UITheme >> createCloseBoxFor: aSystemWindow [
 				   ifFalse: [ aSystemWindow closeBoxHit ] ]
 		   help: 'Close this window' translated) extent:
 		  aSystemWindow boxExtent
-
 ]
 
 { #category : 'label-styles' }
