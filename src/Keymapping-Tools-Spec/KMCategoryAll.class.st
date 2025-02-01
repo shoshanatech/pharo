@@ -1,6 +1,6 @@
 Class {
-	#name : 'KMCategoryItemPresenter',
-	#superclass : 'SpPresenter',
+	#name : 'KMCategoryAll',
+	#superclass : 'Object',
 	#instVars : [
 		'categoryName',
 		'shortcuts'
@@ -10,14 +10,13 @@ Class {
 }
 
 { #category : 'copying' }
-KMCategoryItemPresenter >> , aKMCategory [
+KMCategoryAll >> , aKMCategory [
 
-	self shortcuts addAll: aKMCategory allEntries keymaps asOrderedCollection
-
+	self shortcuts addAll: aKMCategory allEntries keymaps
 ]
 
 { #category : 'comparing' }
-KMCategoryItemPresenter >> = anObject [
+KMCategoryAll >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
 	self == anObject ifTrue: [ ^ true ].
@@ -27,52 +26,52 @@ KMCategoryItemPresenter >> = anObject [
 ]
 
 { #category : 'adding' }
-KMCategoryItemPresenter >> addAll: aCollection [ 
+KMCategoryAll >> addAll: aCollection [ 
 	"Add all shortcuts in aCollection to the receiver"
 	
 	self shortcuts addAll: aCollection
 ]
 
 { #category : 'accessing' }
-KMCategoryItemPresenter >> categoryName [
+KMCategoryAll >> categoryName [
 
 	^ categoryName
 ]
 
 { #category : 'accessing' }
-KMCategoryItemPresenter >> categoryName: anObject [
+KMCategoryAll >> categoryName: anObject [
 
 	categoryName := anObject
 ]
 
 { #category : 'comparing' }
-KMCategoryItemPresenter >> hash [
+KMCategoryAll >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ categoryName hash bitXor: shortcuts hash
 ]
 
 { #category : 'accessing' }
-KMCategoryItemPresenter >> icon [
+KMCategoryAll >> icon [
 
 	^ self iconNamed: self systemIconName
 ]
 
 { #category : 'accessing' }
-KMCategoryItemPresenter >> model [
+KMCategoryAll >> model [
 	"Required by <SpDropListPresenter> ?"
 
 	^ self
 ]
 
 { #category : 'accessing' }
-KMCategoryItemPresenter >> name [
+KMCategoryAll >> name [
 
 	^  self categoryName
 ]
 
 { #category : 'printing' }
-KMCategoryItemPresenter >> printOn: aStream [
+KMCategoryAll >> printOn: aStream [
 	"Generate a string representation of the receiver based on its instance variables."
 
 	super printOn: aStream.
@@ -83,14 +82,14 @@ KMCategoryItemPresenter >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-KMCategoryItemPresenter >> shortcuts [
+KMCategoryAll >> shortcuts [
 
 	^ shortcuts
 		ifNil: [ shortcuts := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
-KMCategoryItemPresenter >> shortcuts: anObject [
+KMCategoryAll >> shortcuts: anObject [
 
 	shortcuts := anObject
 ]
