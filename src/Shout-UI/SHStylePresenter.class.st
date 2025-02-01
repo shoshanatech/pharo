@@ -49,7 +49,7 @@ SHStylePresenter class >> menuCommandOn: aBuilder [
 SHStylePresenter class >> open [
 	<script> 
 
-	^ self new open
+	^ (self newApplication: StPharoApplication current) open
 ]
 
 { #category : 'private' }
