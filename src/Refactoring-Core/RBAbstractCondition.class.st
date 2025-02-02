@@ -22,6 +22,17 @@ Class {
 	#tag : 'Conditions'
 }
 
+{ #category : 'testing' }
+RBAbstractCondition class >> isValidSelector: aString [
+	"Check that aString is a valid selector (name of method).
+	 For checking if there is symbol like me used as a selector, see Symbol>>#isSelectorSymbol"
+
+	^ self new
+		  block: [ OCScanner isSelector: aString ]
+		  errorString:
+		  aString printString , ' is <1?:not >a valid method name'
+]
+
 { #category : 'logical operations' }
 RBAbstractCondition >> & aCondition [
 	^RBConjunctiveCondition new left: self right: aCondition
@@ -51,6 +62,14 @@ RBAbstractCondition >> errorString [
 { #category : 'private' }
 RBAbstractCondition >> errorStringFor: aBoolean [
 	^self errorMacro expandMacrosWith: aBoolean
+]
+
+{ #category : 'testing' }
+RBAbstractCondition >> isValidSelector: aString [
+	"Check that aString is a valid selector (name of method).
+	 For checking if there is symbol like me used as a selector, see Symbol>>#isSelectorSymbol"
+
+	^ OCScanner isSelector: aString 
 ]
 
 { #category : 'logical operations' }

@@ -178,11 +178,6 @@ ReAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
 	^RBCondition checkInstanceVariableName: aName in: aClass
 ]
 
-{ #category : 'condition definitions' }
-ReAbstractTransformation >> checkMethodName: aName in: aClass [
-	^RBCondition checkMethodName: aName in: aClass
-]
-
 { #category : 'scripting api - conditions' }
 ReAbstractTransformation >> checkPreconditions [
 
@@ -280,6 +275,22 @@ ReAbstractTransformation >> generateChangesFor: aRefactoring [
 	aRefactoring copyOptionsFrom: self options.
 	aRefactoring model: self model.
 	aRefactoring generateChanges
+]
+
+{ #category : 'testing' }
+ReAbstractTransformation >> isValidSelector [
+	"Check I could be a valid selector (name of method).
+	 For checking if there is symbol like me used as a selector, see Symbol>>#isSelectorSymbol"
+
+	^ OCScanner isSelector: self
+]
+
+{ #category : 'testing' }
+ReAbstractTransformation >> isValidSelector: aString [
+	"Check that aString is a valid selector (name of method).
+	 For checking if there is symbol like me used as a selector, see Symbol>>#isSelectorSymbol"
+
+	^ OCScanner isSelector: aString
 ]
 
 { #category : 'accessing' }

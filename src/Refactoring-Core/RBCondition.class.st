@@ -56,21 +56,6 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 	^ OCScanner isVariable: string
 ]
 
-{ #category : 'utilities' }
-RBCondition class >> checkMethodName: aString [
-	"Return whether the argument aName is can represent a selector"
-
-	^ aString isString and: [ aString isValidSelector ]
-]
-
-{ #category : 'utilities' }
-RBCondition class >> checkMethodName: aString in: aClass [
-	"Return whether the argument aName is can represent a selector"
-	"You probably look for checkMethodName: since the second argument is ignored"
-
-	^aString isString and: [ aString isValidSelector ]
-]
-
 { #category : 'instance creation' }
 RBCondition class >> definesClassVariable: aString in: aClass [
 	^self new
@@ -339,7 +324,7 @@ RBCondition class >> isValidInstanceVariableName: aString for: aClass [
 RBCondition class >> isValidMethodName: aString for: aClass [
 
 	^ self new
-		  block: [ self checkMethodName: aString in: aClass ]
+		  block: [ self isValidSelector: aString ]
 		  errorString:
 		  aString printString , ' is <1?:not >a valid method name'
 ]
