@@ -320,11 +320,13 @@ RBCondition class >> isValidInstanceVariableName: aString for: aClass [
 		  aString , ' is <1?:not >a valid instance variable name'
 ]
 
-{ #category : 'instance creation' }
-RBCondition class >> isValidMethodName: aString for: aClass [
+{ #category : 'testing' }
+RBCondition class >> isValidSelector: aString [
+	"Check that aString is a valid selector (name of method).
+	 For checking if there is symbol like me used as a selector, see Symbol>>#isSelectorSymbol"
 
 	^ self new
-		  block: [ self isValidSelector: aString ]
+		  block: [ OCScanner isSelector: aString ]
 		  errorString:
 		  aString printString , ' is <1?:not >a valid method name'
 ]
