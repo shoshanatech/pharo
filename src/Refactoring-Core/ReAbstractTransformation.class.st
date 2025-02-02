@@ -287,9 +287,10 @@ ReAbstractTransformation >> isValidSelector [
 
 { #category : 'testing' }
 ReAbstractTransformation >> isValidSelector: aString [
-	"Check that aString is a valid selector (name of method).
+	"Returns the boolean true if aString is a valid selector (name of method).
 	 For checking if there is symbol like me used as a selector, see Symbol>>#isSelectorSymbol"
 
+	"Pay attention RBCondition >> #isValidSelector is returning an Condition object."
 	^ OCScanner isSelector: aString
 ]
 

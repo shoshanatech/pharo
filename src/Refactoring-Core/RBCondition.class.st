@@ -322,9 +322,12 @@ RBCondition class >> isValidInstanceVariableName: aString for: aClass [
 
 { #category : 'testing' }
 RBCondition class >> isValidSelector: aString [
-	"Check that aString is a valid selector (name of method).
-	 For checking if there is symbol like me used as a selector, see Symbol>>#isSelectorSymbol"
-
+	"Returns a Condition that checks that aString is a valid selector (name of method)."
+	
+	"Pay attention this class side method returns an RBCondition object,
+	while Refactoring>> isValidSelector: retuns a boolean. 
+	In the future we may want to have two different names for this two methods."
+	
 	^ self new
 		  block: [ OCScanner isSelector: aString ]
 		  errorString:
