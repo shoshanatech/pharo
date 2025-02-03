@@ -110,7 +110,7 @@ ToolRegistry >> inspector [
 	^self doesNotUnderstand: (Message selector: #inspector)
 ]
 
-{ #category : 'menu' }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openClassBrowser [
 	"nobody else beside the fallbakc menu should invoke this method. 
 	This method exists because the menu cannot accept a block so we cannot express
@@ -126,7 +126,7 @@ ToolRegistry >> openClassBrowser [
 	^ (self toolNamed: #browser) open
 ]
 
-{ #category : 'menu' }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openFileList [
 	"nobody else beside the fallbakc menu should invoke this method. 
 	This method exists because the menu cannot accept a block so we cannot express
@@ -142,14 +142,14 @@ ToolRegistry >> openFileList [
 	^ (self toolNamed: #fileList) open
 ]
 
-{ #category : 'menu' }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openProcessBrowser [
 	self using: #processBrowser do: [:tool |
 		tool open
 		]
 ]
 
-{ #category : 'menu' }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openTestRunner [
 	"nobody else beside the fallbakc menu should invoke this method. 
 	This method exists because the menu cannot accept a block so we cannot express
@@ -165,7 +165,7 @@ ToolRegistry >> openTestRunner [
 	^ (self toolNamed: #testRunner) open
 ]
 
-{ #category : 'menu' }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openTranscript [
 	"nobody else beside the fallbakc menu should invoke this method. 
 	This method exists because the menu cannot accept a block so we cannot express
@@ -181,7 +181,7 @@ ToolRegistry >> openTranscript [
 	^ (self toolNamed: #transcript) open
 ]
 
-{ #category : 'menu' }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openWorkspace [
 	^ self workspace open
 ]
