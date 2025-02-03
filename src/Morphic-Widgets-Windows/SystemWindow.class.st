@@ -277,11 +277,16 @@ SystemWindow class >> closeBoxImage [
 
 { #category : 'top window' }
 SystemWindow class >> closeTopWindow [
+
+	| announcement |
 	"Try to close the top window.  It may of course decline"
 	TopWindow ifNotNil: [ :window |
 		TopWindow := nil.
-		window delete.
-	]
+		window hide.
+		announcement := WindowClosed new
+			                window: window;
+			                yourself.
+		self currentWorld announcer announce: announcement ]
 ]
 
 { #category : 'accessing' }
@@ -361,20 +366,6 @@ SystemWindow class >> sendTopWindowToBack [
 	self currentWorld submorphs
 		detect: [ :morph | morph isSystemWindow ]
 		ifFound: [ :morph | morph sendToBack ]
-]
-
-{ #category : 'settings' }
-SystemWindow class >> settingOn: aBuilder [
-
-<systemsettings>
-
-	(aBuilder setting: #useHideForClose)
-		parent: #tools;
-		order: 2;
-		default: self useHideForClose ;
-		target: self;
-		description: 'If closed windows will be stored in SpClosedWindowListPresenter';
-		label: 'Use last closed windows'.
 ]
 
 { #category : 'menu items - tiling' }
@@ -482,11 +473,11 @@ SystemWindow class >> wakeUpTopWindowUponStartup [
 { #category : 'menu items' }
 SystemWindow class >> windowMenuOn: aBuilder [
 	"To inject your custom items in a specific place, note that each item increases in order by 1. For example, if you wanted your item to be the second item, you could give it an #order: 1.5"
-
+ 
 	<windowMenu>
 	| closableLabel draggableLabel maximizeLabel |
 	
-	(aBuilder item: #Close)
+	(aBuilder item: #Destroy)
 		order: 1.0;
 		action: [ aBuilder model closeBoxHit ];
 		iconName: #windowClose;
@@ -935,25 +926,27 @@ SystemWindow >> deleteCloseBox [
 
 { #category : 'open/close' }
 SystemWindow >> deleteDiscardingChanges [
+
 	| thisWorld announcement |
-	self removePaneSplitters.	"in case we add some panes and reopen!"
+	self removePaneSplitters. "in case we add some panes and reopen!"
 	thisWorld := self world.
 	self isFlexed
 		ifTrue: [ owner delete ]
 		ifFalse: [ super delete ].
-	model
-		ifNotNil: [ model
-				windowIsClosing;
-				releaseActionMap ].
+	model ifNotNil: [
+		model
+			windowIsClosing;
+			releaseActionMap ].
 	model := nil.
 	SystemWindow noteTopWindowIn: thisWorld.
-	
-	announcement := WindowClosed new
-		window: self;
-		yourself.
-	self announce: announcement.
-	 self useHideForClose ifFalse: [ self currentWorld announcer announce: announcement ]
 
+	announcement := WindowClosed new
+		                window: self;
+		                yourself.
+	self announce: announcement.
+	self useHideForClose ifFalse: [
+		self currentWorld announcer announce: announcement ].
+	
 ]
 
 { #category : 'menu building' }
