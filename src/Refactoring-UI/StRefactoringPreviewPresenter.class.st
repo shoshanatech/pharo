@@ -29,7 +29,10 @@ Class {
 
 { #category : 'instance creation' }
 StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring [
-	self deprecated: 'Use `for:` instead.' on: '2024-01-20' in: 'Pharo13' transformWith: '`@receiver changes: `@arg' -> '`@receiver for: `@arg'.
+	self deprecated: 'Use `for:` instead.' 
+		on: '2024/01/20' 
+		in: 'pharo13' 
+		transformWith: '`@receiver changes: `@arg' -> '`@receiver for: `@arg'.
 	
 	^ self new
 		  changesFrom: aCompositeRefactoring scopes: { RBBrowserEnvironment new };
@@ -46,7 +49,11 @@ StRefactoringPreviewPresenter class >> for: aCompositeRefactoring [
 
 { #category : 'instance creation' }
 StRefactoringPreviewPresenter class >> for: aCompositeRefactoring scopes: scopes [
-	self deprecated: 'Use `for:scopes:` instead.' on: '2024-01-20' in: 'Pharo13' transformWith: '`@receiver changes: `@arg1 scopes: `@arg2' -> '`@receiver for: `@arg1 scopes: `@arg2'.
+	self deprecated: 'Use `for:scopes:` instead.' 
+		on: '2024-01-20' 
+		in: 'pharo13' 
+		transformWith: '`@receiver changes: `@arg1 scopes: `@arg2' 
+			-> '`@receiver for: `@arg1 scopes: `@arg2'.
 
 	^ self new
 		  changesFrom: aCompositeRefactoring scopes: scopes;

@@ -97,8 +97,7 @@ RBDeprecateMethodTransformation >> applicabilityPreconditions [
 
 	^ {
 		  (RBCondition withBlock: [ selector ~= newSelector ]).
-		  (RBCondition withBlock: [
-			   RBCondition checkMethodName: newSelector ]).
+		 	(RBCondition isValidSelector: newSelector).
 		  (RBCondition definesSelector: selector in: class) }
 ]
 
