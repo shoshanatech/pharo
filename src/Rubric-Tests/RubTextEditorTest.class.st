@@ -570,24 +570,6 @@ RubTextEditorTest >> testPreviousWordStopOnUpperCaseComplex [
 ]
 
 { #category : 'tests' }
-RubTextEditorTest >> testPreviousWordStopOnUpperCaseManyUpercases [
-
-	string := 'AAAb'.
-	editor addString: string.
-
-	self
-		assertPreviousCharGroupFrom: 	'AAAb¶'
-		to: 							  		'AAA¶b'
-		equals: 						  		'AA¶Ab'.
-
-	self
-		assertPreviousCharGroupFrom:	'AA¶Ab'
-		to: 							  		'¶AAAb'
-		equals: 						  		'¶AAAb'.	
-
-]
-
-{ #category : 'tests' }
 RubTextEditorTest >> testPreviousWordStopOnUpperCaseManyUppercases [
 	string := 'AAAb'.
 	editor addString: string.
