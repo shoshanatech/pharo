@@ -68,7 +68,7 @@ DrTests class >> menuCommandOn: aBuilder [
 DrTests class >> open [
 	<script>
 
-	^ self new
+	^ (self newApplication: StPharoApplication current) 
 		  open;
 		  yourself
 ]
