@@ -111,30 +111,35 @@ ToolRegistry >> inspector [
 ]
 
 { #category : 'menu' }
-ToolRegistry >> menuItems [
-	"Answer the menu items available for this tool set. This is only used by the morphic fallBackMenu.
-	See Worldstate fallbackMenuOn:"
-
-	^#(
-		('System Browser' 			#openClassBrowser)
-		-
-		('Playground'				#openPlayground)
-		('Transcript' 				#openTranscript)
-		('File Browser'				#openFileList)
-		-
-		('Test Runner'				#openTestRunner)
-		('Process Browser' 			#openProcessBrowser)
-	)
-]
-
-{ #category : 'menu' }
 ToolRegistry >> openClassBrowser [
-	^ self browser open
+	"nobody else beside the fallbakc menu should invoke this method. 
+	This method exists because the menu cannot accept a block so we cannot express
+		menu
+			target: Smalltalk tools  
+			action: [ :t | t browser open ]
+			
+		but only 
+		menu
+			target: Smalltalk tools  
+			seleector: openBrowser"
+
+	^ (self toolNamed: #browser) open
 ]
 
 { #category : 'menu' }
 ToolRegistry >> openFileList [
-	self fileList open
+	"nobody else beside the fallbakc menu should invoke this method. 
+	This method exists because the menu cannot accept a block so we cannot express
+		menu
+			target: Smalltalk tools  
+			action: [ :t | t browser open ]
+			
+		but only 
+		menu
+			target: Smalltalk tools  
+			seleector: openBrowser"
+
+	^ (self toolNamed: #fileList) open
 ]
 
 { #category : 'menu' }
@@ -145,18 +150,35 @@ ToolRegistry >> openProcessBrowser [
 ]
 
 { #category : 'menu' }
-ToolRegistry >> openRecentChangesLog [
-	self changeList browseRecentLog
-]
-
-{ #category : 'menu' }
 ToolRegistry >> openTestRunner [
-	self using: #testRunner do: [:tool | tool open ]
+	"nobody else beside the fallbakc menu should invoke this method. 
+	This method exists because the menu cannot accept a block so we cannot express
+		menu
+			target: Smalltalk tools  
+			action: [ :t | t browser open ]
+			
+		but only 
+		menu
+			target: Smalltalk tools  
+			seleector: openBrowser"
+
+	^ (self toolNamed: #testRunner) open
 ]
 
 { #category : 'menu' }
 ToolRegistry >> openTranscript [
-	^ self transcript open
+	"nobody else beside the fallbakc menu should invoke this method. 
+	This method exists because the menu cannot accept a block so we cannot express
+		menu
+			target: Smalltalk tools  
+			action: [ :t | t browser open ]
+			
+		but only 
+		menu
+			target: Smalltalk tools  
+			seleector: openBrowser"
+
+	^ (self toolNamed: #transcript) open
 ]
 
 { #category : 'menu' }
@@ -192,6 +214,12 @@ ToolRegistry >> resetAnnouncer [
 	announcer := nil.
 ]
 
+{ #category : 'registration' }
+ToolRegistry >> toolNamed: aName [
+
+	^ tools at: aName ifAbsent: [self error: 'No tool named: ', aName, ' available']
+]
+
 { #category : 'tools' }
 ToolRegistry >> transcript [
 	"No need to register transcript. But for uniformity,
@@ -211,8 +239,8 @@ ToolRegistry >> unregisterToolWithRole: aName [
 { #category : 'misc' }
 ToolRegistry >> using: aToolName do: aBlock [
 	"Evaluate a block for tool found under corresponding name or silently ignore if its not found or nil"
-	| tool |
 
+	| tool |
 	tool := tools at: aToolName ifAbsent: [ ^ self ].
 	tool ifNotNil: [ ^ aBlock value: tool value ]
 ]

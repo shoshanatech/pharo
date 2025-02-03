@@ -551,7 +551,15 @@ WorldState >> fallbackMenuOn: menu [
 	menu addLine.
 	menu
 		defaultTarget: Smalltalk tools;
-		addList: Smalltalk tools menuItems.
+		addList: #(
+		('System Browser' 			#openClassBrowser)
+		-
+		('Transcript' 				#openTranscript)
+		('File Browser'				#openFileList)
+		-
+		('Test Runner'				#openTestRunner)
+		('Process Browser' 			#openProcessBrowser)
+	).
 	menu addLine.
 	menu add: 'Save'
 		target: self class
