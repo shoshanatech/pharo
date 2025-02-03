@@ -384,7 +384,7 @@ ReCompositeExtractMethodRefactoring >> newMethodName [
 				newAttempt := newSelector isNil.
 
 				"it's a valid selector"
-				(newSelector isString and: [newSelector isValidSelector])
+				(newSelector isString and: [ self isValidSelector: newSelector])
 					ifFalse: [ self inform: newSelector asString, ' is not a valid selector.'.
 								  newSelector := nil ].
 

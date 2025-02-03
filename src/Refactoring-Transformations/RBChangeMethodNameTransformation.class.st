@@ -21,7 +21,7 @@ RBChangeMethodNameTransformation >> applicabilityPreconditions [
 
 	^ {
 		  (RBCondition definesSelector: oldSelector in: class).
-		  (RBCondition isValidMethodName: newSelector for: class) }
+		  (RBCondition isValidSelector: newSelector) }
 ]
 
 { #category : 'support' }

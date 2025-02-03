@@ -483,6 +483,8 @@ Symbol >> isOrientedFill [
 
 { #category : 'testing' }
 Symbol >> isSelectorSymbol [
+	"Returns whether the receiving symbol is used as a method selector."
+	
 	^ self class selectorTable includes: self
 ]
 
