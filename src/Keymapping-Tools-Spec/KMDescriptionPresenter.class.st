@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'actionBar',
 		'categoryList',
-		'selectedAction',
 		'shortcutTable',
 		'inputPresenter'
 	],
