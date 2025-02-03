@@ -363,6 +363,20 @@ SystemWindow class >> sendTopWindowToBack [
 		ifFound: [ :morph | morph sendToBack ]
 ]
 
+{ #category : 'settings' }
+SystemWindow class >> settingOn: aBuilder [
+
+<systemsettings>
+
+	(aBuilder setting: #useHideForClose)
+		parent: #tools;
+		order: 2;
+		default: self useHideForClose ;
+		target: self;
+		description: 'If closed windows will be stored in SpClosedWindowListPresenter';
+		label: 'Use last closed windows'.
+]
+
 { #category : 'menu items - tiling' }
 SystemWindow class >> tilingMenuItemsOn: aBuilder [
 
