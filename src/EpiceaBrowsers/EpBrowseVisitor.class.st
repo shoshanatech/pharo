@@ -41,16 +41,12 @@ EpBrowseVisitor >> visitCodeChange: aChange [
 { #category : 'visitor' }
 EpBrowseVisitor >> visitMethodChange: aChange [
 
-	self
-		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior |
-			behavior
-				compiledMethodAt: aChange methodAffectedSelector
-				ifPresent: [ :p | self browseClass: p class ]
-				ifAbsent: [
-					application inform:
-						'Cannot find ', behavior asString, '>>', aChange methodAffectedSelector.
-					self browseClass: behavior ] ]
+	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
+		behavior
+			compiledMethodAt: aChange methodAffectedSelector
+			ifPresent: [ :method | application tools browser openOnMethod: method ]
+			ifAbsent: [ application inform: 'Cannot find ' , behavior asString , '>>' , aChange methodAffectedSelector.
+				self browseClass: behavior ] ]
 ]
 
 { #category : 'visitor' }
