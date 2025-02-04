@@ -184,7 +184,7 @@ EpLogBrowserPresenter >> browseSelection [
 
 	self selectedEntryItems
 		select: [ :each | each entry content isCodeChange ]
-		thenDo: [ :each | each browseItem ]
+		thenDo: [ :each | each eventAccept: (EpBrowseVisitor new application: self application; yourself) ]
 ]
 
 { #category : 'private' }
@@ -686,6 +686,7 @@ EpLogBrowserPresenter >> newItemForEntryReference: entryReference [
 	^ EpEntryItem new
 		browser: self;
 		entry: entry;
+		application: self application;
 		triggerItems: triggers;
 		yourself
 ]

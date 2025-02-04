@@ -53,7 +53,7 @@ CoverageDemoPresenter class >> exampleMethod [
 { #category : 'open' }
 CoverageDemoPresenter class >> open [
 	<script>
-	self new open
+	(self newApplication: StPharoApplication current) open
 ]
 
 { #category : 'adding' }

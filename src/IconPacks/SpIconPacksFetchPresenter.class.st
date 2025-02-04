@@ -73,7 +73,7 @@ SpIconPacksFetchPresenter class >> menuCommandOn: aBuilder [
 SpIconPacksFetchPresenter class >> open [
 	<script>
 
-	^ self new open
+	^ (self newApplication: StPharoApplication current) open
 ]
 
 { #category : 'class initialization' }
