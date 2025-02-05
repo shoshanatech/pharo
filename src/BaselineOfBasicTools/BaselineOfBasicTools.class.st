@@ -61,7 +61,8 @@ BaselineOfBasicTools >> baseline: spec [
 			spec
 				loads: 'Core';
 				repository: repository ].
-
+		
+		spec package: 'ClassDefinitionPrinters'.
 		spec package: 'Tool-ProcessBrowser'.
 		spec package: 'Tool-Profilers'.
 		spec package: 'NECompletion'.
@@ -73,6 +74,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'MonticelloGUI' with: [ spec requires: #( 'Tool-Diff' ) ].
 		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 
+		spec package: 'ClassDefinitionPrinters-Tests'.
 		spec package: 'Kernel-CodeModel-Tests'.
 		spec package: 'Monticello-Tests'.
 		spec package: 'MonticelloMocks'.
