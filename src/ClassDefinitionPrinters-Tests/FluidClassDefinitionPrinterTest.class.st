@@ -1,9 +1,8 @@
 Class {
 	#name : 'FluidClassDefinitionPrinterTest',
 	#superclass : 'CommonClassDefinitionPrinterTest',
-	#category : 'Kernel-Tests-Fluid',
-	#package : 'Kernel-Tests',
-	#tag : 'Fluid'
+	#category : 'ClassDefinitionPrinters-Tests',
+	#package : 'ClassDefinitionPrinters-Tests'
 }
 
 { #category : 'helpers' }
@@ -82,8 +81,7 @@ FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
 
 	self assert: (self forClass: MockWithComplexSlot) equals: 'Object << #MockWithComplexSlot
 	slots: { #aComplexSlot => ObservableSlot };
-	tag: ''Fluid'';
-	package: ''Kernel-Tests'''
+	package: ''ClassDefinitionPrinters-Tests'''
 ]
 
 { #category : 'tests - unnecessary values' }
