@@ -384,6 +384,14 @@ CompiledCode >> hasPragmaNamed: arg1 [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+CompiledCode >> hasPrimitive [
+	"Answer the primitive index associated with the receiver.
+	 Zero indicates that this is not a primitive method."
+
+	^ self header anyMask: 65536
+]
+
 { #category : 'literals' }
 CompiledCode >> hasSelector: selector [
 	"Answers true if the method refers to the selector"
@@ -797,10 +805,13 @@ CompiledCode >> pragmas [
 CompiledCode >> primitive [
 	"Answer the primitive index associated with the receiver.
 	 Zero indicates that this is not a primitive method."
+
 	| initialPC |
-	^(self header anyMask: 65536) "Is the hasPrimitive? flag set?"
-		ifTrue: [(self at: (initialPC := self initialPC) + 1) + ((self at: initialPC + 2) bitShift: 8)]
-		ifFalse: [0]
+	^ self hasPrimitive
+		  ifTrue: [
+			  (self at: (initialPC := self initialPC) + 1)
+			  + ((self at: initialPC + 2) bitShift: 8) ]
+		  ifFalse: [ 0 ]
 ]
 
 { #category : 'printing' }
