@@ -386,8 +386,7 @@ CompiledCode >> hasPragmaNamed: arg1 [
 
 { #category : 'accessing' }
 CompiledCode >> hasPrimitive [
-	"Answer the primitive index associated with the receiver.
-	 Zero indicates that this is not a primitive method."
+	"Answer a boolean indicated if the method is marked as having a primitive"
 
 	^ self header anyMask: 65536
 ]
