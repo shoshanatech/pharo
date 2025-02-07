@@ -453,7 +453,7 @@ SystemWindow class >> topWindow [
 { #category : 'accessing' }
 SystemWindow class >> useHideForClose [
 
-	^ UseHideForClose ifNil: [ UseHideForClose := false ]
+	^ UseHideForClose ifNil: [ UseHideForClose := true ]
 ]
 
 { #category : 'setting' }
