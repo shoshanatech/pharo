@@ -148,7 +148,7 @@ KMDescriptionPresenter >> initializePresenters [
 				 label: 'Browse';
 				 yourself);
 		addLast: (SpButtonPresenter new
-				 action: [ self application tools inspector openOn: shortcutTable selectedItem inspect ];
+				 action: [ (self application tools toolNamed: #inspector) openOn: shortcutTable selectedItem inspect ];
 				 label: 'Inspect';
 				 yourself)
 ]
