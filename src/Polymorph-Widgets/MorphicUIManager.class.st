@@ -274,7 +274,7 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 { #category : 'private' }
 MorphicUIManager >> deactivate [
 
-	activeTranscript := Smalltalk tools transcript.
+	activeTranscript := Smalltalk tools toolNamed: #transcript.
 	SystemProgressMorph disable.
 
 	self triggerEvent: #aboutToLeaveWorld.

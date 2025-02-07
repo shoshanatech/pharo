@@ -32,7 +32,7 @@ Object >> inspect [
 	Return the receiver. For getting the inspector, use #inspector"
 	"https://github.com/pharo-project/pharo/issues/11803"
 
-	Smalltalk tools inspector inspect: self
+	(Smalltalk tools toolNamed: #inspector) inspect: self
 ]
 
 { #category : '*Tools' }
@@ -53,7 +53,7 @@ Object >> inspectOnce [
 Object >> inspectWithLabel: aLabel [
 	"Create and schedule an Inspector in which the user can examine the receiver's variables."
 
-	^ Smalltalk tools inspector inspect: self label: aLabel
+	^ (Smalltalk tools toolNamed: #inspector) inspect: self label: aLabel
 ]
 
 { #category : '*Tools' }
@@ -64,7 +64,7 @@ Object >> inspector [
 
 	"https://github.com/pharo-project/pharo/issues/11803"
 
-	^Smalltalk tools inspector inspect: self
+	^ (Smalltalk tools toolNamed: #inspector) inspect: self
 ]
 
 { #category : '*Tools-FileList' }

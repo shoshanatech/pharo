@@ -31,7 +31,7 @@ ThreadSafeTranscript >> interactionModel [
 ThreadSafeTranscript class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Transcript')
-		action: [ Smalltalk tools transcript open ];
+		action: [ (Smalltalk tools toolNamed: #transcript) open ];
 		order: 2;
 		parent: #InputOutput;
 		help: 'Transcript';

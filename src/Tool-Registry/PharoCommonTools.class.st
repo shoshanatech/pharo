@@ -71,11 +71,11 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						default: (self environment at: #ClyFullBrowserMorph);
 						domainValues: self tools recentBrowserTools ];
 		with: [
-					(aBuilder pickOne: #inspectorTool)
+					(aBuilder pickOne: #inspector)
 						target: Smalltalk;
 						targetSelector: #tools;
-						getSelector: #inspectorTool;
-						setSelector: #inspectorTool:;
+						getSelector: #inspector;
+						setSelector: #inspector:;
 						default: (self environment at: #StInspectorPresenter);
 						label: 'Inspector';
 						domainValues: self tools recentInspectorTools ];
@@ -206,16 +206,6 @@ PharoCommonTools >> initialize [
 PharoCommonTools >> inspector [
 
 	^ self toolNamed: #inspector
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> inspectorTool [
-	^ self inspector
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> inspectorTool: aTool [
-	^ self register: aTool as: #inspector
 ]
 
 { #category : 'registry access' }

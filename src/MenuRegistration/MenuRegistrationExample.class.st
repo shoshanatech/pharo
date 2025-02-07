@@ -113,12 +113,12 @@ MenuRegistrationExample class >> toolsOn: aBuilder [
 		with: [
 			(aBuilder item: #Transcript)
 				action: [ (Smalltalk tools toolNamed: #transcript) open] ;
-				icon: (aBuilder iconNamed: Smalltalk tools transcript  taskbarIconName).
+				icon: (aBuilder iconNamed: #smallDebug).
 			(aBuilder item: #'File Browser')
 				action: [ (Smalltalk tools toolNamed: #fileList) open] ;
 				icon: (self  iconNamed: #smallWindow).
 			(aBuilder item: #'Process Browser')
 				selector: #openProcessBrowser;
-				icon: (aBuilder iconNamed: Smalltalk tools processBrowser taskbarIconName);
+				icon: (aBuilder iconNamed: #processBrowser);
 				withSeparatorAfter]
 ]
