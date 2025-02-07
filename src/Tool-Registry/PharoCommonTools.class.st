@@ -121,7 +121,7 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 	
 	(aBuilder item: #'System Browser')
 		parent: #Browsing;
-		action: [ self tools openClassBrowser ];
+		action: [ (self tools toolNamed: #browser) open ];
 		order: 0;
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
@@ -134,7 +134,10 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		keyText: 'o, i';
 		help:
 			'Iceberg is a set of tools that allow one to handle git repositories directly from a Pharo image.';
-		action: [ (Smalltalk at: #IceTipRepositoriesBrowser) new open ]
+		action: [ 
+			"Pay attention using newApplication: ... will break IceTipRepositoriesBrowser because it initializes
+			a model."
+			((Smalltalk at: #IceTipRepositoriesBrowser) new) open ]
 ]
 
 { #category : 'registry access' }
