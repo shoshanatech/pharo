@@ -7,7 +7,7 @@ TestCase >> asResultForDrTest [
 
 { #category : '*DrTests-TestsRunner' }
 TestCase >> drTestsBrowse [
-	Smalltalk tools browser openOnClass: self class selector: self selector
+	(Smalltalk  toolNamed: #browser) openOnClass: self class selector: self selector
 ]
 
 { #category : '*DrTests-TestsRunner' }

@@ -38,7 +38,7 @@ MenuRegistrationExample class >> myOwnCoolMenuRegistrationOn: aBuilder [
 		with: [
 			(aBuilder item: #MyOwnCoolTool)
 				label: 'My own cool tool also here';
-				target: Smalltalk tools workspace;
+				target: (Smalltalk tools toolNamed: #workspace);
 				selector: #openContents: ;
 				arguments: #('yep, my own cool tool can be also opened from a world sub-menu ! :)')]
 ]
@@ -49,7 +49,7 @@ MenuRegistrationExample class >> myOwnCoolToolRegistrationOn: aBuilder [
 	(aBuilder item: #MyOwnCoolTool)
 		parent: #Tools;
 		label: 'My own cool tool';
-		target: Smalltalk tools workspace;
+		target: (Smalltalk tools toolNamed: #workspace) ;
 		selector: #openContents: ;
 		arguments: #('yep, my own cool tool can be opened from the world menu ! :)')
 ]
