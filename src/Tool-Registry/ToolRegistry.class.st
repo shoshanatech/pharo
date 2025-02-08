@@ -236,7 +236,7 @@ ToolRegistry >> unregisterToolWithRole: aName [
 	self announcer announce: (ToolRegistryToolRegistered tool: toolToRemove name: aName)
 ]
 
-{ #category : 'misc' }
+{ #category : 'registration' }
 ToolRegistry >> using: aToolName do: aBlock [
 	"Evaluate a block for tool found under corresponding name or silently ignore if its not found or nil"
 

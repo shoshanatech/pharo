@@ -3574,7 +3574,7 @@ Morph >> inspectAt: aPoint event: evt [
 
 { #category : 'menus' }
 Morph >> inspectInMorphic: evt [
-	Smalltalk tools inspector inspect: self
+	(Smalltalk tools toolNamed: #inspector) inspect: self
 ]
 
 { #category : 'debug and other' }

@@ -19,13 +19,12 @@ MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [
 	(aBuilder group: #Tools)
 		withSeparatorAfter;
 		order: 0;
-		target: Smalltalk tools;
 		with: [
 			(aBuilder item: #'System browser')
-				selector: #openClassBrowser;
+				action: [ (Smalltalk tools toolNamed: #browser) open  ] ;
 				icon: (aBuilder iconNamed: Smalltalk tools browser taskbarIconName).
 			(aBuilder item: #Playground)
-				selector: #openPlayground;
+				action: [ (Smalltalk tools toolNamed: #workspace) open ];
 				icon: (aBuilder iconNamed: Smalltalk tools workspace taskbarIconName).
 			]
 ]
@@ -109,18 +108,17 @@ MenuRegistrationExample class >> toolsOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder item: #Tools)
 		order: 1.0;
-		target: Smalltalk tools;
 		iconName: #smallDoIt;
 		withSeparatorAfter;
 		with: [
 			(aBuilder item: #Transcript)
-				selector: #openTranscript;
-				icon: (aBuilder iconNamed: Smalltalk tools transcript  taskbarIconName).
+				action: [ (Smalltalk tools toolNamed: #transcript) open] ;
+				icon: (aBuilder iconNamed: #smallDebug).
 			(aBuilder item: #'File Browser')
-				selector: #openFileList;
+				action: [ (Smalltalk tools toolNamed: #fileList) open] ;
 				icon: (self  iconNamed: #smallWindow).
 			(aBuilder item: #'Process Browser')
 				selector: #openProcessBrowser;
-				icon: (aBuilder iconNamed: Smalltalk tools processBrowser taskbarIconName);
+				icon: (aBuilder iconNamed: #processBrowser);
 				withSeparatorAfter]
 ]
