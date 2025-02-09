@@ -103,13 +103,6 @@ ToolRegistry >> initialize [
 	self initDefaultToolSet
 ]
 
-{ #category : 'tools' }
-ToolRegistry >> inspector [
-	"understand by Object, so we need to work around not getting a DNU"
-	
-	^self doesNotUnderstand: (Message selector: #inspector)
-]
-
 { #category : 'only for fallback menu' }
 ToolRegistry >> openClassBrowser [
 	"nobody else beside the fallbakc menu should invoke this method. 
