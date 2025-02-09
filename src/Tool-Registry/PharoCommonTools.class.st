@@ -5,9 +5,6 @@ A PharoCommonTools is a ToolRegistry that knows about common tools that may be r
 Class {
 	#name : 'PharoCommonTools',
 	#superclass : 'ToolRegistry',
-	#instVars : [
-		'recentTools'
-	],
 	#category : 'Tool-Registry',
 	#package : 'Tool-Registry'
 }
