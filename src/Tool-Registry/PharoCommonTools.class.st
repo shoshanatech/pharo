@@ -142,16 +142,6 @@ PharoCommonTools >> messageList [
 	^ self toolNamed: #messageList
 ]
 
-{ #category : 'tools' }
-PharoCommonTools >> messageListTool [
-	^ self messageList
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> messageListTool: aTool [
-	^ self register: aTool as: #messageList
-]
-
 { #category : 'registry access' }
 PharoCommonTools >> monticelloBrowser [
 
@@ -229,28 +219,8 @@ PharoCommonTools >> versionBrowser [
 	^ self toolNamed: #versionBrowser
 ]
 
-{ #category : 'tools' }
-PharoCommonTools >> versionBrowserTool [
-	^ self versionBrowser
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> versionBrowserTool: aTool [
-	^ self register: aTool as: #versionBrowser
-]
-
 { #category : 'registry access' }
 PharoCommonTools >> workspace [
 
 	^ self toolNamed: #workspace
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> workspaceTool [
-	^ self workspace
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> workspaceTool: aTool [
-	^ self register: aTool as: #workspace
 ]
