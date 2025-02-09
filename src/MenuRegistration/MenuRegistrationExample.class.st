@@ -22,10 +22,10 @@ MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [
 		with: [
 			(aBuilder item: #'System browser')
 				action: [ (Smalltalk tools toolNamed: #browser) open  ] ;
-				icon: (aBuilder iconNamed: Smalltalk tools browser taskbarIconName).
+				icon: (aBuilder iconNamed: #smallSystemBrowser).
 			(aBuilder item: #Playground)
 				action: [ (Smalltalk tools toolNamed: #workspace) open ];
-				icon: (aBuilder iconNamed: Smalltalk tools workspace taskbarIconName).
+				icon: (aBuilder iconNamed: #workspace).
 			]
 ]
 
