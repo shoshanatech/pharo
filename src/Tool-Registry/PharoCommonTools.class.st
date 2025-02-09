@@ -51,58 +51,6 @@ PharoCommonTools class >> menuToploOn: aBuilder [
 				load ]
 ]
 
-{ #category : 'settings' }
-PharoCommonTools class >> settingsOn: aBuilder [
-	<systemsettings>
-
-	self tools class == self
-		ifFalse: [ ^ self ].
-	(aBuilder group: #pharoTools)
-		parent: #pharoSystem;
-		label: 'Recent Tools';
-		description: 'Recently registered Tools';
-		with: [
-					(aBuilder pickOne: #browserTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						getSelector: #browserTool;
-						setSelector: #browserTool:;
-						label: 'System browser';
-						default: (self environment at: #ClyFullBrowserMorph);
-						domainValues: self tools recentBrowserTools ];
-		with: [
-					(aBuilder pickOne: #inspector)
-						target: Smalltalk;
-						targetSelector: #tools;
-						getSelector: #inspector;
-						setSelector: #inspector:;
-						default: (self environment at: #StInspectorPresenter);
-						label: 'Inspector';
-						domainValues: self tools recentInspectorTools ];
-		with: [
-					(aBuilder pickOne: #workspaceTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						getSelector: #workspaceTool;
-						setSelector: #workspaceTool:;
-						label: 'Workspace';
-						default: (self environment at: #StPlayground);
-						domainValues: Smalltalk tools recentWorkspaceTools ];
-		with: [
-					(aBuilder pickOne: #versionBrowserTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						label: 'Versionbrowser';
-						domainValues: self tools recentVersionBrowserTools ];
-		with: [
-					(aBuilder pickOne: #fileListTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						label: 'Filelist';
-						default: (self environment at: #StFileSystemPresenter);
-						domainValues: self tools recentFileListTools]
-]
-
 { #category : 'system startup' }
 PharoCommonTools class >> shutDown: aboutToQuit [
 	self tools cleanUp
@@ -152,16 +100,6 @@ PharoCommonTools >> browser [
 	^ self toolNamed: #browser
 ]
 
-{ #category : 'tools' }
-PharoCommonTools >> browserTool [
-	^ self browser
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> browserTool: aTool [
-	^ self register: aTool as: #browser
-]
-
 { #category : 'registry access' }
 PharoCommonTools >> changeList [
 
@@ -178,16 +116,6 @@ PharoCommonTools >> cleanUp [
 PharoCommonTools >> fileList [
 
 	^ self toolNamed: #fileList
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> fileListTool [
-	^ self fileList
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> fileListTool: aTool [
-	^ self register: aTool as: #fileList
 ]
 
 { #category : 'registry access' }
