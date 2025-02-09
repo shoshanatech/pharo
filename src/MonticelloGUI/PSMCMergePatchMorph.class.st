@@ -95,7 +95,7 @@ PSMCMergePatchMorph >> browseSenders [
 PSMCMergePatchMorph >> browseVersions [
 	"Browse the method versions."
 
-	Smalltalk tools versionBrowser
+	(Smalltalk tools toolNamed: #versionBrowser)
 			browseVersionsForClass: self selectedChangeWrapper actualClass
 			selector: self selectedMessageName
 ]

@@ -53,7 +53,7 @@ PharoCommonTools class >> menuToploOn: aBuilder [
 
 { #category : 'system startup' }
 PharoCommonTools class >> shutDown: aboutToQuit [
-	self tools cleanUp
+	self tools class cleanUp: false
 ]
 
 { #category : 'settings' }
@@ -101,77 +101,15 @@ PharoCommonTools >> browser [
 ]
 
 { #category : 'registry access' }
-PharoCommonTools >> changeList [
-
-	^ self toolNamed: #changeList
-]
-
-{ #category : 'cleanup' }
-PharoCommonTools >> cleanUp [
-	recentTools keysAndValuesDo:[:name :toolSet|
-		toolSet copy do:[:tool | tool isObsolete ifTrue:[ toolSet remove: tool]]]
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> fileList [
-
-	^ self toolNamed: #fileList
-]
-
-{ #category : 'registry access' }
 PharoCommonTools >> finder [
 
 	^ self toolNamed: #finder
-]
-
-{ #category : 'initialization' }
-PharoCommonTools >> initialize [
-	recentTools := Dictionary new.
-	super initialize
 ]
 
 { #category : 'registry access' }
 PharoCommonTools >> inspector [
 
 	^ self toolNamed: #inspector
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> messageList [
-
-	^ self toolNamed: #messageList
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> monticelloBrowser [
-
-	^ self toolNamed: #monticelloBrowser
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> pointerExplorer [
-
-	^ self toolNamed: #pointerExplorer
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> processBrowser [
-
-	^ self toolNamed: #processBrowser
-]
-
-{ #category : 'registration' }
-PharoCommonTools >> recentToolsFor: aName [
-	^ (recentTools at: aName ifAbsent: [ {} ]) reject: [ :tool | tool isObsolete ]
-]
-
-{ #category : 'registration' }
-PharoCommonTools >> register: anTool as: aNameSelector [
-	| usedToolSet |
-	anTool ifNil:[ ^ self].
-	super register: anTool as: aNameSelector.
-	usedToolSet := recentTools at: aNameSelector ifAbsentPut: [ Set new ].
-	usedToolSet add: anTool
 ]
 
 { #category : 'registry access' }
@@ -186,16 +124,4 @@ PharoCommonTools >> toolNamed: aSymbol [
 	tools at: aSymbol ifPresent: [ :tool | ^ tool ].
 	self error:
 		'No tool named: "' , aSymbol , '" present in the registry'
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> versionBrowser [
-
-	^ self toolNamed: #versionBrowser
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> workspace [
-
-	^ self toolNamed: #workspace
 ]
