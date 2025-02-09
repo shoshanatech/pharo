@@ -10,7 +10,6 @@ Class {
 		'superclass',
 		'methodDictionary',
 		'sharedPools',
-		'package',
 		'name'
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
