@@ -161,33 +161,8 @@ PharoCommonTools >> processBrowser [
 ]
 
 { #category : 'registration' }
-PharoCommonTools >> recentBrowserTools [
-	^ self recentToolsFor: #browser
-]
-
-{ #category : 'registration' }
-PharoCommonTools >> recentFileListTools [
-	^ self recentToolsFor: #fileList
-]
-
-{ #category : 'registration' }
-PharoCommonTools >> recentInspectorTools [
-	^ self recentToolsFor: #inspector
-]
-
-{ #category : 'registration' }
 PharoCommonTools >> recentToolsFor: aName [
 	^ (recentTools at: aName ifAbsent: [ {} ]) reject: [ :tool | tool isObsolete ]
-]
-
-{ #category : 'registration' }
-PharoCommonTools >> recentVersionBrowserTools [
-	^ self recentToolsFor: #versionBrowser
-]
-
-{ #category : 'registration' }
-PharoCommonTools >> recentWorkspaceTools [
-	^ self recentToolsFor: #workspace
 ]
 
 { #category : 'registration' }
