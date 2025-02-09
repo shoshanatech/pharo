@@ -29,7 +29,7 @@ SycShowLocalSendersCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycShowLocalSendersCommand >> execute [
 
-	Smalltalk tools messageList browse: self searchInTheWholeHierarchy.
+	(Smalltalk tools toolNamed: #messageList) browse: self searchInTheWholeHierarchy.
 ]
 
 { #category : 'execution' }

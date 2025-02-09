@@ -103,13 +103,6 @@ ToolRegistry >> initialize [
 	self initDefaultToolSet
 ]
 
-{ #category : 'tools' }
-ToolRegistry >> inspector [
-	"understand by Object, so we need to work around not getting a DNU"
-	
-	^self doesNotUnderstand: (Message selector: #inspector)
-]
-
 { #category : 'only for fallback menu' }
 ToolRegistry >> openClassBrowser [
 	"nobody else beside the fallbakc menu should invoke this method. 
@@ -183,7 +176,7 @@ ToolRegistry >> openTranscript [
 
 { #category : 'only for fallback menu' }
 ToolRegistry >> openWorkspace [
-	^ self workspace open
+	^ (self toolNamed: #workspace) open
 ]
 
 { #category : 'registration' }
@@ -222,9 +215,15 @@ ToolRegistry >> toolNamed: aName [
 
 { #category : 'tools' }
 ToolRegistry >> transcript [
-	"No need to register transcript. But for uniformity,
-	implement this method, so transcript can be accessed via
-	Smalltalk tools transcript , as any other tool "
+	"We should rewrite the transcript as a spec UI. 
+	In addition we should implement the Transcript as a circular structure
+	so that we do not have to register to stepGlobal to flush it and avoid memory leak."
+	
+	"check 
+		ThreadSafeTranscript>>#stepGlobal.
+		WorldState >> #runStepMethodsIn: 
+	"
+
 	^ Transcript
 ]
 

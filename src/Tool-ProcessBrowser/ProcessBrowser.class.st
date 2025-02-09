@@ -362,7 +362,7 @@ ProcessBrowser class >> terminateProcess: aProcess [
 ProcessBrowser >> browseContext [
 
 	selectedContext ifNil: [ ^ self ].
-	self tools browser
+	(self tools toolNamed: #browser)
 		openOnClass: self selectedClass
 		selector: self selectedSelector
 ]

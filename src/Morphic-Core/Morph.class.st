@@ -5667,7 +5667,7 @@ Morph >> showActions [
 				ifNotNil: ["want more than default behavior"
 					cls == Morph
 						ifFalse: [adder value: cls value: selector]]].
-	Smalltalk tools messageList browse: list title:  'Actions of ' , self printString
+	(Smalltalk tools toolNamed: #messageList) browse: list title:  'Actions of ' , self printString
 ]
 
 { #category : 'halos and balloon help' }
