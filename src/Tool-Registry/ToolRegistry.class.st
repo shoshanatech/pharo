@@ -210,7 +210,7 @@ ToolRegistry >> resetAnnouncer [
 { #category : 'registration' }
 ToolRegistry >> toolNamed: aName [
 
-	^ tools at: aName ifAbsent: [self error: 'No tool named: ', aName, ' available']
+	^ tools at: aName ifAbsent: [ self error: 'No tool named: ', aName, ' available' ]
 ]
 
 { #category : 'tools' }
@@ -245,20 +245,20 @@ ToolRegistry >> using: aToolName do: aBlock [
 ]
 
 { #category : 'announcer' }
-ToolRegistry >> whenToolRegisteredDo: aBlock for: aSubscriber [
+ToolRegistry >> whenToolRegisteredSend: aSelector to: aSubscriber [
 
 	self announcer weak
 		when: ToolRegistryToolRegistered
-		do: aBlock
-		for: aSubscriber
+		send: aSelector
+		to: aSubscriber
 		
 ]
 
 { #category : 'announcer' }
-ToolRegistry >> whenToolUnregisteredDo: aBlock for: aSubscriber [
+ToolRegistry >> whenToolUnregisteredSend: aSelector  to: aSubscriber [
 
 	self announcer weak
 		when: ToolRegistryToolUnregistered
-		do: aBlock
-		for: aSubscriber
+		send: aSelector
+		to: aSubscriber
 ]
